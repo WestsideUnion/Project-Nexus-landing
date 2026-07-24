@@ -170,9 +170,9 @@ export default function NexusPage() {
           {/* Trust line — three verified proof points only */}
           <div className="flex gap-8 sm:gap-12">
             {[
-              { value: "Managed setup",      label: "No DIY configuration" },
-              { value: "Predictable plans",  label: "Clear monthly cost" },
-              { value: "Human support",      label: "Westside Union backed" },
+              { value: "Managed setup", label: "No DIY configuration" },
+              { value: "Predictable plans", label: "Clear monthly cost" },
+              { value: "Human support", label: "Westside Union backed" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-sm text-[#111] font-light tracking-tight" style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}>{stat.value}</div>
@@ -247,7 +247,7 @@ export default function NexusPage() {
               />
               <div className="relative z-10">
                 <div className="w-10 h-10 rounded-xl border border-black/10 bg-white/60 flex items-center justify-center mb-6" style={{ backdropFilter: "blur(8px)" }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
                 </div>
                 <h3 className="text-xl font-light mb-3">One conversation. Everything connected.</h3>
                 <p className="text-sm text-black/45 leading-relaxed max-w-sm">
@@ -258,9 +258,9 @@ export default function NexusPage() {
 
             {/* Job cards */}
             {[
-              { icon: <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>, title: "Add and monitor tasks", desc: "Tell Nexus what needs doing. It tracks, reminds, and flags overdue items.", delay: 0 },
-              { icon: <><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10h8M8 14h5"/></>, title: "Prepare daily summaries", desc: "Start each day with a clear picture of what happened and what needs attention.", delay: 80 },
-              { icon: <><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></>, title: "Draft customer responses", desc: "Nexus prepares replies for your review. You approve before anything is sent.", delay: 160 },
+              { icon: <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />, title: "Add and monitor tasks", desc: "Tell Nexus what needs doing. It tracks, reminds, and flags overdue items.", delay: 0 },
+              { icon: <><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M8 10h8M8 14h5" /></>, title: "Prepare daily summaries", desc: "Start each day with a clear picture of what happened and what needs attention.", delay: 80 },
+              { icon: <><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" /></>, title: "Draft customer responses", desc: "Nexus prepares replies for your review. You approve before anything is sent.", delay: 160 },
             ].map((job, i) => (
               <BentoCard key={i} className="col-span-12 md:col-span-4 p-8 min-h-[200px]" delay={job.delay}>
                 <div className="w-10 h-10 rounded-xl border border-black/10 flex items-center justify-center mb-5">
@@ -272,9 +272,9 @@ export default function NexusPage() {
             ))}
 
             {[
-              { icon: <><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></>, title: "Review business trends", desc: "Slow periods, unusual activity, and patterns — surfaced before they become problems.", delay: 0 },
-              { icon: <><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></>, title: "Suggest promotions", desc: "\"Wednesday afternoons have been slow. Would you like a promotion drafted?\"", delay: 80 },
-              { icon: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>, title: "Remind and follow up", desc: "Unfinished work, pending callbacks, and pending quotes — nothing gets forgotten.", delay: 160 },
+              { icon: <><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" /></>, title: "Review business trends", desc: "Slow periods, unusual activity, and patterns — surfaced before they become problems.", delay: 0 },
+              { icon: <><path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" /><line x1="6" y1="1" x2="6" y2="4" /><line x1="10" y1="1" x2="10" y2="4" /><line x1="14" y1="1" x2="14" y2="4" /></>, title: "Suggest promotions", desc: "\"Wednesday afternoons have been slow. Would you like a promotion drafted?\"", delay: 80 },
+              { icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></>, title: "Remind and follow up", desc: "Unfinished work, pending callbacks, and pending quotes — nothing gets forgotten.", delay: 160 },
             ].map((job, i) => (
               <BentoCard key={i} className="col-span-12 md:col-span-4 p-8 min-h-[200px]" delay={job.delay}>
                 <div className="w-10 h-10 rounded-xl border border-black/10 flex items-center justify-center mb-5">
@@ -734,11 +734,10 @@ export default function NexusPage() {
                 </ul>
                 <a
                   href="#contact"
-                  className={`block w-full py-3 rounded-xl text-sm tracking-widest text-center transition-all duration-200 ${
-                    plan.highlight
-                      ? "bg-[#111] text-white hover:bg-[#333]"
-                      : "border border-black/10 text-black/60 hover:border-black/25 hover:text-black hover:bg-black/[0.04]"
-                  }`}
+                  className={`block w-full py-3 rounded-xl text-sm tracking-widest text-center transition-all duration-200 ${plan.highlight
+                    ? "bg-[#111] text-white hover:bg-[#333]"
+                    : "border border-black/10 text-black/60 hover:border-black/25 hover:text-black hover:bg-black/[0.04]"
+                    }`}
                 >
                   BOOK A CONSULTATION
                 </a>
@@ -764,16 +763,16 @@ export default function NexusPage() {
           <div className="space-y-0 divide-y divide-black/[0.06]">
             {[
               {
-                q: "Is Nexus another chatbot?",
+                q: "Is Nexus another chatbot? Or another ChatGPT or Claude?",
                 a: "No. Nexus is a managed business assistant configured around your information, tasks, channels, and approval rules.",
               },
               {
                 q: "Do I need to learn a new app?",
-                a: "Daily use is designed around familiar messaging channels. A web control centre will be introduced later for task history, billing, usage, and account management.",
+                a: "No. Daily use is designed around familiar messaging channels. A web control center will be introduced later for task history, billing, usage, and account management.",
               },
               {
                 q: "Can Nexus connect to my POS or booking system?",
-                a: "Often, but availability depends on the system's API, permissions, and plan. Westside Union confirms integration scope during discovery.",
+                a: "Yes, but availability depends on the system's API, permissions, and plan. Westside Union confirms the integration scope during discovery.",
               },
               {
                 q: "Does Nexus replace an employee?",
@@ -987,10 +986,10 @@ export default function NexusPage() {
           <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
             {[
               { label: "How It Works", href: "#how-it-works" },
-              { label: "Industries",   href: "#industries" },
-              { label: "Pricing",      href: "#pricing" },
-              { label: "FAQ",          href: "#faq" },
-              { label: "Contact",      href: "#contact" },
+              { label: "Industries", href: "#industries" },
+              { label: "Pricing", href: "#pricing" },
+              { label: "FAQ", href: "#faq" },
+              { label: "Contact", href: "#contact" },
             ].map(l => (
               <a key={l.label} href={l.href} className="text-xs text-black/35 hover:text-black/70 transition-colors tracking-widest">{l.label}</a>
             ))}
@@ -1000,7 +999,7 @@ export default function NexusPage() {
           <div className="flex items-center gap-6">
             {[
               { label: "Privacy", href: "/privacy" },
-              { label: "Terms",   href: "/terms" },
+              { label: "Terms", href: "/terms" },
             ].map(l => (
               <a key={l.label} href={l.href} className="text-xs text-black/25 hover:text-black/55 transition-colors tracking-widest">{l.label}</a>
             ))}

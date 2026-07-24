@@ -472,13 +472,13 @@ Each industry page follows the same content contract.
 
 ## 7. FAQ Content
 
-### Is Nexus another chatbot?
+### Is Nexus another chatbot? Or another ChatGPT or Claude?
 
 No. Nexus is a managed business assistant configured around your information, tasks, channels, and approval rules.
 
 ### Do I need to learn a new app?
 
-Daily use is designed around familiar messaging channels. A web control centre will be introduced later for task history, billing, usage, and account management.
+No. Daily use is designed around familiar messaging channels. A web control center will be introduced later for task history, billing, usage, and account management.
 
 ### Can Nexus connect to my POS or booking system?
 
