@@ -74,6 +74,7 @@ function StatusPill({ status }: { status: "available" | "configured" | "planned"
 export default function NexusPage() {
   const [formState, setFormState] = useState<"idle" | "submitted">("idle")
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
+  const [showBackToTop, setShowBackToTop] = useState(false)
   const [form, setForm] = useState({
     name: "", business: "", email: "", phone: "", industry: "",
     locations: "", channel: "", problem: "", tools: "", deployment: "", consent: false,
@@ -101,6 +102,18 @@ export default function NexusPage() {
       console.log("Nexus consultation request:", form)
       setFormState("submitted")
     }
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 500)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
   return (
@@ -154,7 +167,7 @@ export default function NexusPage() {
             className="text-5xl sm:text-6xl md:text-7xl font-light text-[#111] leading-[1.0] tracking-tight mb-6"
             style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
           >
-            Your business runs,<br />even when<br />you don&apos;t.
+            Your business runs,<br />even when<br />you sleep.
           </h1>
 
           {/* Supporting copy */}
@@ -1356,6 +1369,17 @@ export default function NexusPage() {
           <span className="text-xs text-black/20">© 2026 Westside Union. Project Nexus is a Westside Union product. All rights reserved.</span>
         </div>
       </footer>
+
+      {/* ── BACK TO TOP ──────────────────────────────────────────────────────── */}
+      <button
+        onClick={scrollToTop}
+        className={`fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-50 p-3 rounded-full bg-black hover:bg-black/80 text-white shadow-2xl transition-all duration-300 flex items-center justify-center cursor-pointer ${showBackToTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8 pointer-events-none"}`}
+        aria-label="Back to top"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+      </button>
     </div>
   )
 }

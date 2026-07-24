@@ -38,7 +38,7 @@ export function MobileNav() {
               <a
                 key={l.label}
                 href={l.href}
-                className="text-[11px] text-black/60 hover:text-black transition-colors duration-200 tracking-wide"
+                className="text-sm text-black/60 hover:text-black transition-colors duration-200 tracking-wide"
               >
                 {l.label}
               </a>
@@ -48,7 +48,7 @@ export function MobileNav() {
           <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="text-[11px] px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide hidden md:block"
+              className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide hidden md:block"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
             >
               BOOK A CONSULTATION
@@ -100,7 +100,7 @@ export function MobileNav() {
                 key={l.label}
                 href={l.href}
                 onClick={close}
-                className="px-4 py-3 text-sm text-black/60 hover:text-black hover:bg-black/[0.03] rounded-xl transition-colors tracking-wide"
+                className="px-4 py-3 text-base text-black/60 hover:text-black hover:bg-black/[0.03] rounded-xl transition-colors tracking-wide"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
                 {l.label}
@@ -110,7 +110,7 @@ export function MobileNav() {
               <a
                 href="#contact"
                 onClick={close}
-                className="block w-full text-center text-[11px] px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide"
+                className="block w-full text-center text-sm px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
                 BOOK A CONSULTATION
