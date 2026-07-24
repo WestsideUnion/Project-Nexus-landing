@@ -73,6 +73,7 @@ function StatusPill({ status }: { status: "available" | "configured" | "planned"
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function NexusPage() {
   const [formState, setFormState] = useState<"idle" | "submitted">("idle")
+  const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
   const [form, setForm] = useState({
     name: "", business: "", email: "", phone: "", industry: "",
     locations: "", channel: "", problem: "", tools: "", deployment: "", consent: false,
@@ -128,14 +129,24 @@ export default function NexusPage() {
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "38%", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "55%", backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
 
+        {/* "Active now" badge — top-right, after hours feel */}
+        <div className="absolute top-24 right-6 md:right-12 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-black/[0.06] shadow-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="text-[10px] tracking-widest text-black/50 uppercase">Nexus is working</span>
+        </div>
+
         {/* Spacer so content doesn't sit under the fixed nav */}
         <div className="h-20" />
 
         {/* Hero content — immediately visible, no gate on animation */}
         <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-6 md:px-12 pb-12 max-w-3xl">
+
           {/* Eyebrow */}
-          <span className="text-[11px] tracking-[0.2em] text-black/50 uppercase mb-4 font-sans">
-            Your business. One smart assistant.
+          <span className="text-[11px] tracking-[0.2em] text-black/50 uppercase mb-5 font-sans">
+            Like your best hire — without the overhead.
           </span>
 
           {/* Headline */}
@@ -143,12 +154,12 @@ export default function NexusPage() {
             className="text-5xl sm:text-6xl md:text-7xl font-light text-[#111] leading-[1.0] tracking-tight mb-6"
             style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
           >
-            Get help running<br />your business —<br />without another<br />complicated app.
+            Your business runs,<br />even when<br />you don&apos;t.
           </h1>
 
           {/* Supporting copy */}
           <p className="text-sm text-black/55 leading-relaxed max-w-md mb-8">
-            Nexus works through the messaging channels you already use. It can organise tasks, follow up, answer routine questions, prepare updates, and alert you when something needs attention. Westside Union sets it up and keeps it working.
+            Nexus handles your messages, follow-ups, and routine tasks — through channels you already use. No training. No onboarding. No technical setup. Just tell us how your business works and we configure everything. It answers inquiries at midnight, follows up on quotes while you sleep, and sends you a clean summary in the morning.
           </p>
 
           {/* CTAs */}
@@ -163,16 +174,16 @@ export default function NexusPage() {
               href="#how-it-works"
               className="px-6 py-3 border border-black/15 text-black/60 text-[11px] rounded-xl hover:border-black/25 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest"
             >
-              SEE WHAT NEXUS CAN DO
+              SEE HOW IT WORKS
             </a>
           </div>
 
-          {/* Trust line — three verified proof points only */}
+          {/* Trust line */}
           <div className="flex gap-8 sm:gap-12">
             {[
-              { value: "Managed setup", label: "No DIY configuration" },
-              { value: "Predictable plans", label: "Clear monthly cost" },
-              { value: "Human support", label: "Westside Union backed" },
+              { value: "No app to learn", label: "Works in WhatsApp, SMS & email" },
+              { value: "Always on", label: "After hours, weekends, overnight" },
+              { value: "Managed by us", label: "Westside Union handles setup" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-sm text-[#111] font-light tracking-tight" style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}>{stat.value}</div>
@@ -378,7 +389,15 @@ export default function NexusPage() {
                     ))}
                   </ul>
                   <div className="mt-6 pt-6 border-t border-black/[0.05]">
-                    <Tag>READY QUICKLY</Tag>
+                    <button
+                      onClick={() => setActiveIndustry(item.industry)}
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/50 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black/70 transition-all duration-200 cursor-pointer"
+                    >
+                      SEE USE CASES
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 5h6M5 2l3 3-3 3"/>
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </BentoCard>
@@ -386,6 +405,221 @@ export default function NexusPage() {
           </div>
         </div>
       </section>
+
+      {/* ── INDUSTRY LIGHTBOX ─────────────────────────────────────────────────── */}
+      {activeIndustry && (() => {
+        const useCases: Record<string, { time: string; scenario: string; outcome: string; img: string }[]> = {
+          "Restaurants": [
+            {
+              time: "11:31 PM — Wednesday",
+              scenario: "A customer messages asking if you're still open and requests tomorrow's specials.",
+              outcome: "Nexus replies instantly with your hours, menu highlights, and reservation link — while you sleep.",
+              img: "/images/scenario-restaurants.png",
+            },
+            {
+              time: "Monday 7:45 AM",
+              scenario: "You wake up to three new Google reviews from the weekend.",
+              outcome: "Nexus has already drafted professional, on-brand responses for each one. You approve with a single reply.",
+              img: "/images/scenario-restaurants-2.png",
+            },
+            {
+              time: "Friday 2:00 PM — slow service",
+              scenario: "Foot traffic is down and your team is idle.",
+              outcome: "Nexus flags the quiet window and asks if you'd like a weekend promotion drafted and queued for your approval.",
+              img: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Barbershops & Salons": [
+            {
+              time: "Sunday 9:55 PM",
+              scenario: "A new client DMs asking about availability, pricing, and whether you take walk-ins.",
+              outcome: "Nexus answers all three questions accurately and sends your booking link — no missed opportunity.",
+              img: "/images/scenario-barbershop.png",
+            },
+            {
+              time: "Tuesday 8:00 AM",
+              scenario: "You open the day and want to know what happened overnight.",
+              outcome: "Nexus delivers a morning summary: 4 confirmations sent, 1 review responded to, 2 callbacks queued.",
+              img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Thursday afternoon",
+              scenario: "A client texts asking about your cancellation policy mid-cut.",
+              outcome: "Nexus replies with your exact policy — accurate, professional, and without interrupting you.",
+              img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Coffee Shops": [
+            {
+              time: "Saturday 7:20 AM — pre-rush",
+              scenario: "A corporate client emails asking about catering options for a Monday team meeting.",
+              outcome: "Nexus captures the enquiry, sends your catering info, and flags it for your review — before the rush hits.",
+              img: "/images/scenario-coffee.png",
+            },
+            {
+              time: "Weekday 3:00 PM",
+              scenario: "A customer asks if your cold brew contains dairy via Instagram DM.",
+              outcome: "Nexus answers using your allergen information — consistent, accurate, no staff interruption needed.",
+              img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Tuesday morning",
+              scenario: "Three reviews came in over the weekend, including one complaint.",
+              outcome: "Nexus has drafted responses for all three. The complaint response includes your preferred tone and a recovery offer ready for your approval.",
+              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Automotive": [
+            {
+              time: "6:45 PM — after closing",
+              scenario: "A prospect submits a vehicle inquiry form after hours.",
+              outcome: "Nexus sends a personalised acknowledgement, captures their preferences, and schedules a callback reminder for your morning.",
+              img: "/images/scenario-automotive.png",
+            },
+            {
+              time: "Wednesday 9:00 AM",
+              scenario: "You have 6 open service quotes that haven't had follow-up in 3 days.",
+              outcome: "Nexus flags all six and queues polite follow-up messages for your approval — one review, one tap to send.",
+              img: "https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Friday afternoon",
+              scenario: "A customer calls to ask about a specific model's towing capacity.",
+              outcome: "Your team is with a customer. Nexus handles the SMS follow-up with the exact spec from your inventory knowledge.",
+              img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Agencies": [
+            {
+              time: "Post-meeting — same day",
+              scenario: "A client strategy meeting just wrapped with 11 action items across three teams.",
+              outcome: "Nexus drafts a structured recap and action list, ready to send within minutes of the meeting ending.",
+              img: "/images/scenario-agency.png",
+            },
+            {
+              time: "End of month",
+              scenario: "Three client reports are due and your team is stretched.",
+              outcome: "Nexus pulls the agreed data points, populates your report template, and flags items needing human review.",
+              img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Monday morning",
+              scenario: "Four client threads went quiet last week with no follow-up sent.",
+              outcome: "Nexus identifies the gaps and queues personalised follow-up drafts for each account — ready for you to approve.",
+              img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Trades": [
+            {
+              time: "7:30 PM — evening",
+              scenario: "A homeowner texts asking for a quote on a full bathroom renovation.",
+              outcome: "Nexus collects job details, confirms their availability, and queues the lead for your morning callback — nothing slips.",
+              img: "/images/scenario-trades.png",
+            },
+            {
+              time: "Thursday morning",
+              scenario: "You sent out 8 quotes last week. None have been followed up.",
+              outcome: "Nexus surfaces all 8, drafts a polite check-in for each, and groups them by age for your review.",
+              img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Friday afternoon — site job",
+              scenario: "A customer calls your mobile while you're on site. You can't answer.",
+              outcome: "Nexus sends an automatic SMS: \"We're on a job right now — can we call you back within the hour?\"",
+              img: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+        }
+        const industry = useCases[activeIndustry] ?? []
+        const coverImg = {
+          "Restaurants": "/images/industry-restaurants.png",
+          "Barbershops & Salons": "/images/industry-barbershop.png",
+          "Coffee Shops": "/images/industry-coffee.png",
+          "Automotive": "/images/industry-automotive.png",
+          "Agencies": "/images/industry-agency.png",
+          "Trades": "/images/industry-trades.png",
+        }[activeIndustry]
+        return (
+          <div
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6"
+            style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+            onClick={() => setActiveIndustry(null)}
+          >
+            <div
+              className="relative w-full sm:max-w-3xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[#F5F4F0] shadow-2xl"
+              onClick={e => e.stopPropagation()}
+            >
+              {/* Cover image header */}
+              {coverImg && (
+                <div className="relative h-48 overflow-hidden rounded-t-3xl sm:rounded-t-2xl">
+                  <img src={coverImg} alt={activeIndustry} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(245,244,240,1) 0%, rgba(245,244,240,0.3) 60%, transparent 100%)" }} />
+                  <div className="absolute bottom-4 left-6">
+                    <Tag>USE CASES</Tag>
+                    <h2 className="mt-2 text-2xl font-light tracking-tight">{activeIndustry}</h2>
+                  </div>
+                </div>
+              )}
+
+              {/* Close button */}
+              <button
+                onClick={() => setActiveIndustry(null)}
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-black/[0.08] text-black/50 hover:text-black transition-colors z-10"
+                aria-label="Close"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M2 2l10 10M12 2L2 12" />
+                </svg>
+              </button>
+
+              {/* Scenario cards — side-by-side image + content, alternating left/right */}
+              <div className="p-6 space-y-4">
+                {industry.map((c, i) => {
+                  const imgLeft = i % 2 === 0
+                  return (
+                    <div key={i} className="rounded-xl border border-black/[0.07] bg-white overflow-hidden flex flex-col sm:flex-row">
+                      {/* Image — left for even, right for odd */}
+                      {imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-square border-b sm:border-b-0 sm:border-r border-black/[0.07]">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      {/* Content */}
+                      <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
+                        <span className="text-[10px] tracking-widest text-black/35 uppercase">{c.time}</span>
+                        <p className="mt-2 text-sm font-light text-black/70 leading-relaxed">{c.scenario}</p>
+                        <div className="mt-3 flex gap-2 items-start">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500 mt-0.5 shrink-0">
+                            <path d="M2 7l3.5 3.5L12 3"/>
+                          </svg>
+                          <p className="text-sm text-black/60 leading-relaxed">{c.outcome}</p>
+                        </div>
+                      </div>
+                      {/* Image — right for odd */}
+                      {!imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-square border-t sm:border-t-0 sm:border-l border-black/[0.07] order-first sm:order-last">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Footer CTA */}
+              <div className="px-6 pb-8 pt-2">
+                <a
+                  href="#contact"
+                  onClick={() => setActiveIndustry(null)}
+                  className="block w-full py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center"
+                >
+                  BOOK A CONSULTATION
+                </a>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
       <section id="how-it-works" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
