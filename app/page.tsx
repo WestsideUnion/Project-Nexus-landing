@@ -310,52 +310,76 @@ export default function NexusPage() {
                 industry: "Restaurants",
                 problem: "Keep up with inquiries, follow-ups, reviews, and daily operations.",
                 ready: ["Menu & hours knowledge", "Inquiry triage", "Review response drafts", "Daily owner summary", "Promotion drafts"],
+                img: "/images/industry-restaurants.png",
                 delay: 0,
               },
               {
                 industry: "Barbershops & Salons",
                 problem: "Reduce missed messages and help protect the appointment book.",
                 ready: ["Booking system handoff", "Appointment confirmation", "Review response drafts", "Hiring & complaint intake", "Daily summary"],
+                img: "/images/industry-barbershop.png",
                 delay: 80,
               },
               {
                 industry: "Coffee Shops",
                 problem: "Stay responsive while your team focuses on service.",
                 ready: ["Hours, menu & allergen knowledge", "Catering intake", "Review response drafts", "Shift task templates", "Slow-period suggestions"],
+                img: "/images/industry-coffee.png",
                 delay: 160,
               },
               {
                 industry: "Automotive",
                 problem: "Follow up with leads and service requests consistently.",
                 ready: ["Sales & service inquiry triage", "Callback capture", "Inventory FAQ knowledge", "Follow-up reminders", "Manager summaries"],
+                img: "/images/industry-automotive.png",
                 delay: 0,
               },
               {
                 industry: "Agencies",
                 problem: "Reduce reporting, follow-up, and administrative work.",
                 ready: ["Client onboarding checklists", "Meeting & action summaries", "Draft reports", "Follow-up tracking", "Pipeline summary"],
+                img: "/images/industry-agency.png",
                 delay: 80,
               },
               {
                 industry: "Trades",
                 problem: "Capture inquiries and keep quotes and callbacks moving.",
                 ready: ["Inquiry capture", "Job intake questions", "Quote follow-up", "Scheduling handoff", "Daily callback summary"],
+                img: "/images/industry-trades.png",
                 delay: 160,
               },
             ].map((item) => (
-              <BentoCard key={item.industry} className="p-8 flex flex-col" delay={item.delay}>
-                <h3 className="text-xl font-light mb-3">{item.industry}</h3>
-                <p className="text-sm text-black/45 leading-relaxed mb-6">{item.problem}</p>
-                <ul className="space-y-2 flex-1">
-                  {item.ready.map(r => (
-                    <li key={r} className="flex items-center gap-3 text-xs text-black/50">
-                      <div className="w-1 h-1 rounded-full bg-black/25 shrink-0" />
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6 pt-6 border-t border-black/[0.05]">
-                  <Tag>READY QUICKLY</Tag>
+              <BentoCard key={item.industry} className="flex flex-col overflow-hidden" delay={item.delay}>
+                {/* Cover photo */}
+                <div className="relative h-48 shrink-0 overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.industry}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  {/* Fade to white at bottom so it blends into card body */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.6) 75%, rgb(255,255,255) 100%)",
+                    }}
+                  />
+                </div>
+                {/* Card body */}
+                <div className="p-8 pt-4 flex flex-col flex-1">
+                  <h3 className="text-xl font-light mb-3">{item.industry}</h3>
+                  <p className="text-sm text-black/45 leading-relaxed mb-6">{item.problem}</p>
+                  <ul className="space-y-2 flex-1">
+                    {item.ready.map(r => (
+                      <li key={r} className="flex items-center gap-3 text-xs text-black/50">
+                        <div className="w-1 h-1 rounded-full bg-black/25 shrink-0" />
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6 pt-6 border-t border-black/[0.05]">
+                    <Tag>READY QUICKLY</Tag>
+                  </div>
                 </div>
               </BentoCard>
             ))}
@@ -376,16 +400,105 @@ export default function NexusPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-5 gap-3" onMouseMove={handleMouse}>
             {[
-              { n: "01", title: "Tell us how your business operates.", desc: "We learn your routines, channels, and the work that keeps following you home.", delay: 0 },
-              { n: "02", title: "Westside Union configures your assistant.", desc: "We handle setup, connections, knowledge preparation, and permission rules.", delay: 80 },
-              { n: "03", title: "Use Nexus in a familiar channel.", desc: "WhatsApp, SMS, or email. No new app to learn. No onboarding certification.", delay: 140 },
-              { n: "04", title: "Receive tasks, summaries, and reminders.", desc: "Nexus keeps you informed and prepares actions for your approval.", delay: 200 },
-              { n: "05", title: "Expand when you're ready.", desc: "Add integrations, additional workflows, and industry tools as your needs grow.", delay: 260 },
+              {
+                n: "01",
+                title: "Tell us how your business operates.",
+                desc: "We learn your routines, channels, and the work that keeps following you home.",
+                delay: 0,
+                icon: (
+                  /* Conversation / discovery — two speech bubbles */
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                    <path d="M10 14a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H24l-8 6v-6h-2a4 4 0 0 1-4-4V14z"/>
+                    <path d="M34 30v4a4 4 0 0 0 4 4h2v6l8-6h2a4 4 0 0 0 4-4V22a4 4 0 0 0-4-4h-6" opacity="0.5"/>
+                    <line x1="18" y1="20" x2="30" y2="20" opacity="0.6"/>
+                    <line x1="18" y1="25" x2="26" y2="25" opacity="0.6"/>
+                  </svg>
+                ),
+              },
+              {
+                n: "02",
+                title: "Westside Union configures your assistant.",
+                desc: "We handle setup, connections, knowledge preparation, and permission rules.",
+                delay: 80,
+                icon: (
+                  /* Wrench + settings cog — managed configuration */
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                    <circle cx="28" cy="28" r="10"/>
+                    <circle cx="28" cy="28" r="4"/>
+                    <line x1="28" y1="8" x2="28" y2="14"/>
+                    <line x1="28" y1="42" x2="28" y2="48"/>
+                    <line x1="8" y1="28" x2="14" y2="28"/>
+                    <line x1="42" y1="28" x2="48" y2="28"/>
+                    <line x1="14.1" y1="14.1" x2="18.3" y2="18.3"/>
+                    <line x1="37.7" y1="37.7" x2="41.9" y2="41.9"/>
+                    <line x1="41.9" y1="14.1" x2="37.7" y2="18.3"/>
+                    <line x1="18.3" y1="37.7" x2="14.1" y2="41.9"/>
+                  </svg>
+                ),
+              },
+              {
+                n: "03",
+                title: "Use Nexus in a familiar channel.",
+                desc: "WhatsApp, SMS, or email. No new app to learn. No onboarding certification.",
+                delay: 140,
+                icon: (
+                  /* Mobile phone with message — familiar channel */
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                    <rect x="16" y="6" width="24" height="40" rx="4"/>
+                    <line x1="24" y1="11" x2="32" y2="11" strokeWidth="2" opacity="0.4"/>
+                    <circle cx="28" cy="42" r="1.5" fill="currentColor" stroke="none" opacity="0.5"/>
+                    <rect x="20" y="18" width="16" height="12" rx="2" opacity="0.5"/>
+                    <line x1="23" y1="22" x2="33" y2="22" opacity="0.7"/>
+                    <line x1="23" y1="25.5" x2="30" y2="25.5" opacity="0.7"/>
+                  </svg>
+                ),
+              },
+              {
+                n: "04",
+                title: "Receive tasks, summaries, and reminders.",
+                desc: "Nexus keeps you informed and prepares actions for your approval.",
+                delay: 200,
+                icon: (
+                  /* Bell with checkmark — notifications + approval */
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                    <path d="M28 8a2 2 0 0 1 2 2v1.2A14 14 0 0 1 42 24v8l4 4H10l4-4v-8A14 14 0 0 1 26 11.2V10a2 2 0 0 1 2-2z"/>
+                    <path d="M24 36a4 4 0 0 0 8 0"/>
+                    <circle cx="40" cy="16" r="7" className="fill-[#F5F4F0]" strokeWidth="1.5"/>
+                    <polyline points="37,16 39.5,18.5 44,13.5" opacity="0.8"/>
+                  </svg>
+                ),
+              },
+              {
+                n: "05",
+                title: "Expand when you're ready.",
+                desc: "Add integrations, additional workflows, and industry tools as your needs grow.",
+                delay: 260,
+                icon: (
+                  /* Branching arrows / network — expansion */
+                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                    <circle cx="28" cy="28" r="5"/>
+                    <circle cx="10" cy="14" r="4" opacity="0.6"/>
+                    <circle cx="46" cy="14" r="4" opacity="0.6"/>
+                    <circle cx="10" cy="42" r="4" opacity="0.6"/>
+                    <circle cx="46" cy="42" r="4" opacity="0.6"/>
+                    <line x1="23.5" y1="24.5" x2="14" y2="17.5"/>
+                    <line x1="32.5" y1="24.5" x2="42" y2="17.5"/>
+                    <line x1="23.5" y1="31.5" x2="14" y2="38.5"/>
+                    <line x1="32.5" y1="31.5" x2="42" y2="38.5"/>
+                  </svg>
+                ),
+              },
             ].map((step) => (
-              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col min-h-[280px]" delay={step.delay}>
-                <div className="relative z-10 p-7">
+              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col min-h-[300px]" delay={step.delay}>
+                {/* Icon — upper centre */}
+                <div className="flex justify-center pt-10 pb-2">
+                  {step.icon}
+                </div>
+                {/* Step number */}
+                <div className="relative z-10 px-7 pt-4">
                   <span className="font-pixel text-[11px] text-black/20 tracking-widest block">{step.n}</span>
                 </div>
+                {/* Text — pushed to bottom */}
                 <div className="relative z-10 px-7 pb-7 mt-auto">
                   <h3 className="text-base font-light mb-3 leading-snug">{step.title}</h3>
                   <p className="text-sm text-black/45 leading-relaxed">{step.desc}</p>
