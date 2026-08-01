@@ -6,7 +6,10 @@ const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? "nexus@westside-union.com"
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.RESEND_API_KEY?.trim()
+    let apiKey = process.env.RESEND_API_KEY?.trim() || ""
+    // Strip surrounding quotes if accidentally included in Vercel UI
+    apiKey = apiKey.replace(/^["']|["']$/g, "").trim()
+
     if (!apiKey || apiKey === "re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") {
       console.error("[Resend] Missing or unconfigured RESEND_API_KEY")
       return NextResponse.json(
