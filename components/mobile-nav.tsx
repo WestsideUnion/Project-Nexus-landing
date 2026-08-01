@@ -3,10 +3,11 @@
 import { useState } from "react"
 
 const NAV_LINKS = [
-  { label: "How It Works",  href: "#how-it-works" },
-  { label: "Industries",    href: "#industries" },
-  { label: "Pricing",       href: "#pricing" },
-  { label: "FAQ",           href: "#faq" },
+  { label: "How It Works",       href: "#how-it-works" },
+  { label: "Industries",         href: "#industries" },
+  { label: "For Founders", href: "#start-your-business" },
+  { label: "Pricing",            href: "#pricing" },
+  { label: "FAQ",                href: "#faq" },
 ]
 
 const NAV_STYLE = {
@@ -51,7 +52,7 @@ export function MobileNav() {
               className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide hidden md:block"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
             >
-              BOOK A CONSULTATION
+              BOOK A NEXUS FIT SESSION
             </a>
 
             {/* Burger — mobile only */}
@@ -113,7 +114,7 @@ export function MobileNav() {
                 className="block w-full text-center text-sm px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
-                BOOK A CONSULTATION
+                BOOK A NEXUS FIT SESSION
               </a>
             </div>
           </div>

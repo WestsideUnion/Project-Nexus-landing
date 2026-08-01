@@ -1,0 +1,95 @@
+import { Resend } from "resend"
+import { NextRequest, NextResponse } from "next/server"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+// Destination inbox — change to your team's address
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "hello@projectnexus.ca"
+// Sender address — must be a verified Resend domain
+const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev"
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json()
+
+    const {
+      name,
+      business,
+      email,
+      phone,
+      city,
+      industry,
+      locations,
+      channel,
+      problem,
+      tools,
+      deployment,
+    } = body
+
+    // Basic server-side validation
+    if (!name || !email || !business) {
+      return NextResponse.json(
+        { error: "Name, email, and business name are required." },
+        { status: 400 }
+      )
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email address." }, { status: 400 })
+    }
+
+    const html = `
+      <table style="font-family:system-ui,sans-serif;font-size:14px;color:#111;max-width:600px;width:100%;border-collapse:collapse;">
+        <tr><td colspan="2" style="padding:20px 0 8px;border-bottom:1px solid #e5e5e5;font-size:18px;font-weight:300;">
+          New Nexus Fit Session Request
+        </td></tr>
+        ${row("Name", name)}
+        ${row("Business", business)}
+        ${row("Email", email)}
+        ${row("Phone", phone || "—")}
+        ${row("City", city || "—")}
+        ${row("Industry", industry || "—")}
+        ${row("Locations", locations || "—")}
+        ${row("Primary channel", channel || "—")}
+        ${row("Deployment preference", deployment || "—")}
+        ${row("Problem / goal", problem || "—", true)}
+        ${row("Current tools", tools || "—", true)}
+        <tr><td colspan="2" style="padding:16px 0 0;color:#999;font-size:11px;">
+          Submitted via projectnexus.ca contact form
+        </td></tr>
+      </table>
+    `
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: TO_EMAIL,
+      replyTo: email,
+      subject: `Nexus Fit Session — ${name} · ${business}`,
+      html,
+    })
+
+    if (error) {
+      console.error("[Resend] send error:", error)
+      return NextResponse.json({ error: "Failed to send. Please try again." }, { status: 500 })
+    }
+
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error("[contact/route] unexpected error:", err)
+    return NextResponse.json({ error: "Unexpected server error." }, { status: 500 })
+  }
+}
+
+function row(label: string, value: string, multiline = false) {
+  return `
+    <tr>
+      <td style="padding:10px 16px 10px 0;vertical-align:top;color:#999;white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.05em;">
+        ${label}
+      </td>
+      <td style="padding:10px 0;vertical-align:top;${multiline ? "white-space:pre-wrap;" : ""}">
+        ${value}
+      </td>
+    </tr>
+  `
+}

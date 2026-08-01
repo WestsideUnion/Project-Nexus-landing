@@ -9,9 +9,16 @@ next.user-config.*
 
 # Environment variables
 .env*.local
+.env.local
 
 # Common ignores
 node_modules
 .next/
 .DS_Store
 .vercel
+tsconfig.tsbuildinfo
+
+# Internal strategy, specifications, and documentation
+*.md
+Project_Nexus_*.md
+Antigravity_*.md

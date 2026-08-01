@@ -1,9 +1,78 @@
 "use client"
 
-import React, { useRef, useEffect, useState, useCallback } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { PixelIcon } from "@/components/pixel-icon"
 import { RevealText } from "@/components/reveal-text"
 import { MobileNav } from "@/components/mobile-nav"
+
+// ─── Centralized content data ────────────────────────────────────────────────
+
+// Toronto wage benchmarks — Government of Canada Job Bank (verified July 2026)
+const WAGE_TABLE = [
+  {
+    work: "Routine questions and booking handoff",
+    benchmark: "Receptionist — $20.00/hr",
+    hours: "20",
+    value: "$400",
+    help: "Answers approved FAQs and routes requests",
+    total: false,
+  },
+  {
+    work: "Follow-ups, reminders, and coordination",
+    benchmark: "Administrative — $26.50/hr",
+    hours: "20",
+    value: "$530",
+    help: "Tracks work and reports unfinished items",
+    total: false,
+  },
+  {
+    work: "Weekly summaries and basic reporting",
+    benchmark: "Administrative — $26.50/hr",
+    hours: "12",
+    value: "$318",
+    help: "Prepares recurring summaries",
+    total: false,
+  },
+  {
+    work: "Review responses and promotional drafts",
+    benchmark: "Social media — $37.50/hr",
+    hours: "8",
+    value: "$300",
+    help: "Drafts content for owner approval",
+    total: false,
+  },
+  {
+    work: "Checklists and owner notifications",
+    benchmark: "Administrative — $26.50/hr",
+    hours: "8",
+    value: "$212",
+    help: "Runs scheduled checks and alerts",
+    total: false,
+  },
+  {
+    work: "Illustrative total",
+    benchmark: "",
+    hours: "68",
+    value: "$1,760/mo",
+    help: "Approved routines can operate concurrently",
+    total: true,
+  },
+]
+
+const HOURLY_RATES: Record<string, number> = {
+  receptionist: 20.0,
+  administrative: 26.5,
+  marketing: 37.5,
+}
+
+const PLAN_DATA: Record<string, { name: string; monthly: number; setup: number; setupLabel: string }> = {
+  cloud: { name: "Nexus Cloud", monthly: 299, setup: 500, setupLabel: "From CAD $500" },
+  managed: { name: "Nexus Managed", monthly: 499, setup: 1000, setupLabel: "From CAD $1,000" },
+  edge: { name: "Nexus Edge", monthly: 599, setup: 0, setupLabel: "Quoted after discovery" },
+}
+
+// USD exchange rate — approximate, for illustrative display only. Rates vary.
+const USD_RATE = 0.73
 
 // ─── Intersection Observer hook ──────────────────────────────────────────────
 function useInView(threshold = 0.15) {
@@ -72,13 +141,38 @@ function StatusPill({ status }: { status: "available" | "configured" | "planned"
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function NexusPage() {
-  const [formState, setFormState] = useState<"idle" | "submitted">("idle")
+  const [formState, setFormState] = useState<"idle" | "loading" | "submitted" | "error">("idle")
+  const [formError, setFormError] = useState<string | null>(null)
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
+  const [currency, setCurrency] = useState<"CAD" | "USD">("CAD")
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [form, setForm] = useState({
-    name: "", business: "", email: "", phone: "", industry: "",
+    name: "", business: "", email: "", phone: "", city: "", industry: "",
     locations: "", channel: "", problem: "", tools: "", deployment: "", consent: false,
   })
+
+  // ── ROI calculator state ──
+  const [roi, setRoi] = useState({
+    hoursPerWeek: 10,
+    hourlyRole: "administrative" as "receptionist" | "administrative" | "marketing" | "custom",
+    customRate: 26.5,
+    offsetPercent: 75,
+    plan: "managed" as "cloud" | "managed" | "edge",
+    setupMonths: 12,
+    recoveredOpportunities: 0,
+    contributionValue: 0,
+    variableCosts: 0,
+  })
+
+  // ── ROI derived calculations ──
+  const roiHourlyRate = roi.hourlyRole === "custom" ? roi.customRate : (HOURLY_RATES[roi.hourlyRole] ?? 26.5)
+  const roiMonthlyWorkValue = roi.hoursPerWeek * 52 / 12 * roiHourlyRate
+  const roiOffsetValue = roiMonthlyWorkValue * (roi.offsetPercent / 100)
+  const roiPlanData = PLAN_DATA[roi.plan]
+  const roiSetupAmortized = roiPlanData.setup > 0 ? roiPlanData.setup / roi.setupMonths : 0
+  const roiNexusCost = roiPlanData.monthly + roiSetupAmortized + roi.variableCosts
+  const roiRecoveredContribution = roi.recoveredOpportunities * roi.contributionValue
+  const roiDiff = roiOffsetValue + roiRecoveredContribution - roiNexusCost
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget
@@ -95,12 +189,37 @@ export default function NexusPage() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleRoiChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target
+    setRoi(prev => ({
+      ...prev,
+      [name]: type === "range" || type === "number" ? Number(value)
+        : name === "setupMonths" ? Number(value)
+        : value,
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Phase 1: client-side state only. Server-side validation + anti-spam is Phase 1B.
-    if (form.consent && form.email && form.name) {
-      console.log("Nexus consultation request:", form)
-      setFormState("submitted")
+    if (!form.consent || !form.email || !form.name) return
+    setFormState("loading")
+    setFormError(null)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setFormError(data.error ?? "Something went wrong. Please try again.")
+        setFormState("error")
+      } else {
+        setFormState("submitted")
+      }
+    } catch {
+      setFormError("Network error — please check your connection and try again.")
+      setFormState("error")
     }
   }
 
@@ -181,7 +300,7 @@ export default function NexusPage() {
               href="#contact"
               className="px-6 py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest"
             >
-              BOOK A CONSULTATION
+              BOOK A NEXUS FIT SESSION
             </a>
             <a
               href="#how-it-works"
@@ -192,11 +311,12 @@ export default function NexusPage() {
           </div>
 
           {/* Trust line */}
-          <div className="flex gap-8 sm:gap-12">
+          <div className="flex flex-wrap gap-8 sm:gap-10">
             {[
               { value: "No app to learn", label: "Works in WhatsApp, SMS & email" },
               { value: "Always on", label: "After hours, weekends, overnight" },
               { value: "Managed by us", label: "Westside Union handles setup" },
+              { value: "Every agent. One Nexus.", label: "Neutral control plane" },
             ].map((stat, i) => (
               <div key={i}>
                 <div className="text-sm text-[#111] font-light tracking-tight" style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}>{stat.value}</div>
@@ -207,15 +327,38 @@ export default function NexusPage() {
         </div>
       </section>
 
+      {/* ── NEUTRAL POSITIONING BAND ────────────────────────────────────────── */}
+      <section className="py-16 px-6 md:px-12 lg:px-20 border-t border-white/10 bg-[#111] text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-20">
+            <div className="flex-1">
+              <p
+                className="text-2xl md:text-3xl font-light leading-snug tracking-tight"
+                style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
+              >
+                Every company will use multiple AI agents.{" "}
+                <span className="text-white/50">Nexus makes them work as one system — without locking you into any one agent.</span>
+              </p>
+            </div>
+            <div className="flex-shrink-0 max-w-xs">
+              <p className="text-sm text-white/40 leading-relaxed">
+                A Westside Union product. The governance layer that keeps your memory, permissions, workflows, and audit history yours — regardless of which agent or model performs the work.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PROBLEM → OUTCOME BAND ─────────────────────────────────────────── */}
       <section className="py-20 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" onMouseMove={handleMouse}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" onMouseMove={handleMouse}>
             {[
               { from: "Missed messages", to: "Timely replies", delay: 0 },
               { from: "Forgotten follow-ups", to: "Tracked tasks", delay: 80 },
               { from: "Scattered information", to: "One knowledgeable assistant", delay: 160 },
               { from: "Slow days and unusual activity", to: "Proactive suggestions", delay: 240 },
+              { from: "Fear of AI acting without you", to: "Transparent logs and safe fallback", delay: 320 },
             ].map((item) => (
               <BentoCard key={item.from} className="p-7 flex flex-col gap-4" delay={item.delay}>
                 <div className="text-sm text-black/35 leading-snug line-through decoration-black/20">{item.from}</div>
@@ -352,8 +495,8 @@ export default function NexusPage() {
                 delay: 160,
               },
               {
-                industry: "Automotive",
-                problem: "Follow up with leads and service requests consistently.",
+                industry: "Dealerships",
+                problem: "Follow up with every qualified lead and service request consistently.",
                 ready: ["Sales & service inquiry triage", "Callback capture", "Inventory FAQ knowledge", "Follow-up reminders", "Manager summaries"],
                 img: "/images/industry-automotive.png",
                 delay: 0,
@@ -372,6 +515,14 @@ export default function NexusPage() {
                 img: "/images/industry-trades.png",
                 delay: 160,
               },
+              {
+                industry: "New Founders",
+                problem: "Launch a Canadian business correctly — with organized decisions, professional referrals, and an operating plan from day one.",
+                ready: ["Discovery and planning", "Registration coordination", "Professional referrals", "Launch checklist", "90-day operating plan"],
+                img: "/images/industry-founders.png",
+                delay: 240,
+                isFounderCard: true,
+              },
             ].map((item) => (
               <BentoCard key={item.industry} className="flex flex-col overflow-hidden" delay={item.delay}>
                 {/* Cover photo */}
@@ -380,6 +531,7 @@ export default function NexusPage() {
                     src={item.img}
                     alt={item.industry}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none" }}
                   />
                   {/* Fade to white at bottom so it blends into card body */}
                   <div
@@ -388,6 +540,11 @@ export default function NexusPage() {
                       background: "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.6) 75%, rgb(255,255,255) 100%)",
                     }}
                   />
+                  {"isFounderCard" in item && item.isFounderCard && (
+                    <div className="absolute top-3 left-3">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] tracking-widest bg-[#111] text-white">CANADA</span>
+                    </div>
+                  )}
                 </div>
                 {/* Card body */}
                 <div className="p-8 pt-4 flex flex-col flex-1">
@@ -402,15 +559,27 @@ export default function NexusPage() {
                     ))}
                   </ul>
                   <div className="mt-6 pt-6 border-t border-black/[0.05]">
-                    <button
-                      onClick={() => setActiveIndustry(item.industry)}
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/50 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black/70 transition-all duration-200 cursor-pointer"
-                    >
-                      SEE USE CASES
-                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M2 5h6M5 2l3 3-3 3"/>
-                      </svg>
-                    </button>
+                    {"isFounderCard" in item && item.isFounderCard ? (
+                      <a
+                        href="#start-your-business"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/50 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black/70 transition-all duration-200"
+                      >
+                        EXPLORE THIS PATH
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 5h6M5 2l3 3-3 3"/>
+                        </svg>
+                      </a>
+                    ) : (
+                      <button
+                        onClick={() => setActiveIndustry(item.industry)}
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/50 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black/70 transition-all duration-200 cursor-pointer"
+                      >
+                        SEE USE CASES
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 5h6M5 2l3 3-3 3"/>
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 </div>
               </BentoCard>
@@ -482,7 +651,7 @@ export default function NexusPage() {
               img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
             },
           ],
-          "Automotive": [
+          "Dealerships": [
             {
               time: "6:45 PM — after closing",
               scenario: "A prospect submits a vehicle inquiry form after hours.",
@@ -548,7 +717,7 @@ export default function NexusPage() {
           "Restaurants": "/images/industry-restaurants.png",
           "Barbershops & Salons": "/images/industry-barbershop.png",
           "Coffee Shops": "/images/industry-coffee.png",
-          "Automotive": "/images/industry-automotive.png",
+          "Dealerships": "/images/industry-automotive.png",
           "Agencies": "/images/industry-agency.png",
           "Trades": "/images/industry-trades.png",
         }[activeIndustry]
@@ -626,7 +795,7 @@ export default function NexusPage() {
                   onClick={() => setActiveIndustry(null)}
                   className="block w-full py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center"
                 >
-                  BOOK A CONSULTATION
+                  BOOK A NEXUS FIT SESSION
                 </a>
               </div>
             </div>
@@ -888,10 +1057,13 @@ export default function NexusPage() {
 
               <div className="space-y-4">
                 {[
-                  { label: "Owner-approved permissions", desc: "Define what Nexus can and cannot do on your behalf" },
+                  { label: "Your business owns its data", desc: "Business data, conversations, memories, and audit records belong to you — and can be exported" },
+                  { label: "Approved tools and scoped permissions", desc: "Define what Nexus can and cannot do on your behalf" },
                   { label: "Human approval for sensitive actions", desc: "High-risk or public-posting actions pause for your sign-off" },
-                  { label: "Activity history", desc: "Every interaction logged and available to review" },
+                  { label: "Transparent task and audit history", desc: "Every interaction logged and available to review" },
                   { label: "Monthly usage limits and alerts", desc: "No surprise AI bills. Clear limits and notifications" },
+                  { label: "Tested fallback and safe failure", desc: "If a route fails, Nexus falls back safely — never silently or by broadening permissions" },
+                  { label: "Replaceable agents, exportable memory", desc: "Agent portability is a product requirement. You are never locked into one runtime" },
                   { label: "Customer data separation", desc: "Your business data is isolated and not shared between clients" },
                   { label: "Managed configuration", desc: "Models, routing, and technical settings managed by Westside Union" },
                 ].map((item) => (
@@ -915,6 +1087,7 @@ export default function NexusPage() {
                   { time: "09:31", action: "Approval requested — review response", status: "pending" },
                   { time: "09:20", action: "Customer inquiry triaged", status: "done" },
                   { time: "09:12", action: "Follow-up reminder sent", status: "done" },
+                  { time: "08:52", action: "Fallback invoked — secondary route used safely", status: "done" },
                   { time: "08:07", action: "Slow-period insight generated", status: "done" },
                 ].map((log, i) => (
                   <div
@@ -927,6 +1100,9 @@ export default function NexusPage() {
                   </div>
                 ))}
               </div>
+              <p className="mt-4 text-[10px] text-black/25 leading-relaxed">
+                Demonstration log. Real activity history is private to each customer and accessible only to authorized users.
+              </p>
             </BentoCard>
           </div>
         </div>
@@ -993,6 +1169,386 @@ export default function NexusPage() {
         </div>
       </section>
 
+      {/* ── START YOUR BUSINESS — CANADA ────────────────────────────────────── */}
+      <section id="start-your-business" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <PixelIcon type="workflow" size={40} />
+              <div className="mt-4"><Tag>START YOUR BUSINESS — CANADA</Tag></div>
+              <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
+                {"Launch your\nbusiness the\norganized way."}
+              </RevealText>
+              <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-md">
+                Starting a business in Canada? Nexus helps you organize the decisions, registration steps, professional handoffs, launch tools, and first 90 days — then stays available as your operating assistant.
+              </p>
+              <div className="mt-5 p-4 rounded-xl bg-black/[0.03] border border-black/[0.06]">
+                <p className="text-xs text-black/45 leading-relaxed">
+                  <strong className="text-black/60 font-medium">Professional advice boundary:</strong> Nexus provides education, checklists, coordination, and professional referrals. It does not provide legal, tax, accounting, immigration, or regulated filing advice. All professional decisions are referred to qualified providers. Government fees and third-party professional fees are not included unless explicitly stated in a proposal.
+                </p>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="#contact"
+                  className="px-6 py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest"
+                >
+                  EXPLORE START YOUR BUSINESS
+                </a>
+                <a
+                  href="https://www.canada.ca/en/services/business/start.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 border border-black/15 text-black/60 text-[11px] rounded-xl hover:border-black/25 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest"
+                >
+                  GOVT. OF CANADA — STARTING A BUSINESS ↗
+                </a>
+              </div>
+            </div>
+            <div className="space-y-3" onMouseMove={handleMouse}>
+              {[
+                { label: "Founder discovery and planning", desc: "Map your province, industry, customer model, revenue structure, risk, and launch timing." },
+                { label: "Education and decision worksheets", desc: "Common business structures explained — with legal and tax decisions referred to qualified professionals." },
+                { label: "Registration coordination checklist", desc: "Step-by-step checklist using current official Canadian government sources." },
+                { label: "Business setup checklist", desc: "Business name, domain, banking, payments, bookkeeping, insurance, licence, privacy, and operating tools." },
+                { label: "Industry launch blueprint", desc: "First customer-intake workflow and a 30/60/90-day operating plan." },
+                { label: "Founder task board", desc: "Reminders, research drafting, and initial Nexus assistant configuration." },
+                { label: "Professional referrals", desc: "Warm handoffs to accountants, lawyers, insurers, banks, and government programs." },
+              ].map((item, i) => (
+                <BentoCard key={item.label} className="p-5" delay={i * 50}>
+                  <h3 className="text-sm font-light mb-1">{item.label}</h3>
+                  <p className="text-xs text-black/40 leading-relaxed">{item.desc}</p>
+                </BentoCard>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── NEXUS LIVE — OPERATIONAL PREVIEW ───────────────────────────────── */}
+      <section id="nexus-live" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-12">
+            <PixelIcon type="agents" size={40} />
+            <div className="mt-4"><Tag>NEXUS LIVE — CONCEPT PREVIEW</Tag></div>
+            <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
+              {"See the work.\nNot just the promise."}
+            </RevealText>
+            <p className="mt-4 text-sm text-black/45 leading-relaxed max-w-lg">
+              A privacy-safe operational view showing what Nexus is doing — tasks completed, human approvals, fallbacks, and outcomes. No customer data, no private prompts, no invented activity.
+            </p>
+            <p className="mt-2 text-xs text-black/30">
+              ⚑ Illustrative system preview. These figures represent a demonstration scenario and are not live data or a guarantee of results.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3" onMouseMove={handleMouse}>
+            {[
+              { label: "Tasks completed", value: "247", sub: "this month (demo)" },
+              { label: "Human approvals", value: "18", sub: "owner reviewed" },
+              { label: "Fallbacks invoked", value: "3", sub: "safely rerouted" },
+              { label: "Local / cloud mix", value: "61 / 39%", sub: "workload split" },
+              { label: "Capacity value est.", value: "~$620", sub: "illustrative" },
+              { label: "Opportunities handled", value: "12", sub: "demonstration" },
+            ].map((metric, i) => (
+              <BentoCard key={metric.label} className="p-5 flex flex-col" delay={i * 40}>
+                <div className="text-2xl font-light text-[#111] mb-1">{metric.value}</div>
+                <div className="text-[11px] text-black/55 font-light leading-snug">{metric.label}</div>
+                <div className="text-[10px] text-black/30 mt-1">{metric.sub}</div>
+              </BentoCard>
+            ))}
+          </div>
+
+          <div className="mt-6 p-5 rounded-2xl border border-black/[0.06] bg-black/[0.02]">
+            <div className="flex flex-wrap gap-5 text-xs text-black/40">
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block shrink-0" />
+                Tasks completed: actions confirmed within approved policy
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block shrink-0" />
+                Human approvals: actions paused for owner review before sending
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 inline-block shrink-0" />
+                Fallbacks: primary route unavailable; secondary route used safely without broadening permissions
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-black/20 inline-block shrink-0" />
+                Capacity value: illustrative wage-comparison figure using disclosed method
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── ROI COMPARISON & CALCULATOR ─────────────────────────────────────── */}
+      <section id="roi" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-16">
+            <PixelIcon type="pricing" size={40} />
+            <div className="mt-4"><Tag>CAPACITY COMPARISON</Tag></div>
+            <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
+              {"What is repetitive work\ncosting your business?"}
+            </RevealText>
+            <p className="mt-4 text-sm text-black/45 leading-relaxed max-w-lg">
+              Nexus is not a replacement for human judgment or customer care. It helps absorb repetitive coordination, drafting, monitoring, and follow-up work that consumes owner and staff time.
+            </p>
+          </div>
+
+          {/* Toronto wage benchmarks table */}
+          <div className="mb-12 overflow-x-auto">
+            <div className="text-xs text-black/35 tracking-widest uppercase mb-4">
+              Toronto wage benchmarks — Government of Canada Job Bank (median wages, 2026)
+            </div>
+            <table className="w-full text-sm min-w-[640px]">
+              <thead>
+                <tr className="border-b border-black/[0.08]">
+                  <th className="text-left py-3 pr-6 text-xs tracking-widest text-black/35 font-normal">Repetitive work</th>
+                  <th className="text-right py-3 pr-6 text-xs tracking-widest text-black/35 font-normal">Benchmark</th>
+                  <th className="text-right py-3 pr-6 text-xs tracking-widest text-black/35 font-normal">Hrs/mo</th>
+                  <th className="text-right py-3 pr-6 text-xs tracking-widest text-black/35 font-normal">Wage-only value</th>
+                  <th className="text-left py-3 text-xs tracking-widest text-black/35 font-normal">How Nexus helps</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-black/[0.04]">
+                {WAGE_TABLE.map((row, i) => (
+                  <tr key={i} className={row.total ? "border-t-2 border-black/[0.08]" : ""}>
+                    <td className={`py-3 pr-6 ${row.total ? "font-light text-black/70" : "text-black/55"}`}>{row.work}</td>
+                    <td className={`py-3 pr-6 text-right whitespace-nowrap ${row.total ? "text-black/40" : "text-black/35"}`}>{row.benchmark}</td>
+                    <td className={`py-3 pr-6 text-right tabular-nums ${row.total ? "text-black/70 font-light" : "text-black/40"}`}>{row.hours}</td>
+                    <td className={`py-3 pr-6 text-right whitespace-nowrap tabular-nums ${row.total ? "text-black/70 font-light" : "text-black/55"}`}>{row.value}</td>
+                    <td className="py-3 text-black/35 text-xs">{row.help}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="mt-3 text-xs text-black/30 leading-relaxed">
+              Base wage benchmarks only. Actual employer cost may include CPP, EI, vacation, benefits, training, equipment, and supervision.{" "}
+              <a href="https://www.jobbank.gc.ca/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black/50 transition-colors">
+                Source: Government of Canada Job Bank ↗
+              </a>
+            </p>
+          </div>
+
+          {/* Conservative scenario + calculator intro */}
+          <div className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-3" onMouseMove={handleMouse}>
+            <BentoCard className="p-8" delay={0}>
+              <div className="text-xs text-black/35 tracking-widest uppercase mb-6">Illustrative conservative scenario</div>
+              <div className="space-y-3">
+                {[
+                  { label: "$1,760 × 75% estimated workload offset", value: "$1,320" },
+                  { label: "Nexus Managed plan", value: "−$499" },
+                  { label: "$1,000 setup ÷ 12 months", value: "−$83" },
+                ].map((row, i) => (
+                  <div key={i} className="flex items-center justify-between border-b border-black/[0.05] pb-3">
+                    <span className="text-sm text-black/55">{row.label}</span>
+                    <span className="text-sm font-light text-[#111] tabular-nums">{row.value}</span>
+                  </div>
+                ))}
+                <div className="flex items-center justify-between pt-2">
+                  <span className="text-sm text-black/70">Illustrative capacity difference</span>
+                  <span className="text-xl font-light text-[#111] tabular-nums">~$738/mo</span>
+                </div>
+              </div>
+              <p className="mt-6 text-xs text-black/30 leading-relaxed">
+                This is an illustrative workload comparison, not a guaranteed saving. It assumes Nexus successfully offsets the selected workload. It excludes AI overages, messaging, voice, paid integrations, and human review or work Nexus cannot perform.
+              </p>
+            </BentoCard>
+
+            <BentoCard className="p-8 flex flex-col justify-between" delay={80}>
+              <div>
+                <div className="text-xs text-black/35 tracking-widest uppercase mb-4">Your situation is unique</div>
+                <p className="text-sm text-black/45 leading-relaxed">
+                  Use the calculator below to enter your actual hours, team cost, and expected scope. Negative results are shown honestly — if the numbers don&apos;t support the cost, we&apos;ll recommend a smaller starting point or no purchase at all.
+                </p>
+              </div>
+              <a href="#calculator" className="mt-6 inline-flex items-center gap-2 text-sm text-black/55 hover:text-black transition-colors group">
+                Try the interactive calculator
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-0.5 transition-transform">
+                  <path d="M7 2l5 5-5 5M2 7h10"/>
+                </svg>
+              </a>
+            </BentoCard>
+          </div>
+
+          {/* Interactive calculator */}
+          <div id="calculator" className="rounded-2xl border border-black/[0.07] bg-white p-8">
+            <div className="text-xs text-black/35 tracking-widest uppercase mb-8">Interactive capacity calculator</div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+              {/* Inputs */}
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-[11px] tracking-widest text-black/40 mb-2">
+                    REPETITIVE HOURS PER WEEK: <span className="text-black/70">{roi.hoursPerWeek}h</span>
+                  </label>
+                  <input
+                    type="range" name="hoursPerWeek" min={1} max={60}
+                    value={roi.hoursPerWeek} onChange={handleRoiChange}
+                    className="w-full accent-black h-1.5 rounded-full"
+                    aria-label="Repetitive hours per week"
+                  />
+                  <div className="flex justify-between text-[10px] text-black/25 mt-1"><span>1h</span><span>60h</span></div>
+                </div>
+
+                <div>
+                  <label htmlFor="roi-role" className="block text-[11px] tracking-widest text-black/40 mb-2">HOURLY ROLE BENCHMARK</label>
+                  <select
+                    id="roi-role" name="hourlyRole" value={roi.hourlyRole} onChange={handleRoiChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                  >
+                    <option value="receptionist">Receptionist — CAD $20.00/hr (Job Bank, Toronto)</option>
+                    <option value="administrative">Administrative assistant — CAD $26.50/hr (Job Bank, Toronto)</option>
+                    <option value="marketing">Social media coordinator — CAD $37.50/hr (Job Bank, Toronto)</option>
+                    <option value="custom">Custom hourly rate</option>
+                  </select>
+                </div>
+
+                {roi.hourlyRole === "custom" && (
+                  <div>
+                    <label htmlFor="roi-rate" className="block text-[11px] tracking-widest text-black/40 mb-2">CUSTOM HOURLY RATE (CAD $)</label>
+                    <input
+                      id="roi-rate" type="number" name="customRate" min={1} max={500} step={0.5}
+                      value={roi.customRate} onChange={handleRoiChange}
+                      className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                      aria-label="Custom hourly rate"
+                    />
+                  </div>
+                )}
+
+                <div>
+                  <label className="block text-[11px] tracking-widest text-black/40 mb-2">
+                    EXPECTED WORKLOAD OFFSET: <span className="text-black/70">{roi.offsetPercent}%</span>
+                  </label>
+                  <input
+                    type="range" name="offsetPercent" min={0} max={100}
+                    value={roi.offsetPercent} onChange={handleRoiChange}
+                    className="w-full accent-black h-1.5 rounded-full"
+                    aria-label="Workload offset percentage"
+                  />
+                  <div className="flex justify-between text-[10px] text-black/25 mt-1"><span>0%</span><span>100%</span></div>
+                </div>
+
+                <div>
+                  <label htmlFor="roi-plan" className="block text-[11px] tracking-widest text-black/40 mb-2">NEXUS PLAN</label>
+                  <select
+                    id="roi-plan" name="plan" value={roi.plan} onChange={handleRoiChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                  >
+                    <option value="cloud">Nexus Cloud — from CAD $299/mo</option>
+                    <option value="managed">Nexus Managed — from CAD $499/mo</option>
+                    <option value="edge">Nexus Edge — from CAD $599/mo (setup quoted)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="roi-months" className="block text-[11px] tracking-widest text-black/40 mb-2">SPREAD SETUP FEE OVER</label>
+                  <select
+                    id="roi-months" name="setupMonths" value={roi.setupMonths} onChange={handleRoiChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                  >
+                    <option value={12}>12 months</option>
+                    <option value={24}>24 months</option>
+                    <option value={36}>36 months</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="roi-opps" className="block text-[11px] tracking-widest text-black/40 mb-2">RECOVERED OPPORTUNITIES / MO</label>
+                    <input
+                      id="roi-opps" type="number" name="recoveredOpportunities" min={0} max={999}
+                      value={roi.recoveredOpportunities} onChange={handleRoiChange}
+                      className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                      aria-label="Recovered opportunities per month"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="roi-contrib" className="block text-[11px] tracking-widest text-black/40 mb-2">CONTRIBUTION VALUE (CAD $)</label>
+                    <input
+                      id="roi-contrib" type="number" name="contributionValue" min={0} max={99999}
+                      value={roi.contributionValue} onChange={handleRoiChange}
+                      className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                      aria-label="Contribution value per opportunity"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="roi-var" className="block text-[11px] tracking-widest text-black/40 mb-2">ADDITIONAL MONTHLY COSTS — messaging, voice, integrations (CAD $)</label>
+                  <input
+                    id="roi-var" type="number" name="variableCosts" min={0} max={9999}
+                    value={roi.variableCosts} onChange={handleRoiChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors"
+                    aria-label="Additional monthly variable costs"
+                  />
+                </div>
+              </div>
+
+              {/* Results */}
+              <div className="sticky top-24">
+                <div className="rounded-2xl border border-black/[0.07] bg-[#fafaf8] p-6 space-y-4">
+                  <div className="text-xs text-black/35 tracking-widest uppercase">Result</div>
+
+                  <div className="space-y-2.5">
+                    <div className="flex items-start justify-between gap-4 text-sm">
+                      <span className="text-black/45 leading-snug">Monthly work value ({roi.hoursPerWeek}h × 52/12 × CAD ${roiHourlyRate.toFixed(2)})</span>
+                      <span className="tabular-nums text-black/70 shrink-0">CAD ${roiMonthlyWorkValue.toFixed(0)}</span>
+                    </div>
+                    <div className="flex items-start justify-between gap-4 text-sm">
+                      <span className="text-black/45 leading-snug">Estimated offset ({roi.offsetPercent}%)</span>
+                      <span className="tabular-nums text-black/70 shrink-0">CAD ${roiOffsetValue.toFixed(0)}</span>
+                    </div>
+                    {roiRecoveredContribution > 0 && (
+                      <div className="flex items-start justify-between gap-4 text-sm">
+                        <span className="text-black/45 leading-snug">Recovered contribution ({roi.recoveredOpportunities} × CAD ${roi.contributionValue})</span>
+                        <span className="tabular-nums text-black/70 shrink-0">CAD ${roiRecoveredContribution.toFixed(0)}</span>
+                      </div>
+                    )}
+                    <div className="flex items-start justify-between gap-4 text-sm border-t border-black/[0.06] pt-2.5">
+                      <span className="text-black/45 leading-snug">
+                        {roiPlanData.name} — CAD ${roiPlanData.monthly}/mo
+                        {roiSetupAmortized > 0 && ` + CAD $${roiSetupAmortized.toFixed(0)} setup`}
+                        {roi.variableCosts > 0 && ` + CAD $${roi.variableCosts} variable`}
+                      </span>
+                      <span className="tabular-nums text-black/70 shrink-0">−CAD ${roiNexusCost.toFixed(0)}</span>
+                    </div>
+                  </div>
+
+                  <div className={`rounded-xl p-4 ${roiDiff >= 0 ? "bg-emerald-50 border border-emerald-100" : "bg-amber-50 border border-amber-100"}`}>
+                    <div className={`text-[10px] tracking-widest uppercase mb-1 ${roiDiff >= 0 ? "text-emerald-600" : "text-amber-600"}`}>
+                      Illustrative capacity difference
+                    </div>
+                    <div className={`text-3xl font-light tabular-nums ${roiDiff >= 0 ? "text-emerald-700" : "text-amber-700"}`}>
+                      {roiDiff >= 0 ? "+" : ""}CAD ${roiDiff.toFixed(0)}<span className="text-base font-light">/mo</span>
+                    </div>
+                    <div className="text-xs text-black/30 tabular-nums mt-0.5">
+                      ≈ USD ${Math.round(roiDiff * USD_RATE).toLocaleString()}/mo (approx.)
+                    </div>
+                    {roiDiff < 0 && (
+                      <p className="mt-2 text-xs text-amber-700 leading-relaxed">
+                        At this workload, the estimated cost exceeds the offset. Consider a smaller scope, a longer setup amortization period, or book a fit session to find a better-fit starting package.
+                      </p>
+                    )}
+                  </div>
+
+                  <p className="text-[10px] text-black/30 leading-relaxed">
+                    This is an illustrative workload comparison, not a guaranteed saving. It assumes Nexus successfully offsets the entered hours. Excludes AI usage overages, messaging fees, voice, paid integrations, and work Nexus cannot perform. Recovered-opportunity figures require an attribution method. Label: illustrative capacity difference.
+                  </p>
+
+                  <a
+                    href="#contact"
+                    className="block w-full py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center"
+                  >
+                    BOOK A NEXUS FIT SESSION
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PRICING ────────────────────────────────────────────────────────── */}
       <section id="pricing" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-5xl mx-auto">
@@ -1005,6 +1561,30 @@ export default function NexusPage() {
             <p className="mt-4 text-sm text-black/40 max-w-md">
               Every plan includes a defined AI usage allowance with alerts and limits. Exact pricing depends on channels, integrations, and workflow complexity — confirmed during discovery.
             </p>
+            {/* Currency toggle */}
+            <div className="mt-6 inline-flex items-center rounded-full border border-black/10 p-0.5 gap-0.5">
+              <button
+                onClick={() => setCurrency("CAD")}
+                className={`px-4 py-1.5 rounded-full text-[11px] tracking-widest transition-all duration-200 ${
+                  currency === "CAD" ? "bg-[#111] text-white" : "text-black/45 hover:text-black/70"
+                }`}
+              >
+                CAD
+              </button>
+              <button
+                onClick={() => setCurrency("USD")}
+                className={`px-4 py-1.5 rounded-full text-[11px] tracking-widest transition-all duration-200 ${
+                  currency === "USD" ? "bg-[#111] text-white" : "text-black/45 hover:text-black/70"
+                }`}
+              >
+                USD
+              </button>
+            </div>
+            {currency === "USD" && (
+              <p className="mt-2 text-[10px] text-black/30">
+                USD amounts are approximate (1 CAD ≈ {USD_RATE} USD). Invoices are issued in CAD.
+              </p>
+            )}
           </div>
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3" onMouseMove={handleMouse}>
@@ -1078,10 +1658,24 @@ export default function NexusPage() {
                 <div className="mb-8">
                   <div className="font-pixel text-[11px] tracking-widest text-black/40 mb-4">{plan.name}</div>
                   <div className="flex items-baseline gap-1 mb-1">
-                    <span className="text-3xl font-light">{plan.price}</span>
-                    {plan.period && <span className="text-black/40 text-sm">{plan.period}</span>}
+                    <span className="text-3xl font-light">
+                      {(() => {
+                        if (plan.price === "Custom") return "Custom"
+                        const cadMatch = plan.price.match(/\d[\d,]*/)
+                        if (!cadMatch) return plan.price
+                        const cadNum = parseFloat(cadMatch[0].replace(/,/g, ""))
+                        if (currency === "USD") return `USD $${Math.round(cadNum * USD_RATE).toLocaleString()}`
+                        return plan.price
+                      })()}
+                    </span>
+                    {"period" in plan && plan.period && <span className="text-black/40 text-sm">{plan.period}</span>}
                   </div>
-                  <p className="text-[10px] text-black/30 tracking-wide mb-1">{plan.setup}</p>
+                  <p className="text-[10px] text-black/30 tracking-wide mb-1">
+                    {currency === "USD" && plan.setup !== "Setup quoted after discovery" && plan.setup !== "Quoted after scoping"
+                      ? plan.setup.replace(/CAD \$(\d[\d,]*)/, (_, n) => `USD $${Math.round(parseFloat(n.replace(/,/g,"")) * USD_RATE).toLocaleString()}`)
+                      : plan.setup
+                    }
+                  </p>
                   <p className="text-xs text-black/35 tracking-wide">{plan.sub}</p>
                 </div>
                 <ul className="space-y-3 flex-1 mb-8">
@@ -1099,7 +1693,7 @@ export default function NexusPage() {
                     : "border border-black/10 text-black/60 hover:border-black/25 hover:text-black hover:bg-black/[0.04]"
                     }`}
                 >
-                  BOOK A CONSULTATION
+                  BOOK A NEXUS FIT SESSION
                 </a>
               </BentoCard>
             ))}
@@ -1107,6 +1701,9 @@ export default function NexusPage() {
 
           <p className="mt-8 text-center text-xs text-black/30">
             Voice, SMS, paid third-party services, and custom integrations may be billed separately. Usage allowances and limits confirmed during setup.
+          </p>
+          <p className="mt-2 text-center text-xs text-black/25">
+            ⚑ Start Your Business — Canada pricing: not published until professional scope and referral network are approved. Contact us for details.
           </p>
         </div>
       </section>
@@ -1161,6 +1758,18 @@ export default function NexusPage() {
               {
                 q: "How quickly can we launch?",
                 a: "A basic knowledge-and-messaging deployment can launch faster than a system requiring POS, booking, CRM, or custom API integration. Timing is confirmed after discovery.",
+              },
+              {
+                q: "Who owns my data? Can I take it with me?",
+                a: "You own your business data, conversations, memories, workflow definitions, and raw audit records. Agent portability is a product requirement — Nexus is designed so your memory and history are not locked to one runtime or model. Export terms are documented in the service agreement.",
+              },
+              {
+                q: "What if the AI makes a mistake or takes an unexpected action?",
+                a: "Sensitive and high-risk actions require your approval before Nexus acts. If a workflow fails, Nexus falls back safely and records the failure visibly — it does not disguise errors as completions. Reversible actions have a tested rollback method.",
+              },
+              {
+                q: "Can Nexus help me register or start a business in Canada?",
+                a: "Yes, through the Start Your Business — Canada package. Nexus coordinates the launch checklist, official and professional handoffs, operating tools, and a 90-day plan. It does not provide legal, tax, accounting, immigration, or regulated filing advice. All professional decisions are referred to qualified providers.",
               },
             ].map((item, i) => (
               <FaqItem key={i} question={item.q} answer={item.a} />
@@ -1242,6 +1851,13 @@ export default function NexusPage() {
                 </div>
               </div>
 
+              <div>
+                <label htmlFor="city" className="block text-[11px] tracking-widest text-black/40 mb-2">CITY</label>
+                <input id="city" name="city" type="text" value={form.city} onChange={handleFormChange}
+                  placeholder="e.g. Toronto, Mississauga, Vancouver"
+                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/40 mb-2">INDUSTRY *</label>
@@ -1251,10 +1867,11 @@ export default function NexusPage() {
                     <option>Restaurant</option>
                     <option>Barbershop / Salon</option>
                     <option>Coffee Shop / Café</option>
-                    <option>Automotive</option>
+                    <option>Automotive / Dealership</option>
                     <option>Marketing / Agency</option>
                     <option>Trades / Home Services</option>
                     <option>Clinic / Professional Office</option>
+                    <option>Starting a New Business</option>
                     <option>Other</option>
                   </select>
                 </div>
@@ -1323,11 +1940,18 @@ export default function NexusPage() {
                 </label>
               </div>
 
+              {formError && (
+                <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                  {formError}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="w-full py-4 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium"
+                disabled={formState === "loading"}
+                className="w-full py-4 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                REQUEST A NEXUS ASSESSMENT
+                {formState === "loading" ? "SENDING…" : "REQUEST A NEXUS ASSESSMENT"}
               </button>
             </form>
           )}
@@ -1347,6 +1971,7 @@ export default function NexusPage() {
             {[
               { label: "How It Works", href: "#how-it-works" },
               { label: "Industries", href: "#industries" },
+              { label: "Start Your Business", href: "#start-your-business" },
               { label: "Pricing", href: "#pricing" },
               { label: "FAQ", href: "#faq" },
               { label: "Contact", href: "#contact" },
@@ -1403,7 +2028,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
       </button>
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: open ? "200px" : "0px", opacity: open ? 1 : 0 }}
+        style={{ maxHeight: open ? "300px" : "0px", opacity: open ? 1 : 0 }}
       >
         <p className="mt-3 text-sm text-black/45 leading-relaxed pr-8">{answer}</p>
       </div>
