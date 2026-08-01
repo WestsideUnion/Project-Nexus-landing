@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Destination inbox — change to your team's address
-const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "hello@projectnexus.ca"
-// Sender address — must be a verified Resend domain
-const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev"
+// Destination inbox — where leads are received
+const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "nexus@westside-union.com"
+// Sender address — verified domain sender
+const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? "nexus@westside-union.com"
 
 export async function POST(req: NextRequest) {
   try {
