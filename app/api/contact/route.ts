@@ -1,15 +1,21 @@
 import { Resend } from "resend"
 import { NextRequest, NextResponse } from "next/server"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
-// Destination inbox — where leads are received
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL ?? "nexus@westside-union.com"
-// Sender address — verified domain sender
 const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL ?? "nexus@westside-union.com"
 
 export async function POST(req: NextRequest) {
   try {
+    const apiKey = process.env.RESEND_API_KEY?.trim()
+    if (!apiKey || apiKey === "re_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") {
+      console.error("[Resend] Missing or unconfigured RESEND_API_KEY")
+      return NextResponse.json(
+        { error: "RESEND_API_KEY is not configured in environment variables." },
+        { status: 500 }
+      )
+    }
+
+    const resend = new Resend(apiKey)
     const body = await req.json()
 
     const {
