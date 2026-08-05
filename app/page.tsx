@@ -242,7 +242,7 @@ export default function NexusPage() {
       <MobileNav />
 
       {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative min-h-[90vh] md:min-h-screen flex flex-col justify-end overflow-hidden pt-28 pb-12 px-6 md:px-12 lg:px-20">
 
         {/* Video background — retained per client direction; rights confirmation required before public launch */}
         <video
@@ -256,119 +256,161 @@ export default function NexusPage() {
         />
 
         {/* Progressive blur + light gradient rising from bottom */}
-        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "65%", background: "linear-gradient(to top, #F5F4F0 0%, #F5F4F0 18%, rgba(245,244,240,0.85) 35%, rgba(245,244,240,0.5) 55%, rgba(245,244,240,0.15) 75%, transparent 100%)" }} />
-        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "20%", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
-        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "38%", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
-        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "55%", backdropFilter: "blur(2px)", WebkitBackdropFilter: "blur(2px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
+        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "70%", background: "linear-gradient(to top, #F5F4F0 0%, #F5F4F0 25%, rgba(245,244,240,0.85) 45%, rgba(245,244,240,0.4) 70%, transparent 100%)" }} />
+        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "25%", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
+        <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "45%", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
 
-        {/* "Active now" badge — top-right, after hours feel */}
-        <div className="absolute top-24 right-6 md:right-12 z-30 flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-black/[0.06] shadow-sm">
+        {/* Status badge — top-right */}
+        <div className="absolute top-24 right-6 md:right-12 z-30 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-black/[0.08] shadow-sm">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
           </span>
-          <span className="text-[10px] tracking-widest text-black/50 uppercase">Nexus is working</span>
+          <span className="text-[10px] tracking-widest text-black/60 uppercase font-sans">Now accepting pilot businesses</span>
         </div>
 
-        {/* Spacer so content doesn't sit under the fixed nav */}
-        <div className="h-20" />
+        {/* Hero content card — overlay treatment for WCAG AA readability */}
+        <div className="relative z-30 max-w-3xl my-auto pt-16">
+          <div className="p-6 sm:p-10 rounded-2xl bg-[#F5F4F0]/80 backdrop-blur-md border border-black/[0.07] shadow-xl">
 
-        {/* Hero content — immediately visible, no gate on animation */}
-        <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col px-6 md:px-12 pb-12 max-w-3xl">
+            {/* Eyebrow */}
+            <span className="text-[11px] tracking-[0.2em] text-black/60 uppercase mb-4 block font-sans font-medium">
+              FOR BUSINESS OWNERS WHO CANNOT BE EVERYWHERE AT ONCE
+            </span>
 
-          {/* Eyebrow */}
-          <span className="text-[11px] tracking-[0.2em] text-black/50 uppercase mb-5 font-sans">
-            Like your best hire — without the overhead.
-          </span>
-
-          {/* Headline */}
-          <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-light text-[#111] leading-[1.0] tracking-tight mb-6"
-            style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-          >
-            Your business runs,<br />even when<br />you sleep.
-          </h1>
-
-          {/* Supporting copy */}
-          <p className="text-sm text-black/55 leading-relaxed max-w-md mb-8">
-            Nexus handles your messages, follow-ups, and routine tasks — through channels you already use. No training. No onboarding. No technical setup. Just tell us how your business works and we configure everything. It answers inquiries at midnight, follows up on quotes while you sleep, and sends you a clean summary in the morning.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-3 mb-10">
-            <a
-              href="#contact"
-              className="px-6 py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest"
+            {/* Headline */}
+            <h1
+              className="text-4xl sm:text-5xl md:text-6xl font-light text-[#111] leading-[1.08] tracking-tight mb-6"
+              style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
             >
-              BOOK A NEXUS FIT SESSION
-            </a>
-            <a
-              href="#how-it-works"
-              className="px-6 py-3 border border-black/15 text-black/60 text-[11px] rounded-xl hover:border-black/25 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest"
+              Your customers keep reaching out - even when you are busy running the business.
+            </h1>
+
+            {/* Supporting copy */}
+            <p className="text-sm sm:text-base text-black/70 leading-relaxed max-w-2xl mb-8">
+              Reviews wait. Messages pile up. Follow-ups get buried. New opportunities quietly disappear. Nexus helps keep everyday work moving through WhatsApp, text, and email, so your customers feel heard and fewer opportunities slip away.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+              <div>
+                <a
+                  href="#contact"
+                  className="inline-block px-6 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase text-center"
+                >
+                  SHOW US WHAT STEALS YOUR TIME
+                </a>
+                <span className="block text-[11px] text-black/50 mt-1.5 tracking-wide">
+                  Book a free business workflow review.
+                </span>
+              </div>
+              <a
+                href="#industries"
+                className="px-6 py-3.5 border border-black/20 text-black/80 text-[11px] font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.04] transition-all duration-200 tracking-widest uppercase self-start sm:self-auto"
+              >
+                SEE YOUR INDUSTRY
+              </a>
+            </div>
+
+            {/* Trust line */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-black/[0.08]">
+              {[
+                { label: "Works where you already communicate" },
+                { label: "Important actions wait for your approval" },
+                { label: "See what was completed" },
+                { label: "Predictable monthly costs" },
+              ].map((stat, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1 shrink-0" />
+                  <div className="text-xs text-black/75 font-normal leading-snug">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SECTION 2: THE RECOGNIZABLE OWNER PROBLEM ─────────────────────── */}
+      <section id="how-it-helps" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <Tag>THE REALITY</Tag>
+            <h2
+              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light text-[#111] tracking-tight leading-[1.1]"
+              style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
             >
-              SEE HOW IT WORKS
-            </a>
+              Your business can be busy and still lose the next customer.
+            </h2>
           </div>
 
-          {/* Trust line */}
-          <div className="flex flex-wrap gap-8 sm:gap-10">
+          <div className="p-8 sm:p-12 rounded-2xl border border-black/[0.07] bg-white shadow-sm space-y-6">
+            <p className="text-base sm:text-lg text-black/75 leading-relaxed font-light">
+              A customer sends a message, but nobody sees it. A review waits a week for a response. A catering, booking, or sales enquiry gets buried. Tomorrow&apos;s promotion never gets posted. None of this happens because you do not care. It happens because you are already doing too much.
+            </p>
+
+            <div className="p-6 rounded-xl bg-[#F5F4F0] border-l-4 border-black/70">
+              <p className="text-sm sm:text-base text-black/80 font-medium leading-relaxed">
+                You should not have to choose between serving the customer in front of you and staying responsive to the customer reaching out online.
+              </p>
+            </div>
+          </div>
+
+          {/* Quick problem → outcome cards */}
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" onMouseMove={handleMouse}>
             {[
-              { value: "No app to learn", label: "Works in WhatsApp, SMS & email" },
-              { value: "Always on", label: "After hours, weekends, overnight" },
-              { value: "Managed by us", label: "Westside Union handles setup" },
-              { value: "Every agent. One Nexus.", label: "Neutral control plane" },
-            ].map((stat, i) => (
-              <div key={i}>
-                <div className="text-sm text-[#111] font-light tracking-tight" style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}>{stat.value}</div>
-                <div className="text-[10px] text-black/40 tracking-widest uppercase mt-1">{stat.label}</div>
-              </div>
+              { from: "Messages waiting while you serve guests", to: "Instant approved replies", delay: 0 },
+              { from: "Unanswered online reviews", to: "Drafted responses ready to review", delay: 60 },
+              { from: "Forgotten callbacks & quotes", to: "Tracked follow-up reminders", delay: 120 },
+              { from: "Late night administrative anxiety", to: "Clear morning owner summaries", delay: 180 },
+            ].map((item) => (
+              <BentoCard key={item.from} className="p-6 flex flex-col justify-between gap-3" delay={item.delay}>
+                <div className="text-xs text-black/40 line-through decoration-black/25 leading-snug">{item.from}</div>
+                <div className="text-sm font-medium text-[#111] leading-snug">{item.to}</div>
+                <div className="mt-auto pt-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-emerald-600">
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                  </svg>
+                </div>
+              </BentoCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── NEUTRAL POSITIONING BAND ────────────────────────────────────────── */}
-      <section className="py-16 px-6 md:px-12 lg:px-20 border-t border-white/10 bg-[#111] text-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-20">
-            <div className="flex-1">
-              <p
-                className="text-2xl md:text-3xl font-light leading-snug tracking-tight"
-                style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-              >
-                Every company will use multiple AI agents.{" "}
-                <span className="text-white/50">Nexus makes them work as one system — without locking you into any one agent.</span>
-              </p>
-            </div>
-            <div className="flex-shrink-0 max-w-xs">
-              <p className="text-sm text-white/40 leading-relaxed">
-                A Westside Union product. The governance layer that keeps your memory, permissions, workflows, and audit history yours — regardless of which agent or model performs the work.
-              </p>
-            </div>
+      {/* ── SECTION 4: TRANSFORMATION SECTION ───────────────────────────────── */}
+      <section className="py-20 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#111] text-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-white/50 bg-white/10 mb-4">
+              TRANSFORMATION
+            </span>
+            <h2
+              className="text-4xl sm:text-5xl md:text-6xl font-light text-white tracking-tight leading-[1.05]"
+              style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
+            >
+              Your business runs, even when you sleep.
+            </h2>
+            <p className="mt-5 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed font-light">
+              Finish the day knowing what was handled, what is still moving, and what needs your approval. Customers feel heard. Follow-ups stay visible. The work no longer depends on you remembering everything at midnight.
+            </p>
           </div>
-        </div>
-      </section>
 
-      {/* ── PROBLEM → OUTCOME BAND ─────────────────────────────────────────── */}
-      <section className="py-20 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3" onMouseMove={handleMouse}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { from: "Missed messages", to: "Timely replies", delay: 0 },
-              { from: "Forgotten follow-ups", to: "Tracked tasks", delay: 80 },
-              { from: "Scattered information", to: "One knowledgeable assistant", delay: 160 },
-              { from: "Slow days and unusual activity", to: "Proactive suggestions", delay: 240 },
-              { from: "Fear of AI acting without you", to: "Transparent logs and safe fallback", delay: 320 },
-            ].map((item) => (
-              <BentoCard key={item.from} className="p-7 flex flex-col gap-4" delay={item.delay}>
-                <div className="text-sm text-black/35 leading-snug line-through decoration-black/20">{item.from}</div>
-                <div className="text-base font-light text-[#111] leading-snug">{item.to}</div>
-                <div className="mt-auto">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-black/20">
-                    <path d="M12 5v14M5 12l7 7 7-7" />
+              { title: "Timely approved replies", desc: "Customers receive accurate, helpful answers without waiting." },
+              { title: "Visible follow-ups", desc: "Pending quotes, callbacks, and inquiries stay tracked until complete." },
+              { title: "Daily owner summary", desc: "Start each morning with a concise summary of what was completed." },
+              { title: "Human approval preserved", desc: "Sensitive, high-risk, or public actions pause for your approval." },
+            ].map((outcome, i) => (
+              <div key={i} className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] space-y-3">
+                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-emerald-400">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-              </BentoCard>
+                <h3 className="text-lg font-light text-white">{outcome.title}</h3>
+                <p className="text-xs text-white/50 leading-relaxed">{outcome.desc}</p>
+              </div>
             ))}
           </div>
         </div>
@@ -475,49 +517,49 @@ export default function NexusPage() {
             {[
               {
                 industry: "Restaurants",
-                problem: "Keep up with inquiries, follow-ups, reviews, and daily operations.",
+                problem: "A full dining room should not mean online enquiries go unanswered.",
                 ready: ["Menu & hours knowledge", "Inquiry triage", "Review response drafts", "Daily owner summary", "Promotion drafts"],
                 img: "/images/industry-restaurants.png",
                 delay: 0,
               },
               {
                 industry: "Barbershops & Salons",
-                problem: "Reduce missed messages and help protect the appointment book.",
+                problem: "An unanswered booking question can become an empty chair.",
                 ready: ["Booking system handoff", "Appointment confirmation", "Review response drafts", "Hiring & complaint intake", "Daily summary"],
                 img: "/images/industry-barbershop.png",
                 delay: 80,
               },
               {
                 industry: "Coffee Shops",
-                problem: "Stay responsive while your team focuses on service.",
+                problem: "The morning rush should not cost you the catering enquiry in your inbox.",
                 ready: ["Hours, menu & allergen knowledge", "Catering intake", "Review response drafts", "Shift task templates", "Slow-period suggestions"],
                 img: "/images/industry-coffee.png",
                 delay: 160,
               },
               {
                 industry: "Dealerships",
-                problem: "Follow up with every qualified lead and service request consistently.",
+                problem: "Every delayed response gives a buyer time to call another dealership.",
                 ready: ["Sales & service inquiry triage", "Callback capture", "Inventory FAQ knowledge", "Follow-up reminders", "Manager summaries"],
                 img: "/images/industry-automotive.png",
                 delay: 0,
               },
               {
                 industry: "Agencies",
-                problem: "Reduce reporting, follow-up, and administrative work.",
+                problem: "Client reporting should not consume your team's best hours.",
                 ready: ["Client onboarding checklists", "Meeting & action summaries", "Draft reports", "Follow-up tracking", "Pipeline summary"],
                 img: "/images/industry-agency.png",
                 delay: 80,
               },
               {
                 industry: "Trades",
-                problem: "Capture inquiries and keep quotes and callbacks moving.",
+                problem: "A missed call can become somebody else's job.",
                 ready: ["Inquiry capture", "Job intake questions", "Quote follow-up", "Scheduling handoff", "Daily callback summary"],
                 img: "/images/industry-trades.png",
                 delay: 160,
               },
               {
                 industry: "New Founders",
-                problem: "Launch a Canadian business correctly — with organized decisions, professional referrals, and an operating plan from day one.",
+                problem: "Starting a business is difficult enough without chasing every step alone.",
                 ready: ["Discovery and planning", "Registration coordination", "Professional referrals", "Launch checklist", "90-day operating plan"],
                 img: "/images/industry-founders.png",
                 delay: 240,
@@ -795,7 +837,7 @@ export default function NexusPage() {
                   onClick={() => setActiveIndustry(null)}
                   className="block w-full py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center"
                 >
-                  BOOK A NEXUS FIT SESSION
+                  BOOK MY FREE WORKFLOW REVIEW
                 </a>
               </div>
             </div>
@@ -810,118 +852,91 @@ export default function NexusPage() {
             <PixelIcon type="workflow" size={40} />
             <div className="mt-4"><Tag>HOW IT WORKS</Tag></div>
             <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
-              {"From discovery\nto working assistant."}
+              {"A simple 3-step plan."}
             </RevealText>
+            <p className="mt-4 text-sm text-black/55 leading-relaxed max-w-lg">
+              No complicated software training. Westside Union handles setup with you.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3" onMouseMove={handleMouse}>
+          {/* 3 Primary steps */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" onMouseMove={handleMouse}>
             {[
               {
                 n: "01",
-                title: "Tell us how your business operates.",
-                desc: "We learn your routines, channels, and the work that keeps following you home.",
+                title: "Show us what keeps stealing your time.",
+                desc: "We identify one useful, measurable starting workflow that will save you time right away.",
                 delay: 0,
                 icon: (
-                  /* Conversation / discovery — two speech bubbles */
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                  <svg width="48" height="48" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/30">
                     <path d="M10 14a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H24l-8 6v-6h-2a4 4 0 0 1-4-4V14z"/>
                     <path d="M34 30v4a4 4 0 0 0 4 4h2v6l8-6h2a4 4 0 0 0 4-4V22a4 4 0 0 0-4-4h-6" opacity="0.5"/>
-                    <line x1="18" y1="20" x2="30" y2="20" opacity="0.6"/>
-                    <line x1="18" y1="25" x2="26" y2="25" opacity="0.6"/>
                   </svg>
                 ),
               },
               {
                 n: "02",
-                title: "Westside Union configures your assistant.",
-                desc: "We handle setup, connections, knowledge preparation, and permission rules.",
+                title: "We configure Nexus around your business.",
+                desc: "Westside Union prepares the knowledge, channels, rules, and approved connections.",
                 delay: 80,
                 icon: (
-                  /* Wrench + settings cog — managed configuration */
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                  <svg width="48" height="48" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/30">
                     <circle cx="28" cy="28" r="10"/>
                     <circle cx="28" cy="28" r="4"/>
                     <line x1="28" y1="8" x2="28" y2="14"/>
                     <line x1="28" y1="42" x2="28" y2="48"/>
                     <line x1="8" y1="28" x2="14" y2="28"/>
                     <line x1="42" y1="28" x2="48" y2="28"/>
-                    <line x1="14.1" y1="14.1" x2="18.3" y2="18.3"/>
-                    <line x1="37.7" y1="37.7" x2="41.9" y2="41.9"/>
-                    <line x1="41.9" y1="14.1" x2="37.7" y2="18.3"/>
-                    <line x1="18.3" y1="37.7" x2="14.1" y2="41.9"/>
                   </svg>
                 ),
               },
               {
                 n: "03",
-                title: "Use Nexus in a familiar channel.",
-                desc: "WhatsApp, SMS, or email. No new app to learn. No onboarding certification.",
-                delay: 140,
+                title: "Keep running your business.",
+                desc: "Nexus helps keep agreed work moving through familiar channels and reports what was completed or needs attention.",
+                delay: 160,
                 icon: (
-                  /* Mobile phone with message — familiar channel */
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
+                  <svg width="48" height="48" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/30">
                     <rect x="16" y="6" width="24" height="40" rx="4"/>
                     <line x1="24" y1="11" x2="32" y2="11" strokeWidth="2" opacity="0.4"/>
-                    <circle cx="28" cy="42" r="1.5" fill="currentColor" stroke="none" opacity="0.5"/>
                     <rect x="20" y="18" width="16" height="12" rx="2" opacity="0.5"/>
-                    <line x1="23" y1="22" x2="33" y2="22" opacity="0.7"/>
-                    <line x1="23" y1="25.5" x2="30" y2="25.5" opacity="0.7"/>
-                  </svg>
-                ),
-              },
-              {
-                n: "04",
-                title: "Receive tasks, summaries, and reminders.",
-                desc: "Nexus keeps you informed and prepares actions for your approval.",
-                delay: 200,
-                icon: (
-                  /* Bell with checkmark — notifications + approval */
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
-                    <path d="M28 8a2 2 0 0 1 2 2v1.2A14 14 0 0 1 42 24v8l4 4H10l4-4v-8A14 14 0 0 1 26 11.2V10a2 2 0 0 1 2-2z"/>
-                    <path d="M24 36a4 4 0 0 0 8 0"/>
-                    <circle cx="40" cy="16" r="7" className="fill-[#F5F4F0]" strokeWidth="1.5"/>
-                    <polyline points="37,16 39.5,18.5 44,13.5" opacity="0.8"/>
-                  </svg>
-                ),
-              },
-              {
-                n: "05",
-                title: "Expand when you're ready.",
-                desc: "Add integrations, additional workflows, and industry tools as your needs grow.",
-                delay: 260,
-                icon: (
-                  /* Branching arrows / network — expansion */
-                  <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-black/25">
-                    <circle cx="28" cy="28" r="5"/>
-                    <circle cx="10" cy="14" r="4" opacity="0.6"/>
-                    <circle cx="46" cy="14" r="4" opacity="0.6"/>
-                    <circle cx="10" cy="42" r="4" opacity="0.6"/>
-                    <circle cx="46" cy="42" r="4" opacity="0.6"/>
-                    <line x1="23.5" y1="24.5" x2="14" y2="17.5"/>
-                    <line x1="32.5" y1="24.5" x2="42" y2="17.5"/>
-                    <line x1="23.5" y1="31.5" x2="14" y2="38.5"/>
-                    <line x1="32.5" y1="31.5" x2="42" y2="38.5"/>
                   </svg>
                 ),
               },
             ].map((step) => (
-              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col min-h-[300px]" delay={step.delay}>
-                {/* Icon — upper centre */}
-                <div className="flex justify-center pt-10 pb-2">
+              <BentoCard key={step.n} className="relative overflow-hidden flex flex-col p-8 min-h-[280px]" delay={step.delay}>
+                <div className="flex items-center justify-between mb-6">
+                  <span className="font-pixel text-xs text-black/40 tracking-widest">{step.n}</span>
                   {step.icon}
                 </div>
-                {/* Step number */}
-                <div className="relative z-10 px-7 pt-4">
-                  <span className="font-pixel text-[11px] text-black/20 tracking-widest block">{step.n}</span>
-                </div>
-                {/* Text — pushed to bottom */}
-                <div className="relative z-10 px-7 pb-7 mt-auto">
-                  <h3 className="text-base font-light mb-3 leading-snug">{step.title}</h3>
-                  <p className="text-sm text-black/45 leading-relaxed">{step.desc}</p>
-                </div>
+                <h3 className="text-lg font-light mb-3 leading-snug">{step.title}</h3>
+                <p className="text-sm text-black/50 leading-relaxed">{step.desc}</p>
               </BentoCard>
             ))}
           </div>
+
+          {/* Accessible disclosure for detailed 5-step setup */}
+          <details className="mt-8 group border border-black/[0.07] rounded-2xl bg-white p-6 transition-all">
+            <summary className="text-sm font-normal text-black/70 cursor-pointer flex items-center justify-between select-none font-sans">
+              <span>View detailed 5-step operational setup</span>
+              <span className="text-xs text-black/40 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div className="mt-6 pt-6 border-t border-black/[0.06] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {[
+                { n: "01", title: "Business Discovery", desc: "Learn your routines, channels, and work patterns." },
+                { n: "02", title: "Managed Configuration", desc: "Set up knowledge, connections, and permission rules." },
+                { n: "03", title: "Familiar Channel Access", desc: "Operate via WhatsApp, SMS, or email with no app to learn." },
+                { n: "04", title: "Approvals & Summaries", desc: "Receive updates and approve sensitive actions." },
+                { n: "05", title: "Ongoing Optimization", desc: "Expand capabilities as your business needs grow." },
+              ].map((s) => (
+                <div key={s.n} className="p-4 rounded-xl bg-black/[0.02]">
+                  <span className="font-pixel text-[10px] text-black/30 block mb-1">{s.n}</span>
+                  <h4 className="text-xs font-medium text-[#111] mb-1">{s.title}</h4>
+                  <p className="text-[11px] text-black/45 leading-normal">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
@@ -1044,7 +1059,7 @@ export default function NexusPage() {
             <PixelIcon type="platform" size={40} />
             <div className="mt-4"><Tag>TRUST & CONTROL</Tag></div>
             <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
-              {"You approve.\nWe manage."}
+              {"You stay in control.\nWestside Union handles\nthe complexity."}
             </RevealText>
           </div>
 
@@ -1052,30 +1067,38 @@ export default function NexusPage() {
             {/* Left side */}
             <div className="space-y-6">
               <p className="text-sm text-black/45 leading-relaxed">
-                Nexus is a managed service, not a do-it-yourself chatbot builder. Westside Union handles model, routing, and advanced configuration. You control what matters to your business.
+                Nexus is a managed service, not a do-it-yourself chatbot builder. Westside Union handles model, routing, and technical configuration so you stay in control of your business.
               </p>
 
               <div className="space-y-4">
                 {[
-                  { label: "Your business owns its data", desc: "Business data, conversations, memories, and audit records belong to you — and can be exported" },
-                  { label: "Approved tools and scoped permissions", desc: "Define what Nexus can and cannot do on your behalf" },
-                  { label: "Human approval for sensitive actions", desc: "High-risk or public-posting actions pause for your sign-off" },
-                  { label: "Transparent task and audit history", desc: "Every interaction logged and available to review" },
-                  { label: "Monthly usage limits and alerts", desc: "No surprise AI bills. Clear limits and notifications" },
-                  { label: "Tested fallback and safe failure", desc: "If a route fails, Nexus falls back safely — never silently or by broadening permissions" },
-                  { label: "Replaceable agents, exportable memory", desc: "Agent portability is a product requirement. You are never locked into one runtime" },
-                  { label: "Customer data separation", desc: "Your business data is isolated and not shared between clients" },
-                  { label: "Managed configuration", desc: "Models, routing, and technical settings managed by Westside Union" },
+                  { label: "1. Your business owns its information.", desc: "Business data, conversations, memories, and audit records belong to you." },
+                  { label: "2. Important actions wait for approval.", desc: "Sensitive, high-risk, or public-facing actions pause for your sign-off before sending." },
+                  { label: "3. You can see what was requested and completed.", desc: "Every task and interaction is logged in clear activity history." },
+                  { label: "4. Usage limits help prevent surprise bills.", desc: "Clear monthly usage allowances and alerts protect your budget." },
+                  { label: "5. Westside Union monitors and maintains the agreed system.", desc: "We handle updates, integration health, and configuration maintenance." },
                 ].map((item) => (
-                  <div key={item.label} className="flex gap-4">
-                    <div className="w-1 bg-black/10 rounded-full shrink-0" />
+                  <div key={item.label} className="flex gap-4 p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
+                    <div className="w-1 bg-emerald-500 rounded-full shrink-0" />
                     <div>
-                      <h3 className="text-sm font-light mb-1">{item.label}</h3>
-                      <p className="text-xs text-black/35">{item.desc}</p>
+                      <h3 className="text-sm font-medium text-[#111] mb-0.5">{item.label}</h3>
+                      <p className="text-xs text-black/45">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
+
+              <details className="mt-4 group border border-black/[0.07] rounded-xl bg-white p-4">
+                <summary className="text-xs font-medium text-black/60 cursor-pointer flex items-center justify-between select-none font-sans">
+                  <span>For technical teams & enterprise buyers</span>
+                  <span className="text-[10px] text-black/40 group-open:rotate-180 transition-transform duration-200">▼</span>
+                </summary>
+                <div className="mt-3 pt-3 border-t border-black/[0.06] space-y-2 text-xs text-black/50">
+                  <p>• <strong>Runtime portability:</strong> Agent portability is a product requirement. Memory and schemas are exportable.</p>
+                  <p>• <strong>Tested fallback:</strong> If a primary route fails, Nexus falls back safely without broadening permissions.</p>
+                  <p>• <strong>Control plane governance:</strong> Neutral control plane architecture isolating customer data environments.</p>
+                </div>
+              </details>
             </div>
 
             {/* Right side — activity log */}
@@ -1169,58 +1192,69 @@ export default function NexusPage() {
         </div>
       </section>
 
-      {/* ── START YOUR BUSINESS — CANADA ────────────────────────────────────── */}
-      <section id="start-your-business" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-            <div>
-              <PixelIcon type="workflow" size={40} />
-              <div className="mt-4"><Tag>START YOUR BUSINESS — CANADA</Tag></div>
-              <RevealText className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
-                {"Launch your\nbusiness the\norganized way."}
-              </RevealText>
-              <p className="mt-6 text-sm text-black/45 leading-relaxed max-w-md">
-                Starting a business in Canada? Nexus helps you organize the decisions, registration steps, professional handoffs, launch tools, and first 90 days — then stays available as your operating assistant.
+      {/* ── START YOUR BUSINESS — CANADA TEASER ──────────────────────────────── */}
+      <section id="start-your-business" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
+        <div className="max-w-5xl mx-auto">
+          <div className="rounded-2xl border border-black/[0.08] bg-white p-8 sm:p-12 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="max-w-2xl space-y-4">
+              <span className="px-2.5 py-1 rounded-full text-[10px] tracking-widest bg-[#111] text-white uppercase font-sans">
+                For New Canadian Founders
+              </span>
+              <h2
+                className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
+                style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
+              >
+                Starting a business in Canada? Begin with a clear path.
+              </h2>
+              <p className="text-sm sm:text-base text-black/65 leading-relaxed font-light">
+                Nexus can help organize your launch checklist, official information, professional handoffs, and first operating tools, then remain available as your business assistant after launch.
               </p>
-              <div className="mt-5 p-4 rounded-xl bg-black/[0.03] border border-black/[0.06]">
-                <p className="text-xs text-black/45 leading-relaxed">
-                  <strong className="text-black/60 font-medium">Professional advice boundary:</strong> Nexus provides education, checklists, coordination, and professional referrals. It does not provide legal, tax, accounting, immigration, or regulated filing advice. All professional decisions are referred to qualified providers. Government fees and third-party professional fees are not included unless explicitly stated in a proposal.
+              <div className="p-3.5 rounded-xl bg-[#F5F4F0] border border-black/[0.05]">
+                <p className="text-xs text-black/50 leading-relaxed">
+                  <strong className="font-medium text-black/70">Professional boundary:</strong> Nexus provides education, checklists, and qualified referrals. It does not provide legal, tax, accounting, immigration, or regulated filing advice.
                 </p>
               </div>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="#contact"
-                  className="px-6 py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest"
-                >
-                  EXPLORE START YOUR BUSINESS
-                </a>
-                <a
-                  href="https://www.canada.ca/en/services/business/start.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 border border-black/15 text-black/60 text-[11px] rounded-xl hover:border-black/25 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest"
-                >
-                  GOVT. OF CANADA — STARTING A BUSINESS ↗
-                </a>
-              </div>
             </div>
-            <div className="space-y-3" onMouseMove={handleMouse}>
-              {[
-                { label: "Founder discovery and planning", desc: "Map your province, industry, customer model, revenue structure, risk, and launch timing." },
-                { label: "Education and decision worksheets", desc: "Common business structures explained — with legal and tax decisions referred to qualified professionals." },
-                { label: "Registration coordination checklist", desc: "Step-by-step checklist using current official Canadian government sources." },
-                { label: "Business setup checklist", desc: "Business name, domain, banking, payments, bookkeeping, insurance, licence, privacy, and operating tools." },
-                { label: "Industry launch blueprint", desc: "First customer-intake workflow and a 30/60/90-day operating plan." },
-                { label: "Founder task board", desc: "Reminders, research drafting, and initial Nexus assistant configuration." },
-                { label: "Professional referrals", desc: "Warm handoffs to accountants, lawyers, insurers, banks, and government programs." },
-              ].map((item, i) => (
-                <BentoCard key={item.label} className="p-5" delay={i * 50}>
-                  <h3 className="text-sm font-light mb-1">{item.label}</h3>
-                  <p className="text-xs text-black/40 leading-relaxed">{item.desc}</p>
-                </BentoCard>
-              ))}
+
+            <div className="shrink-0 flex flex-col gap-3 w-full sm:w-auto">
+              <a
+                href="#contact"
+                className="px-6 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase"
+              >
+                EXPLORE THE CANADA FOUNDER PATH
+              </a>
+              <a
+                href="https://www.canada.ca/en/services/business/start.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 border border-black/15 text-black/60 text-[11px] rounded-xl hover:border-black/25 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest text-center"
+              >
+                GOVT. OF CANADA — STARTING A BUSINESS ↗
+              </a>
             </div>
           </div>
+
+          <details className="mt-6 group border border-black/[0.07] rounded-2xl bg-white p-6">
+            <summary className="text-xs font-normal text-black/60 cursor-pointer flex items-center justify-between select-none font-sans">
+              <span>View launch checklist & professional referral network details</span>
+              <span className="text-[10px] text-black/40 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div className="mt-4 pt-4 border-t border-black/[0.06] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {[
+                { label: "Founder discovery & planning", desc: "Map province, industry, business model, and risk." },
+                { label: "Structure decision worksheets", desc: "Common Canadian business structures explained." },
+                { label: "Registration coordination", desc: "Checklist using official Canadian government sources." },
+                { label: "Business setup checklist", desc: "Domain, banking, bookkeeping, insurance, and operating tools." },
+                { label: "Industry launch blueprint", desc: "First intake workflow and 30/60/90-day plan." },
+                { label: "Qualified professional referrals", desc: "Warm handoffs to accountants, lawyers, and banks." },
+              ].map((item, i) => (
+                <div key={i} className="p-3.5 rounded-xl bg-black/[0.02]">
+                  <h4 className="text-xs font-medium text-[#111] mb-1">{item.label}</h4>
+                  <p className="text-[11px] text-black/45 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
@@ -1540,7 +1574,7 @@ export default function NexusPage() {
                     href="#contact"
                     className="block w-full py-3 bg-[#111] text-white text-[11px] rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center"
                   >
-                    BOOK A NEXUS FIT SESSION
+                    BOOK MY FREE WORKFLOW REVIEW
                   </a>
                 </div>
               </div>
@@ -1594,7 +1628,7 @@ export default function NexusPage() {
                 price: "CAD $299",
                 period: "/month",
                 setup: "Setup from CAD $500",
-                sub: "One owner-focused assistant",
+                sub: "Start with one important workflow",
                 features: [
                   "One primary messaging channel",
                   "Business knowledge setup",
@@ -1609,7 +1643,7 @@ export default function NexusPage() {
                 price: "CAD $499",
                 period: "/month",
                 setup: "Setup from CAD $1,000",
-                sub: "More workflows and integrations",
+                sub: "Keep more recurring work moving",
                 features: [
                   "Proactive owner notifications",
                   "Expanded task automation",
@@ -1625,7 +1659,7 @@ export default function NexusPage() {
                 price: "CAD $599",
                 period: "/month",
                 setup: "Setup quoted after discovery",
-                sub: "Managed local AI appliance",
+                sub: "Add local privacy and predictable capacity",
                 features: [
                   "Local business knowledge",
                   "Selected local workloads",
@@ -1639,7 +1673,7 @@ export default function NexusPage() {
                 name: "Nexus Enterprise",
                 price: "Custom",
                 setup: "Quoted after scoping",
-                sub: "Multiple locations or departments",
+                sub: "Coordinate locations, departments, and stronger controls",
                 features: [
                   "Multiple locations & agents",
                   "Advanced permissions",
@@ -1676,7 +1710,7 @@ export default function NexusPage() {
                       : plan.setup
                     }
                   </p>
-                  <p className="text-xs text-black/35 tracking-wide">{plan.sub}</p>
+                  <p className="text-xs text-black/45 font-medium tracking-wide">{plan.sub}</p>
                 </div>
                 <ul className="space-y-3 flex-1 mb-8">
                   {plan.features.map(f => (
@@ -1688,12 +1722,12 @@ export default function NexusPage() {
                 </ul>
                 <a
                   href="#contact"
-                  className={`block w-full py-3 rounded-xl text-sm tracking-widest text-center transition-all duration-200 ${plan.highlight
+                  className={`block w-full py-3 rounded-xl text-[11px] tracking-widest text-center transition-all duration-200 uppercase font-medium ${plan.highlight
                     ? "bg-[#111] text-white hover:bg-[#333]"
                     : "border border-black/10 text-black/60 hover:border-black/25 hover:text-black hover:bg-black/[0.04]"
                     }`}
                 >
-                  BOOK A NEXUS FIT SESSION
+                  BOOK MY FREE WORKFLOW REVIEW
                 </a>
               </BentoCard>
             ))}
@@ -1720,61 +1754,62 @@ export default function NexusPage() {
           <div className="space-y-0 divide-y divide-black/[0.06]">
             {[
               {
-                q: "Is Nexus another chatbot? Or another ChatGPT or Claude?",
+                q: "Is Nexus another chatbot?",
                 a: "No. Nexus is a managed business assistant configured around your information, tasks, channels, and approval rules.",
               },
               {
                 q: "Do I need to learn a new app?",
-                a: "No. Daily use is designed around familiar messaging channels. A web control center will be introduced later for task history, billing, usage, and account management.",
+                a: "No. Daily use is designed around familiar messaging channels like WhatsApp, SMS, and email. Westside Union handles configuration for you.",
               },
               {
-                q: "Can Nexus connect to my POS or booking system?",
-                a: "Yes, but availability depends on the system's API, permissions, and plan. Westside Union confirms the integration scope during discovery.",
+                q: "What can Nexus handle first?",
+                a: "We start with one lower-risk, high-value workflow — like answering recurring customer inquiries, drafting review responses, or tracking follow-up reminders.",
               },
               {
-                q: "Does Nexus replace an employee?",
-                a: "Nexus is designed first to support the owner and reduce repetitive work. It does not replace judgment, hospitality, skilled service, or accountable staff.",
+                q: "Will important actions happen without my approval?",
+                a: "No. High-risk, public-facing, or sensitive actions require your explicit approval before Nexus sends or publishes anything.",
               },
               {
-                q: "Will my bill change based on tokens?",
-                a: "Plans include a defined AI usage allowance, alerts, and limits. Paid channels and third-party services are explained separately.",
+                q: "What will it cost each month?",
+                a: "Plans start at CAD $299/mo for Nexus Cloud. Every plan includes a defined usage allowance with clear budget limits and alerts.",
               },
               {
-                q: "Can Nexus run locally?",
-                a: "Yes, selected packages can include a managed local appliance. Local models are recommended when privacy, predictable usage, or local-system access justifies the added hardware and support.",
-              },
-              {
-                q: "Who configures the AI?",
-                a: "Westside Union manages models, frameworks, routing, and advanced settings. Customers control business-level preferences, approvals, notification choices, and billing — not underlying technical configuration.",
-              },
-              {
-                q: "Can Nexus send messages automatically?",
-                a: "Only within configured permissions, platform rules, and consent requirements. Sensitive or high-risk actions require approval.",
-              },
-              {
-                q: "What happens if an integration stops working?",
-                a: "Managed plans include monitoring and maintenance within the agreed scope. Third-party platform changes may require additional work.",
-              },
-              {
-                q: "How quickly can we launch?",
-                a: "A basic knowledge-and-messaging deployment can launch faster than a system requiring POS, booking, CRM, or custom API integration. Timing is confirmed after discovery.",
-              },
-              {
-                q: "Who owns my data? Can I take it with me?",
-                a: "You own your business data, conversations, memories, workflow definitions, and raw audit records. Agent portability is a product requirement — Nexus is designed so your memory and history are not locked to one runtime or model. Export terms are documented in the service agreement.",
-              },
-              {
-                q: "What if the AI makes a mistake or takes an unexpected action?",
-                a: "Sensitive and high-risk actions require your approval before Nexus acts. If a workflow fails, Nexus falls back safely and records the failure visibly — it does not disguise errors as completions. Reversible actions have a tested rollback method.",
-              },
-              {
-                q: "Can Nexus help me register or start a business in Canada?",
-                a: "Yes, through the Start Your Business — Canada package. Nexus coordinates the launch checklist, official and professional handoffs, operating tools, and a 90-day plan. It does not provide legal, tax, accounting, immigration, or regulated filing advice. All professional decisions are referred to qualified providers.",
+                q: "How quickly can we begin?",
+                a: "A basic knowledge-and-messaging workflow can launch quickly after your initial workflow review and discovery process.",
               },
             ].map((item, i) => (
               <FaqItem key={i} question={item.q} answer={item.a} />
             ))}
           </div>
+
+          <details className="mt-8 group border border-black/[0.07] rounded-2xl bg-white p-6">
+            <summary className="text-xs font-normal text-black/60 cursor-pointer flex items-center justify-between select-none font-sans">
+              <span>More technical, local-appliance, & founder questions</span>
+              <span className="text-[10px] text-black/40 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div className="mt-4 pt-4 border-t border-black/[0.06] space-y-0 divide-y divide-black/[0.06]">
+              {[
+                {
+                  q: "Does Nexus replace an employee?",
+                  a: "Nexus supports the owner and team by absorbing repetitive work. It does not replace human judgment, hospitality, or skilled service.",
+                },
+                {
+                  q: "Can Nexus run locally?",
+                  a: "Yes, Nexus Edge includes a managed local appliance for businesses requiring local privacy or local network access.",
+                },
+                {
+                  q: "Who owns my data? Can I take it with me?",
+                  a: "You own your business data, conversations, memories, and audit logs. Agent portability is a core design requirement.",
+                },
+                {
+                  q: "Can Nexus help me start a business in Canada?",
+                  a: "Yes, through the Start Your Business — Canada package, providing checklists, launch workflows, and professional referrals.",
+                },
+              ].map((item, i) => (
+                <FaqItem key={i} question={item.q} answer={item.a} />
+              ))}
+            </div>
+          </details>
         </div>
       </section>
 
@@ -1811,8 +1846,8 @@ export default function NexusPage() {
             >
               Show us the work<br />that keeps following<br />you home.
             </h2>
-            <p className="text-sm text-black/45 leading-relaxed">
-              We'll identify the first few tasks Nexus can take off your plate and recommend a practical starting package.
+            <p className="text-sm text-black/55 max-w-lg mx-auto leading-relaxed">
+              We will identify the first few tasks Nexus may be able to take off your plate and recommend a practical starting point. If the numbers or workflow do not support Nexus, we will say so.
             </p>
           </div>
 
@@ -1820,112 +1855,66 @@ export default function NexusPage() {
             <div className="text-center">
               <div className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl border border-emerald-600/20 bg-emerald-50 text-emerald-700">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-sm font-light">Thanks — we'll be in touch within one business day.</span>
+                <span className="text-sm font-light">Thanks — we&apos;ll be in touch within one business day for your workflow review.</span>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/[0.07] p-8 space-y-5">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/[0.07] p-8 space-y-5 shadow-sm">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-[11px] tracking-widest text-black/40 mb-2">YOUR NAME *</label>
+                  <label htmlFor="name" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">YOUR NAME *</label>
                   <input id="name" name="name" type="text" required value={form.name} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
+                    placeholder="Jane Doe"
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/25 transition-colors" />
                 </div>
                 <div>
-                  <label htmlFor="business" className="block text-[11px] tracking-widest text-black/40 mb-2">BUSINESS NAME *</label>
+                  <label htmlFor="business" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">BUSINESS NAME *</label>
                   <input id="business" name="business" type="text" required value={form.business} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
+                    placeholder="Acme Cafe"
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/25 transition-colors" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="email" className="block text-[11px] tracking-widest text-black/40 mb-2">EMAIL *</label>
+                  <label htmlFor="email" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">EMAIL *</label>
                   <input id="email" name="email" type="email" required value={form.email} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
+                    placeholder="jane@example.com"
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/25 transition-colors" />
                 </div>
                 <div>
-                  <label htmlFor="phone" className="block text-[11px] tracking-widest text-black/40 mb-2">PHONE (OPTIONAL)</label>
+                  <label htmlFor="phone" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">PHONE (OPTIONAL)</label>
                   <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
+                    placeholder="(416) 555-0123"
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/25 transition-colors" />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="city" className="block text-[11px] tracking-widest text-black/40 mb-2">CITY</label>
-                <input id="city" name="city" type="text" value={form.city} onChange={handleFormChange}
-                  placeholder="e.g. Toronto, Mississauga, Vancouver"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/40 mb-2">INDUSTRY *</label>
-                  <select id="industry" name="industry" required value={form.industry} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
-                    <option value="">Select industry</option>
-                    <option>Restaurant</option>
-                    <option>Barbershop / Salon</option>
-                    <option>Coffee Shop / Café</option>
-                    <option>Automotive / Dealership</option>
-                    <option>Marketing / Agency</option>
-                    <option>Trades / Home Services</option>
-                    <option>Clinic / Professional Office</option>
-                    <option>Starting a New Business</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="locations" className="block text-[11px] tracking-widest text-black/40 mb-2">NUMBER OF LOCATIONS</label>
-                  <select id="locations" name="locations" value={form.locations} onChange={handleFormChange}
-                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
-                    <option value="">Select</option>
-                    <option>1</option>
-                    <option>2–3</option>
-                    <option>4–10</option>
-                    <option>10+</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="channel" className="block text-[11px] tracking-widest text-black/40 mb-2">PREFERRED CONTACT CHANNEL</label>
-                <select id="channel" name="channel" value={form.channel} onChange={handleFormChange}
+                <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">INDUSTRY *</label>
+                <select id="industry" name="industry" required value={form.industry} onChange={handleFormChange}
                   className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
-                  <option value="">Select</option>
-                  <option>WhatsApp</option>
-                  <option>SMS / Text</option>
-                  <option>Email</option>
-                  <option>Phone call</option>
+                  <option value="">Select industry</option>
+                  <option>Restaurant</option>
+                  <option>Barbershop / Salon</option>
+                  <option>Coffee Shop / Café</option>
+                  <option>Automotive / Dealership</option>
+                  <option>Marketing / Agency</option>
+                  <option>Trades / Home Services</option>
+                  <option>Clinic / Professional Office</option>
+                  <option>Starting a New Business</option>
+                  <option>Other</option>
                 </select>
               </div>
 
               <div>
-                <label htmlFor="problem" className="block text-[11px] tracking-widest text-black/40 mb-2">BIGGEST REPETITIVE PROBLEM</label>
+                <label htmlFor="problem" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">WHAT WORK KEEPS FOLLOWING YOU HOME?</label>
                 <textarea id="problem" name="problem" rows={3} value={form.problem} onChange={handleFormChange}
-                  placeholder="What work keeps following you home at the end of the day?"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors resize-none" />
+                  placeholder="Describe the tasks, messages, or follow-ups that consume your evenings..."
+                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/25 transition-colors resize-none" />
               </div>
 
-              <div>
-                <label htmlFor="tools" className="block text-[11px] tracking-widest text-black/40 mb-2">CURRENT POS, BOOKING, CRM, OR MESSAGING TOOLS</label>
-                <input id="tools" name="tools" type="text" value={form.tools} onChange={handleFormChange}
-                  placeholder="e.g. Square, Mindbody, HubSpot, WhatsApp"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/25 focus:outline-none focus:border-black/25 transition-colors" />
-              </div>
-
-              <div>
-                <label htmlFor="deployment" className="block text-[11px] tracking-widest text-black/40 mb-2">DEPLOYMENT PREFERENCE</label>
-                <select id="deployment" name="deployment" value={form.deployment} onChange={handleFormChange}
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
-                  <option value="">Select</option>
-                  <option>Cloud (Nexus Cloud or Managed)</option>
-                  <option>Local appliance (Nexus Edge)</option>
-                  <option>Recommend for me</option>
-                </select>
-              </div>
-
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 pt-2">
                 <input
                   id="consent"
                   name="consent"
@@ -1935,7 +1924,7 @@ export default function NexusPage() {
                   onChange={handleFormChange}
                   className="mt-0.5 w-4 h-4 rounded border-black/20 accent-black"
                 />
-                <label htmlFor="consent" className="text-xs text-black/40 leading-relaxed">
+                <label htmlFor="consent" className="text-xs text-black/50 leading-relaxed">
                   I agree to be contacted by Westside Union regarding Project Nexus. My information will not be shared with third parties. *
                 </label>
               </div>
@@ -1949,9 +1938,9 @@ export default function NexusPage() {
               <button
                 type="submit"
                 disabled={formState === "loading"}
-                className="w-full py-4 bg-[#111] text-white text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest font-medium disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-[#111] text-white text-xs sm:text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase font-medium disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                {formState === "loading" ? "SENDING…" : "REQUEST A NEXUS ASSESSMENT"}
+                {formState === "loading" ? "SENDING…" : "BOOK MY FREE WORKFLOW REVIEW"}
               </button>
             </form>
           )}

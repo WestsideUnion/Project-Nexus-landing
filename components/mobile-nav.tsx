@@ -3,10 +3,11 @@
 import { useState } from "react"
 
 const NAV_LINKS = [
-  { label: "How It Works",       href: "#how-it-works" },
+  { label: "How It Helps",       href: "#how-it-helps" },
   { label: "Industries",         href: "#industries" },
-  { label: "For Founders", href: "#start-your-business" },
+  { label: "How It Works",       href: "#how-it-works" },
   { label: "Pricing",            href: "#pricing" },
+  { label: "For Founders",       href: "#start-your-business" },
   { label: "FAQ",                href: "#faq" },
 ]
 
@@ -60,7 +61,7 @@ export function MobileNav() {
               className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide whitespace-nowrap hidden md:block"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
-              BOOK A NEXUS FIT SESSION
+              SHOW US WHAT STEALS YOUR TIME
             </a>
 
             {/* Burger — mobile only */}
@@ -98,7 +99,7 @@ export function MobileNav() {
         {/* Mobile dropdown */}
         <div
           className="md:hidden mt-2 overflow-hidden transition-all duration-300 ease-in-out"
-          style={{ maxHeight: open ? "320px" : "0px", opacity: open ? 1 : 0 }}
+          style={{ maxHeight: open ? "360px" : "0px", opacity: open ? 1 : 0 }}
         >
           <div
             className="rounded-2xl border border-black/[0.06] px-2 py-2 flex flex-col"
@@ -122,7 +123,7 @@ export function MobileNav() {
                 className="block w-full text-center text-sm px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
-                BOOK A NEXUS FIT SESSION
+                SHOW US WHAT STEALS YOUR TIME
               </a>
             </div>
           </div>
