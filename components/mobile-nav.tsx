@@ -24,22 +24,30 @@ export function MobileNav() {
 
   return (
     <div className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
-      <div className="pointer-events-auto w-full max-w-3xl">
+      <div className="pointer-events-auto w-full max-w-5xl">
 
         {/* Main bar */}
         <nav
-          className="flex items-center justify-between px-5 py-3 rounded-2xl border border-black/[0.06]"
+          className="flex items-center justify-between px-6 py-4 rounded-2xl border border-black/[0.06]"
           style={NAV_STYLE}
         >
-          <span className="font-pixel text-xs tracking-[0.25em] text-black/70">NEXUS</span>
+          <span className="flex items-center gap-3">
+            <img
+              src="/nexus-logo.png"
+              alt="Nexus logo"
+              className="w-9 h-9 object-contain"
+              style={{ imageRendering: "auto" }}
+            />
+            <span className="font-pixel text-xs tracking-[0.25em] text-black/70">NEXUS</span>
+          </span>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-7" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
+          <div className="hidden md:flex items-center gap-5" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
             {NAV_LINKS.map(l => (
               <a
                 key={l.label}
                 href={l.href}
-                className="text-sm text-black/60 hover:text-black transition-colors duration-200 tracking-wide"
+                className="text-sm text-black/60 hover:text-black transition-colors duration-200 tracking-wide whitespace-nowrap"
               >
                 {l.label}
               </a>
@@ -49,8 +57,8 @@ export function MobileNav() {
           <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide hidden md:block"
-              style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
+              className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide whitespace-nowrap hidden md:block"
+              style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
               BOOK A NEXUS FIT SESSION
             </a>

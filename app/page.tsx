@@ -1962,8 +1962,16 @@ export default function NexusPage() {
       <footer className="py-10 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <span className="font-pixel text-xs tracking-[0.25em] text-black/70">NEXUS</span>
-            <p className="text-[10px] text-black/30 tracking-widest mt-1">A Westside Union product</p>
+            <span className="flex items-center gap-3">
+              <img
+                src="/nexus-logo.png"
+                alt="Nexus logo"
+                className="w-9 h-9 object-contain"
+                style={{ imageRendering: "auto" }}
+              />
+              <span className="font-pixel text-xs tracking-[0.25em] text-black/70">NEXUS</span>
+            </span>
+            <p className="text-[10px] text-black/30 tracking-widest mt-1 pl-12">A Westside Union product</p>
           </div>
 
           {/* Nav sections */}

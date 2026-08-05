@@ -15,6 +15,14 @@ export const metadata: Metadata = {
   description: 'Project Nexus is a managed AI assistant for local business owners, built and operated by Westside Union. One assistant that knows your business, works through the channels you already use, and helps you stay ahead.',
   keywords: ['AI assistant', 'business assistant', 'managed AI', 'local business', 'WhatsApp business', 'Westside Union', 'Project Nexus'],
   authors: [{ name: 'Westside Union' }],
+  icons: {
+    icon: [
+      { url: '/nexus-logo-sm.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/nexus-logo.png', sizes: '1024x1024', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: 'Project Nexus — Managed AI Assistant for Business Owners',
     description: 'One assistant that knows your business, works through the channels you already use, and helps you stay ahead without adding another employee or complicated app.',
