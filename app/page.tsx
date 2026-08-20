@@ -1313,7 +1313,122 @@ export default function NexusPage() {
         </div>
       </section>
 
-      {/* ── SECTION 11: CAPACITY COMPARISON & WAGE BENCHMARKS ─────────────────── */}
+      {/* ── SECTION 11: FOR FOUNDERS — START YOUR BUSINESS CANADA ───────────── */}
+      <section id="start-your-business" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
+        <div className="max-w-6xl mx-auto space-y-12">
+          {/* Header Card */}
+          <div className="rounded-2xl border border-black/[0.08] bg-white p-8 sm:p-12 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="max-w-2xl space-y-4">
+              <span className="px-2.5 py-1 rounded-full text-[10px] tracking-widest bg-[#111] text-white uppercase font-sans">
+                FOR NEW CANADIAN FOUNDERS
+              </span>
+              <h2
+                className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
+                style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
+              >
+                Starting a business in Canada? Begin with a clear path.
+              </h2>
+              <p className="text-sm sm:text-base text-black/70 leading-relaxed font-light">
+                Launching a business comes with a dizzying checklist—registrations, business numbers, bank accounts, bookkeeping setups, and communication tools. Nexus organizes your launch roadmap, references official Canadian resources, coordinates warm handoffs to trusted professionals, and stays on as your managed business assistant after opening day.
+              </p>
+              <div className="p-3.5 rounded-xl bg-[#F5F4F0] border border-black/[0.05]">
+                <p className="text-xs text-black/55 leading-relaxed">
+                  <strong className="font-medium text-black/80">Professional boundary:</strong> Nexus provides operational guidance, launch coordination, and initial tool setup. It does not provide legal, accounting, tax, immigration, or regulated filing advice. We coordinate referrals to qualified Canadian professionals for regulated counsel.
+                </p>
+              </div>
+            </div>
+
+            <div className="shrink-0 flex flex-col gap-3 w-full sm:w-auto">
+              <a
+                href="#contact"
+                className="px-6 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
+              >
+                Book a Founder Consultation
+              </a>
+              <a
+                href="https://www.canada.ca/en/services/business/start.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 border border-black/15 text-black/70 text-[11px] rounded-xl hover:border-black/30 hover:text-black hover:bg-black/[0.02] transition-all duration-200 tracking-widest text-center uppercase"
+              >
+                Govt. of Canada — Starting a Business ↗
+              </a>
+            </div>
+          </div>
+
+          {/* 4 Launch Pillars Bento Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" onMouseMove={handleMouse}>
+            {[
+              {
+                step: "01",
+                title: "Discovery & Launch Roadmap",
+                desc: "Map your province, structure, and startup milestones into a personalized checklist referencing official Canadian government guidelines.",
+                tag: "Planning",
+                delay: 0,
+              },
+              {
+                step: "02",
+                title: "Operating Toolkit Setup",
+                desc: "Organize domain, business email, invoicing, booking, and customer messaging channels before opening day.",
+                tag: "Setup",
+                delay: 60,
+              },
+              {
+                step: "03",
+                title: "Professional Handoffs",
+                desc: "Warm referrals to verified Canadian accountants, business lawyers, and commercial banking partners when you need regulated counsel.",
+                tag: "Referrals",
+                delay: 120,
+              },
+              {
+                step: "04",
+                title: "Post-Launch Continuity",
+                desc: "Seamlessly transition into an ongoing Nexus Cloud subscription to manage customer inquiries, follow-ups, and review drafts from day one.",
+                tag: "Ongoing",
+                delay: 180,
+              },
+            ].map((pillar) => (
+              <BentoCard key={pillar.step} className="p-6 flex flex-col justify-between" delay={pillar.delay}>
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-mono text-xs text-black/30 tracking-widest">{pillar.step}</span>
+                    <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded-full bg-black/[0.04] text-black/50">
+                      {pillar.tag}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-light text-[#111] mb-2">{pillar.title}</h3>
+                  <p className="text-xs text-black/55 leading-relaxed">{pillar.desc}</p>
+                </div>
+              </BentoCard>
+            ))}
+          </div>
+
+          {/* Detailed Milestone Accordion */}
+          <details className="group border border-black/[0.07] rounded-2xl bg-white p-6 shadow-sm">
+            <summary className="text-xs font-medium text-black/70 cursor-pointer flex items-center justify-between select-none font-sans">
+              <span>View full Canada founder launch checklist & referral framework</span>
+              <span className="text-[10px] text-black/40 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div className="mt-4 pt-4 border-t border-black/[0.06] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {[
+                { label: "Founder discovery & scoping", desc: "Identify industry, operating model, province requirements, and risk factors." },
+                { label: "Structure decision clarity", desc: "Sole proprietorship, partnership, or federal/provincial incorporation considerations." },
+                { label: "Official registration checklists", desc: "Step-by-step guidance referencing Canada.ca, Corporations Canada, and provincial registries." },
+                { label: "Banking & financial setup", desc: "Checklist for business bank accounts, GST/HST accounts, and initial bookkeeping systems." },
+                { label: "First-customer workflow", desc: "Configure customer inquiry channels, automated intake, and quote follow-ups." },
+                { label: "Ongoing business assistant", desc: "Transition directly to Nexus Cloud ($99/mo) to keep administrative work off your plate." },
+              ].map((item, i) => (
+                <div key={i} className="p-4 rounded-xl bg-[#F5F4F0] border border-black/[0.03]">
+                  <h4 className="text-xs font-medium text-[#111] mb-1">{item.label}</h4>
+                  <p className="text-[11px] text-black/50 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </details>
+        </div>
+      </section>
+
+      {/* ── SECTION 12: CAPACITY COMPARISON & WAGE BENCHMARKS ─────────────────── */}
       <section id="roi" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
         <div className="max-w-6xl mx-auto">
           <div className="mb-16">
@@ -1984,6 +2099,7 @@ export default function NexusPage() {
               { label: "Industries", href: "#industries" },
               { label: "How It Works", href: "#how-it-works" },
               { label: "Pricing", href: "#pricing" },
+              { label: "For Founders", href: "#start-your-business" },
               { label: "FAQ", href: "#faq" },
               { label: "Contact", href: "#contact" },
             ].map(l => (
