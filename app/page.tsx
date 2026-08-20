@@ -750,117 +750,142 @@ export default function NexusPage() {
 
       {/* ── INDUSTRY LIGHTBOX MODAL ───────────────────────────────────────────── */}
       {activeIndustry && (() => {
-        const useCases: Record<string, { time: string; busyWith: string; atRisk: string; nexusAction: string; approval: string; img: string }[]> = {
+        const useCases: Record<string, { time: string; scenario: string; outcome: string; img: string }[]> = {
           "Restaurants": [
             {
-              time: "Wednesday 11:30 PM (After closing)",
-              busyWith: "You just finished a busy dinner rush and clean-up.",
-              atRisk: "A promotion idea for the weekend and 2 Google reviews go forgotten by morning.",
-              nexusAction: "Nexus captures your audio note, drafts the promotion, and prepares review responses based on approved restaurant tone.",
-              approval: "Drafts are queued for your single-tap approval before anything is scheduled.",
+              time: "11:31 PM — Wednesday",
+              scenario: "A customer messages asking if you're still open and requests tomorrow's specials.",
+              outcome: "Nexus replies instantly with your hours, menu highlights, and reservation link — while you sleep.",
               img: "/images/scenario-restaurants.png",
             },
             {
-              time: "Friday 7:15 PM (Dinner service)",
-              busyWith: "The floor is full and your staff is serving guests.",
-              atRisk: "A party of 10 messages asking about reservations, parking, and allergen menus.",
-              nexusAction: "Nexus answers hours, parking, and allergen FAQs instantly, and routes the reservation request directly to your booking link.",
-              approval: "Custom menu requests pause for manager confirmation.",
+              time: "Monday 7:45 AM",
+              scenario: "You wake up to three new Google reviews from the weekend.",
+              outcome: "Nexus has already drafted professional, on-brand responses for each one. You approve with a single reply.",
               img: "/images/scenario-restaurants-2.png",
+            },
+            {
+              time: "Friday 2:00 PM — slow service",
+              scenario: "Foot traffic is down and your team is idle.",
+              outcome: "Nexus flags the quiet window and asks if you'd like a weekend promotion drafted and queued for your approval.",
+              img: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
             },
           ],
           "Cafés and coffee shops": [
             {
-              time: "Saturday 7:45 AM (Morning rush)",
-              busyWith: "The line is out the door and your baristas are making coffee.",
-              atRisk: "A corporate catering inquiry for 40 coffees on Monday sits unread in your inbox.",
-              nexusAction: "Nexus acknowledges the inquiry instantly, provides your catering menu and pricing, and collects headcount details.",
-              approval: "Order confirmation and final quote remain queued for owner approval.",
+              time: "Saturday 7:20 AM — pre-rush",
+              scenario: "A corporate client emails asking about catering options for a Monday team meeting.",
+              outcome: "Nexus captures the enquiry, sends your catering info, and flags it for your review — before the rush hits.",
               img: "/images/scenario-coffee.png",
             },
             {
-              time: "Tuesday 2:30 PM (Quiet afternoon window)",
-              busyWith: "You are restocking inventory and managing supplier deliveries.",
-              atRisk: "Slow afternoon sales go unaddressed without proactive promotion.",
-              nexusAction: "Nexus highlights the recurring slow window and suggests a 2-for-1 pastry social draft.",
-              approval: "Owner approves the draft before it is scheduled.",
+              time: "Weekday 3:00 PM",
+              scenario: "A customer asks if your cold brew contains dairy via Instagram DM.",
+              outcome: "Nexus answers using your allergen information — consistent, accurate, no staff interruption needed.",
               img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Tuesday morning",
+              scenario: "Three reviews came in over the weekend, including one complaint.",
+              outcome: "Nexus has drafted responses for all three. The complaint response includes your preferred tone and a recovery offer ready for your approval.",
+              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
             },
           ],
           "Barbershops and salons": [
             {
-              time: "Thursday 3:00 PM (In the chair)",
-              busyWith: "Every barber is busy cutting hair and engaging clients.",
-              atRisk: "A potential new client asks about weekend availability via Instagram DM and books elsewhere after 20 minutes.",
-              nexusAction: "Nexus replies within seconds with your service list and direct booking link.",
-              approval: "Special request appointments or pricing exceptions pause for owner review.",
+              time: "Sunday 9:55 PM",
+              scenario: "A new client DMs asking about availability, pricing, and whether you take walk-ins.",
+              outcome: "Nexus answers all three questions accurately and sends your booking link — no missed opportunity.",
               img: "/images/scenario-barbershop.png",
             },
             {
-              time: "Monday 8:30 AM (Weekly kickoff)",
-              busyWith: "Opening the shop and preparing chairs for the day.",
-              atRisk: "No-shows from unconfirmed appointments across 4 chairs.",
-              nexusAction: "Nexus sends confirmation reminders and delivers a morning appointment & review summary.",
-              approval: "Cancellations and rescheduling requests are routed with your approved rules.",
+              time: "Tuesday 8:00 AM",
+              scenario: "You open the day and want to know what happened overnight.",
+              outcome: "Nexus delivers a morning summary: 4 confirmations sent, 1 review responded to, 2 callbacks queued.",
               img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Thursday afternoon",
+              scenario: "A client texts asking about your cancellation policy mid-cut.",
+              outcome: "Nexus replies with your exact policy — accurate, professional, and without interrupting you.",
+              img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
             },
           ],
           "Automotive dealerships": [
             {
-              time: "Tuesday 8:45 PM (After-hours lead)",
-              busyWith: "Showroom is closed and sales advisors are home.",
-              atRisk: "An online buyer inquires about a certified pre-owned SUV and contacts a competing dealer.",
-              nexusAction: "Nexus captures specific trim preferences, answers inventory specs, and schedules a morning callback for the sales manager.",
-              approval: "Price negotiation and financing pre-approvals remain strictly human-handled.",
+              time: "6:45 PM — after closing",
+              scenario: "A prospect submits a vehicle inquiry form after hours.",
+              outcome: "Nexus sends a personalised acknowledgement, captures their preferences, and schedules a callback reminder for your morning.",
               img: "/images/scenario-automotive.png",
             },
             {
-              time: "Thursday 9:00 AM (Service department)",
-              busyWith: "Service advisors are checking in morning vehicles.",
-              atRisk: "Open service quotes from 3 days ago go cold without structured follow-up.",
-              nexusAction: "Nexus surfaces aging quotes and drafts polite check-in messages for customer review.",
-              approval: "Service advisor reviews and taps to send.",
+              time: "Wednesday 9:00 AM",
+              scenario: "You have 6 open service quotes that haven't had follow-up in 3 days.",
+              outcome: "Nexus flags all six and queues polite follow-up messages for your approval — one review, one tap to send.",
               img: "https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Friday afternoon",
+              scenario: "A customer calls to ask about a specific model's towing capacity.",
+              outcome: "Your team is with a customer. Nexus handles the SMS follow-up with the exact spec from your inventory knowledge.",
+              img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
             },
           ],
           "Marketing agencies": [
             {
-              time: "Wednesday 4:30 PM (Client meeting wrap)",
-              busyWith: "Finishing a strategy session with 8 client deliverables.",
-              atRisk: "Meeting action items and client recaps delayed until Friday due to deadlines.",
-              nexusAction: "Nexus formats meeting notes into an organized action checklist and draft client update.",
-              approval: "Account lead reviews, edits, and approves before sending.",
+              time: "Post-meeting — same day",
+              scenario: "A client strategy meeting just wrapped with 11 action items across three teams.",
+              outcome: "Nexus drafts a structured recap and action list, ready to send within minutes of the meeting ending.",
               img: "/images/scenario-agency.png",
             },
             {
-              time: "Monday 9:00 AM (Weekly reporting)",
-              busyWith: "Preparing team bandwidth and kickoff calls.",
-              atRisk: "Client accounts with no contact in 7 days slip through the cracks.",
-              nexusAction: "Nexus scans open deliverables and queues gentle check-in drafts for the account director.",
-              approval: "All outward communications require lead approval.",
+              time: "End of month",
+              scenario: "Three client reports are due and your team is stretched.",
+              outcome: "Nexus pulls the agreed data points, populates your report template, and flags items needing human review.",
               img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Monday morning",
+              scenario: "Four client threads went quiet last week with no follow-up sent.",
+              outcome: "Nexus identifies the gaps and queues personalised follow-up drafts for each account — ready for you to approve.",
+              img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
             },
           ],
           "Start Your Business — Canada": [
             {
-              time: "Discovery & Launch Planning",
-              busyWith: "You have a business concept but need clarity on requirements and setup.",
-              atRisk: "Overwhelmed by province registration, business numbers, bank accounts, and tools.",
-              nexusAction: "Nexus generates a structured launch checklist referencing official Canadian resources and coordinates operating tools.",
-              approval: "Nexus guides you to qualified accountants, lawyers, and banks for professional advice.",
+              time: "Discovery & launch planning",
+              scenario: "A founder has a business idea but needs clarity on registrations, province requirements, and operating tools.",
+              outcome: "Nexus generates a personalized launch checklist referencing official Canadian sources and guides initial milestones.",
               img: "/images/industry-founders.png",
             },
             {
-              time: "Post-Launch Operating Transition",
-              busyWith: "Welcoming your first customers and managing day-to-day operations.",
-              atRisk: "Losing focus on customer growth while juggling admin tasks.",
-              nexusAction: "Nexus seamlessly transitions into your daily managed business assistant on Nexus Cloud.",
-              approval: "All business policies and communication rules remain in your control.",
+              time: "Toolkit setup & referrals",
+              scenario: "Organizing domain, banking, bookkeeping, and communications before opening day.",
+              outcome: "Nexus helps configure your initial tools and coordinates warm handoffs to verified accountants, lawyers, and banks.",
+              img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Post-launch operating support",
+              scenario: "Transitioning from launch into daily business operations.",
+              outcome: "Nexus transitions seamlessly into your ongoing business assistant on Nexus Cloud to organize follow-ups and messages.",
               img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
             },
           ],
         }
         const scenarios = useCases[activeIndustry] ?? []
+        const coverImg = {
+          "Restaurants": "/images/industry-restaurants.png",
+          "Cafés and coffee shops": "/images/industry-coffee.png",
+          "Coffee Shops": "/images/industry-coffee.png",
+          "Barbershops and salons": "/images/industry-barbershop.png",
+          "Barbershops & Salons": "/images/industry-barbershop.png",
+          "Automotive dealerships": "/images/industry-automotive.png",
+          "Dealerships": "/images/industry-automotive.png",
+          "Marketing agencies": "/images/industry-agency.png",
+          "Agencies": "/images/industry-agency.png",
+          "Start Your Business — Canada": "/images/industry-founders.png",
+        }[activeIndustry] || "/images/industry-restaurants.png"
+
         return (
           <div
             className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6"
@@ -871,57 +896,69 @@ export default function NexusPage() {
               className="relative w-full sm:max-w-3xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[#F5F4F0] shadow-2xl"
               onClick={e => e.stopPropagation()}
             >
-              {/* Header */}
-              <div className="p-6 border-b border-black/[0.07] bg-white sticky top-0 z-10 flex items-center justify-between">
-                <div>
-                  <Tag>INDUSTRY USE CASES</Tag>
-                  <h2 className="mt-1 text-2xl font-light tracking-tight">{activeIndustry}</h2>
-                </div>
-                <button
-                  onClick={() => setActiveIndustry(null)}
-                  className="w-8 h-8 flex items-center justify-center rounded-full bg-black/[0.05] hover:bg-black/[0.1] text-black/60 transition-colors"
-                  aria-label="Close modal"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Scenarios */}
-              <div className="p-6 space-y-4">
-                {scenarios.map((sc, i) => (
-                  <div key={i} className="rounded-xl border border-black/[0.07] bg-white overflow-hidden p-6 space-y-4 shadow-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium tracking-wide text-black/50 uppercase">{sc.time}</span>
-                      <span className="text-[10px] tracking-widest text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
-                        Nexus Workflow
-                      </span>
-                    </div>
-
-                    <div className="space-y-2 text-sm">
-                      <div className="p-3 rounded-lg bg-amber-50/70 border border-amber-200/50 text-amber-900">
-                        <strong className="font-medium block text-xs uppercase tracking-wide text-amber-700 mb-0.5">The Situation:</strong>
-                        {sc.busyWith} <span className="text-amber-800/80">{sc.atRisk}</span>
-                      </div>
-
-                      <div className="p-3 rounded-lg bg-emerald-50/70 border border-emerald-200/50 text-emerald-900">
-                        <strong className="font-medium block text-xs uppercase tracking-wide text-emerald-700 mb-0.5">How Nexus Helps:</strong>
-                        {sc.nexusAction}
-                      </div>
-
-                      <div className="p-3 rounded-lg bg-black/[0.02] border border-black/[0.04] text-black/70 text-xs">
-                        <strong className="font-medium text-black/80">Owner Control:</strong> {sc.approval}
-                      </div>
-                    </div>
+              {/* Cover image header */}
+              {coverImg && (
+                <div className="relative h-48 overflow-hidden rounded-t-3xl sm:rounded-t-2xl">
+                  <img src={coverImg} alt={activeIndustry} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(245,244,240,1) 0%, rgba(245,244,240,0.3) 60%, transparent 100%)" }} />
+                  <div className="absolute bottom-4 left-6">
+                    <Tag>USE CASES</Tag>
+                    <h2 className="mt-2 text-2xl font-light tracking-tight">{activeIndustry}</h2>
                   </div>
-                ))}
+                </div>
+              )}
+
+              {/* Close button */}
+              <button
+                onClick={() => setActiveIndustry(null)}
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-black/[0.08] text-black/50 hover:text-black transition-colors z-10"
+                aria-label="Close modal"
+              >
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M2 2l10 10M12 2L2 12" />
+                </svg>
+              </button>
+
+              {/* Scenario cards — side-by-side image + content, alternating left/right */}
+              <div className="p-6 space-y-4">
+                {scenarios.map((c, i) => {
+                  const imgLeft = i % 2 === 0
+                  return (
+                    <div key={i} className="rounded-xl border border-black/[0.07] bg-white overflow-hidden flex flex-col sm:flex-row shadow-sm">
+                      {/* Image — left for even */}
+                      {imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-square border-b sm:border-b-0 sm:border-r border-black/[0.07]">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      {/* Content */}
+                      <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
+                        <span className="text-[10px] tracking-widest text-black/35 uppercase font-medium">{c.time}</span>
+                        <p className="mt-2 text-sm font-light text-black/75 leading-relaxed">{c.scenario}</p>
+                        <div className="mt-3 flex gap-2 items-start">
+                          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-500 mt-0.5 shrink-0">
+                            <path d="M2 7l3.5 3.5L12 3"/>
+                          </svg>
+                          <p className="text-sm text-black/60 leading-relaxed">{c.outcome}</p>
+                        </div>
+                      </div>
+                      {/* Image — right for odd */}
+                      {!imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-square border-t sm:border-t-0 sm:border-l border-black/[0.07] order-first sm:order-last">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
 
               {/* Modal CTA */}
-              <div className="p-6 pt-2 pb-8 bg-[#F5F4F0] border-t border-black/[0.06]">
+              <div className="px-6 pb-8 pt-2">
                 <a
                   href="#contact"
                   onClick={() => setActiveIndustry(null)}
-                  className="block w-full py-3.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase"
+                  className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
                 >
                   Book a Free Consultation
                 </a>
