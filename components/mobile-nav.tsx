@@ -58,10 +58,10 @@ export function MobileNav() {
           <div className="flex items-center gap-2">
             <a
               href="#contact"
-              className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide whitespace-nowrap hidden md:block"
+              className="text-xs px-4 py-2 rounded-xl border border-black/10 text-black/70 hover:text-black hover:border-black/25 hover:bg-black/[0.04] transition-all duration-200 tracking-wide whitespace-nowrap hidden md:block uppercase font-medium"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
-              SHOW US WHAT STEALS YOUR TIME
+              Book a Free Consultation
             </a>
 
             {/* Burger — mobile only */}
@@ -120,10 +120,10 @@ export function MobileNav() {
               <a
                 href="#contact"
                 onClick={close}
-                className="block w-full text-center text-sm px-4 py-2.5 rounded-xl border border-black/10 text-black/60 hover:text-black hover:border-black/20 hover:bg-black/[0.03] transition-all duration-200 tracking-wide"
+                className="block w-full text-center text-sm px-4 py-2.5 rounded-xl border border-black/10 text-black/70 hover:text-black hover:border-black/25 hover:bg-black/[0.04] transition-all duration-200 tracking-wide uppercase font-medium"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
-                SHOW US WHAT STEALS YOUR TIME
+                Book a Free Consultation
               </a>
             </div>
           </div>
