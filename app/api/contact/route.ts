@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
       phone,
       city,
       industry,
+      package: selectedPackage,
       locations,
       channel,
       problem,
@@ -57,8 +58,9 @@ export async function POST(req: NextRequest) {
         ${row("Business", business)}
         ${row("Email", email)}
         ${row("Phone", phone || "—")}
-        ${row("City", city || "—")}
         ${row("Industry", industry || "—")}
+        ${row("Package", selectedPackage || body.package || "—")}
+        ${row("City", city || "—")}
         ${row("Locations", locations || "—")}
         ${row("Primary channel", channel || "—")}
         ${row("Deployment preference", deployment || "—")}

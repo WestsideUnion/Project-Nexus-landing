@@ -4,6 +4,14 @@ import React, { useRef, useEffect, useState } from "react"
 import { PixelIcon } from "@/components/pixel-icon"
 import { RevealText } from "@/components/reveal-text"
 import { MobileNav } from "@/components/mobile-nav"
+import {
+  FollowUpTrackerVector,
+  ReviewResponseVector,
+  OmnichannelSyncVector,
+  IdeaToTaskVector,
+  MorningBriefingVector,
+  EveningAutopilotVector,
+} from "@/components/transformation-vectors"
 
 // ─── Centralized content data ────────────────────────────────────────────────
 
@@ -68,7 +76,7 @@ const HOURLY_RATES: Record<string, number> = {
 // 3 Primary Package Structure
 const PLAN_DATA: Record<string, { name: string; monthly: number; annualMonthly: number; setup: number; setupLabel: string }> = {
   cloud: { name: "Nexus Cloud", monthly: 99, annualMonthly: 79, setup: 299, setupLabel: "CAD $299 one-time onboarding" },
-  edge: { name: "Nexus Edge", monthly: 299, annualMonthly: 299, setup: 0, setupLabel: "Appliance setup priced by config" },
+  edge: { name: "Nexus Edge", monthly: 299, annualMonthly: 239, setup: 0, setupLabel: "Appliance setup priced by config" },
   custom: { name: "Nexus Custom", monthly: 799, annualMonthly: 799, setup: 0, setupLabel: "Quoted after workflow consultation" },
 }
 
@@ -151,9 +159,23 @@ export default function NexusPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly")
   const [showBackToTop, setShowBackToTop] = useState(false)
   const [form, setForm] = useState({
-    name: "", business: "", email: "", phone: "", city: "", industry: "",
+    name: "", business: "", email: "", phone: "", city: "", industry: "", package: "",
     locations: "", channel: "", problem: "", tools: "", deployment: "", consent: false,
   })
+
+  const handleSelectPackage = (packageName: string) => {
+    setForm(prev => ({ ...prev, package: packageName }))
+    const contactSection = document.getElementById("contact")
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" })
+      setTimeout(() => {
+        const pkgSelect = document.getElementById("package") as HTMLSelectElement | null
+        if (pkgSelect) {
+          pkgSelect.focus()
+        }
+      }, 500)
+    }
+  }
 
   // ── ROI calculator state ──
   const [roi, setRoi] = useState({
@@ -265,8 +287,8 @@ export default function NexusPage() {
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "25%", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
         <div className="absolute inset-x-0 bottom-0 z-10 pointer-events-none" style={{ height: "45%", backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)", maskImage: "linear-gradient(to top, black 0%, transparent 100%)", WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 100%)" }} />
 
-        {/* Status badge — top-right */}
-        <div className="absolute top-24 right-6 md:right-12 z-30 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-black/[0.08] shadow-sm">
+        {/* Status badge — center */}
+        <div className="absolute top-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-black/[0.08] shadow-sm whitespace-nowrap">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -360,15 +382,58 @@ export default function NexusPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               {[
-                "A café owner sees new reviews but cannot reply during the morning rush.",
-                "A restaurant owner remembers a promotion idea after closing and forgets it by morning.",
-                "A barber loses time switching between bookings, messages, reviews, and social posts.",
-                "A business owner finishes the day with customer follow-ups still waiting.",
-                "A founder spends more time organizing work than growing the company.",
-              ].map((situation, i) => (
-                <div key={i} className={`p-4 rounded-xl bg-[#F5F4F0] border border-black/[0.04] flex items-start gap-3 ${i === 4 ? "sm:col-span-2" : ""}`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
-                  <p className="text-xs sm:text-sm text-black/75 leading-relaxed">{situation}</p>
+                {
+                  role: "Café Owner",
+                  text: "A café owner sees new reviews but cannot reply during the morning rush.",
+                  img: "/images/scenario-coffee.png",
+                  objectPosition: "center center",
+                },
+                {
+                  role: "Restaurant Owner",
+                  text: "A restaurant owner remembers a promotion idea after closing and forgets it by morning.",
+                  img: "/images/scenario-restaurants.png",
+                  objectPosition: "center center",
+                },
+                {
+                  role: "Barber & Stylist",
+                  text: "A barber loses time switching between bookings, messages, reviews, and social posts.",
+                  img: "/images/scenario-barbershop.png",
+                  objectPosition: "center center",
+                },
+                {
+                  role: "Business Owner",
+                  text: "A business owner finishes the day with customer follow-ups still waiting.",
+                  img: "/images/scenario-agency.png",
+                  objectPosition: "center center",
+                },
+                {
+                  role: "Founder",
+                  text: "A founder spends more time organizing work than growing the company.",
+                  img: "/images/industry-founders.png",
+                  objectPosition: "center 22%",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className={`group rounded-2xl bg-[#F5F4F0] border border-black/[0.05] hover:bg-[#EFECE6] hover:border-black/[0.12] transition-all duration-300 overflow-hidden flex flex-col sm:flex-row ${i === 4 ? "sm:col-span-2" : ""}`}
+                >
+                  {/* Half width image container */}
+                  <div className="w-full sm:w-1/2 relative min-h-[160px] sm:min-h-[180px] shrink-0 overflow-hidden bg-black/[0.02]">
+                    <img
+                      src={item.img}
+                      alt={item.role}
+                      style={{ objectPosition: item.objectPosition }}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                  {/* Half width content container */}
+                  <div className="w-full sm:w-1/2 p-5 sm:p-6 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                      <span className="text-[10px] tracking-widest uppercase font-mono text-black/45 font-medium">{item.role}</span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-black/75 leading-relaxed">{item.text}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1065,7 +1130,7 @@ export default function NexusPage() {
 
       {/* ── SECTION 7: TRANSFORMATION & OUTCOMES (StoryBrand Part 4) ─────────── */}
       <section className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#111] text-white">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-white/50 bg-white/10 mb-4 uppercase">
               TRANSFORMATION
@@ -1081,23 +1146,62 @@ export default function NexusPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { title: "Fewer forgotten follow-ups", desc: "Quotes, callbacks, and inquiries remain tracked until complete." },
-              { title: "Faster review responses", desc: "Drafted responses ready for your review to protect your reputation." },
-              { title: "More consistent communication", desc: "Customers receive timely, accurate, approved answers." },
-              { title: "Ideas turned into assigned work", desc: "Late-night thoughts converted into organized tasks." },
-              { title: "More visibility into completed work", desc: "Start each morning with a concise summary of what happened." },
-              { title: "Less administrative work at home", desc: "Regain your evenings with routine coordination handled." },
+              {
+                title: "Fewer forgotten follow-ups",
+                desc: "Quotes, callbacks, and inquiries remain tracked until complete.",
+                badge: "Pipeline Automation",
+                vector: <FollowUpTrackerVector />,
+              },
+              {
+                title: "Faster review responses",
+                desc: "Drafted responses ready for your review to protect your reputation.",
+                badge: "Reputation Protection",
+                vector: <ReviewResponseVector />,
+              },
+              {
+                title: "More consistent communication",
+                desc: "Customers receive timely, accurate, approved answers.",
+                badge: "Omnichannel Sync",
+                vector: <OmnichannelSyncVector />,
+              },
+              {
+                title: "Ideas turned into assigned work",
+                desc: "Late-night thoughts converted into organized tasks.",
+                badge: "Task Delegation",
+                vector: <IdeaToTaskVector />,
+              },
+              {
+                title: "More visibility into completed work",
+                desc: "Start each morning with a concise summary of what happened.",
+                badge: "Executive Briefing",
+                vector: <MorningBriefingVector />,
+              },
+              {
+                title: "Less administrative work at home",
+                desc: "Regain your evenings with routine coordination handled.",
+                badge: "Evening Autopilot",
+                vector: <EveningAutopilotVector />,
+              },
             ].map((outcome, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-white/10 bg-white/[0.03] space-y-3">
-                <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-emerald-400">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+              <div
+                key={i}
+                className="group p-5 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="mb-4">
+                    {outcome.vector}
+                  </div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                    <span className="text-[10px] tracking-widest uppercase font-mono text-white/50 font-medium">
+                      {outcome.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-light text-white leading-snug mb-1.5">{outcome.title}</h3>
+                  <p className="text-xs text-white/60 leading-relaxed font-light">{outcome.desc}</p>
                 </div>
-                <h3 className="text-lg font-light text-white">{outcome.title}</h3>
-                <p className="text-xs text-white/50 leading-relaxed">{outcome.desc}</p>
               </div>
             ))}
           </div>
@@ -1123,21 +1227,135 @@ export default function NexusPage() {
           <div className="grid grid-cols-12 gap-3" onMouseMove={handleMouse}>
             {/* Channel grid */}
             <BentoCard className="col-span-12 lg:col-span-7 p-8" delay={0}>
-              <h3 className="text-lg font-light mb-6">Messaging channels</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-light">Messaging channels</h3>
+                  <p className="text-xs text-black/40 mt-1">Directly supported across OpenClaw &amp; Hermes Agent gateways</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
-                  { name: "WhatsApp", status: "available" as const, desc: "Direct owner and customer messaging" },
-                  { name: "SMS / Text", status: "available" as const, desc: "Standard text messaging & reminders" },
-                  { name: "Email", status: "available" as const, desc: "Inbox triage and reply drafting" },
-                  { name: "Web Messaging", status: "configured" as const, desc: "Embedded chat on your website" },
-                  { name: "Telegram", status: "configured" as const, desc: "Where appropriate per deployment" },
+                  {
+                    name: "WhatsApp",
+                    icon: (
+                      <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.711 1.456h.005c6.554 0 11.89-5.336 11.893-11.893a11.82 11.82 0 00-3.479-8.413z" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Direct owner & customer messaging",
+                  },
+                  {
+                    name: "Telegram",
+                    icon: (
+                      <svg className="w-4 h-4 text-sky-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.943z" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Real-time bot commands & alerts",
+                  },
+                  {
+                    name: "Slack",
+                    icon: (
+                      <svg className="w-4 h-4 text-[#4A154B]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Workspace channels, DMs & threads",
+                  },
+                  {
+                    name: "Discord",
+                    icon: (
+                      <svg className="w-4 h-4 text-[#5865F2]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Community servers & direct bot chats",
+                  },
+                  {
+                    name: "SMS / Text",
+                    icon: (
+                      <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                        <path d="M8 9h8" />
+                        <path d="M8 13h5" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Twilio SMS & text notifications",
+                  },
+                  {
+                    name: "Email",
+                    icon: (
+                      <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    ),
+                    status: "available" as const,
+                    desc: "Inbox triage & reply drafting",
+                  },
+                  {
+                    name: "Signal",
+                    icon: (
+                      <svg className="w-4 h-4 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.086 21.23a.75.75 0 0 0 .914.914l4.062-1.352A9.948 9.948 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 1.5c4.694 0 8.5 3.806 8.5 8.5s-3.806 8.5-8.5 8.5c-1.637 0-3.167-.463-4.464-1.266a.75.75 0 0 0-.518-.094l-3.23.943.943-3.23a.75.75 0 0 0-.094-.518C3.963 15.167 3.5 13.637 3.5 12c0-4.694 3.806-8.5 8.5-8.5z" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "End-to-end encrypted messaging",
+                  },
+                  {
+                    name: "iMessage",
+                    icon: (
+                      <svg className="w-4 h-4 text-emerald-500" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.42 3.84 7.02-.17.97-.68 2.37-1.74 3.44-.19.19-.15.52.09.65.17.09.38.08.54-.03 2.12-1.42 3.59-2.31 4.14-2.67.75.19 1.54.29 2.36.29 5.52 0 10-4.03 10-9S17.52 2 12 2z" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Apple ecosystem native chat",
+                  },
+                  {
+                    name: "Microsoft Teams",
+                    icon: (
+                      <svg className="w-4 h-4 text-[#5059C9]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.5 7.5a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5zm-5-1a2.75 2.75 0 1 0 0-5.5 2.75 2.75 0 0 0 0 5.5zM17 9h5a2 2 0 0 1 2 2v4a3 3 0 0 1-3 3h-1.5a.5.5 0 0 1-.5-.5V14a3 3 0 0 0-3-3h-.5V9.5A.5.5 0 0 1 17 9zm-5 1.5h6a2 2 0 0 1 2 2v6a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3v-6a2 2 0 0 1 2-2h4zm-8 .5a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5zm2 2H2a2 2 0 0 0-2 2v3a3 3 0 0 0 3 3h1.5a.5.5 0 0 0 .5-.5V15a3 3 0 0 1 3-3z" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Enterprise channels & collaboration",
+                  },
+                  {
+                    name: "Web Chat",
+                    icon: (
+                      <svg className="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                        <circle cx="8" cy="12" r="1" fill="currentColor" />
+                        <circle cx="12" cy="12" r="1" fill="currentColor" />
+                        <circle cx="16" cy="12" r="1" fill="currentColor" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Embedded live chat on your website",
+                  },
                 ].map(ch => (
-                  <div key={ch.name} className="flex flex-col gap-2 p-4 rounded-xl bg-black/[0.02] border border-black/[0.04]">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-light">{ch.name}</span>
+                  <div
+                    key={ch.name}
+                    className="flex flex-col justify-between gap-3 p-4 rounded-xl bg-black/[0.02] border border-black/[0.04] hover:bg-black/[0.035] hover:border-black/[0.08] transition-all"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-black/[0.04] border border-black/[0.06] flex items-center justify-center shrink-0">
+                        {ch.icon}
+                      </div>
                       <StatusPill status={ch.status} />
                     </div>
-                    <span className="text-xs text-black/40">{ch.desc}</span>
+                    <div>
+                      <div className="text-sm font-light text-black/90">{ch.name}</div>
+                      <div className="text-xs text-black/40 mt-0.5 leading-relaxed">{ch.desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1145,19 +1363,99 @@ export default function NexusPage() {
 
             {/* Business systems */}
             <BentoCard className="col-span-12 lg:col-span-5 p-8" delay={80}>
-              <h3 className="text-lg font-light mb-6">Business systems</h3>
-              <div className="space-y-4">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-light">Business systems</h3>
+                  <p className="text-xs text-black/40 mt-1">Operational backends &amp; APIs</p>
+                </div>
+              </div>
+              <div className="space-y-3">
                 {[
-                  { name: "POS Systems", status: "configured" as const, desc: "Sales reporting and inventory knowledge" },
-                  { name: "Booking Platforms", status: "configured" as const, desc: "Appointment scheduling handoff" },
-                  { name: "Google Business Profile", status: "planned" as const, desc: "Review management and drafting" },
-                  { name: "CRM Platforms", status: "configured" as const, desc: "Lead and customer inquiry data" },
-                  { name: "Loyalty Programs", status: "planned" as const, desc: "Customer rewards and promotions" },
+                  {
+                    name: "POS Systems",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="20" height="14" x="2" y="5" rx="2" />
+                        <line x1="2" x2="22" y1="10" y2="10" />
+                        <line x1="6" x2="10" y1="15" y2="15" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Sales reporting and inventory knowledge",
+                  },
+                  {
+                    name: "Booking Platforms",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <rect width="18" height="18" x="3" y="4" rx="2" />
+                        <line x1="16" x2="16" y1="2" y2="6" />
+                        <line x1="8" x2="8" y1="2" y2="6" />
+                        <line x1="3" x2="21" y1="10" y2="10" />
+                        <path d="m9 16 2 2 4-4" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Appointment scheduling handoff",
+                  },
+                  {
+                    name: "Google Business Profile",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                      </svg>
+                    ),
+                    status: "planned" as const,
+                    desc: "Review management and drafting",
+                  },
+                  {
+                    name: "CRM Platforms",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "Lead and customer inquiry data",
+                  },
+                  {
+                    name: "Loyalty Programs",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="8" r="6" />
+                        <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                      </svg>
+                    ),
+                    status: "planned" as const,
+                    desc: "Customer rewards and promotions",
+                  },
+                  {
+                    name: "Custom APIs & Webhooks",
+                    icon: (
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m18 16 4-4-4-4" />
+                        <path d="m6 8-4 4 4 4" />
+                        <path d="m14.5 4-5 16" />
+                      </svg>
+                    ),
+                    status: "configured" as const,
+                    desc: "REST endpoints and custom business logic",
+                  },
                 ].map(sys => (
-                  <div key={sys.name} className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="text-sm font-light">{sys.name}</div>
-                      <div className="text-xs text-black/40 mt-0.5">{sys.desc}</div>
+                  <div key={sys.name} className="flex items-start justify-between gap-3 p-2.5 rounded-xl bg-black/[0.015] border border-black/[0.03] hover:bg-black/[0.03] hover:border-black/[0.06] transition-all">
+                    <div className="flex items-start gap-3 min-w-0">
+                      <div className="w-7 h-7 rounded-lg bg-black/[0.04] border border-black/[0.06] flex items-center justify-center text-black/75 shrink-0 mt-0.5">
+                        {sys.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-light text-black/90 truncate">{sys.name}</div>
+                        <div className="text-xs text-black/40 mt-0.5 leading-relaxed">{sys.desc}</div>
+                      </div>
                     </div>
                     <StatusPill status={sys.status} />
                   </div>
@@ -1188,19 +1486,71 @@ export default function NexusPage() {
                 Nexus is a managed service, not a do-it-yourself chatbot builder. Westside Union handles configuration, connectivity, and maintenance so you stay focused on your customers.
               </p>
 
-              <div className="space-y-4">
+              <div className="space-y-3.5">
                 {[
-                  { label: "1. Your business owns its information.", desc: "Business data, conversations, customer knowledge, and records belong entirely to you." },
-                  { label: "2. Important actions wait for approval.", desc: "Sensitive, high-risk, public, or promotional actions pause for your sign-off before sending." },
-                  { label: "3. You can see what was requested and completed.", desc: "Every task and customer interaction is logged with transparent activity history." },
-                  { label: "4. Usage limits help prevent surprise bills.", desc: "Clear usage visibility and spending alerts protect your budget." },
-                  { label: "5. Westside Union monitors and maintains the agreed system.", desc: "We manage updates, connectivity health, and ongoing optimizations." },
+                  {
+                    label: "1. Your business owns its information.",
+                    desc: "Business data, conversations, customer knowledge, and records belong entirely to you.",
+                    icon: (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="m9 12 2 2 4-4" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: "2. Important actions wait for approval.",
+                    desc: "Sensitive, high-risk, public, or promotional actions pause for your sign-off before sending.",
+                    icon: (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <polyline points="16 11 18 13 22 9" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: "3. You can see what was requested and completed.",
+                    desc: "Every task and customer interaction is logged with transparent activity history.",
+                    icon: (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                        <path d="M3 3v5h5" />
+                        <polyline points="12 7 12 12 15 15" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: "4. Usage limits help prevent surprise bills.",
+                    desc: "Clear usage visibility and spending alerts protect your budget.",
+                    icon: (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m12 14 4-4" />
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0" />
+                        <circle cx="12" cy="14" r="2" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: "5. Westside Union monitors and maintains the agreed system.",
+                    desc: "We manage updates, connectivity health, and ongoing optimizations.",
+                    icon: (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                      </svg>
+                    ),
+                  },
                 ].map((item) => (
-                  <div key={item.label} className="flex gap-4 p-3.5 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
-                    <div className="w-1 bg-emerald-500 rounded-full shrink-0" />
-                    <div>
+                  <div
+                    key={item.label}
+                    className="group/item flex items-start gap-3.5 p-3.5 rounded-xl bg-[#FAF9F5] border border-black/[0.04] hover:bg-white hover:border-black/[0.08] hover:shadow-xs transition-all duration-200"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-white border border-black/[0.08] flex items-center justify-center text-black/70 shrink-0 mt-0.5 group-hover/item:text-emerald-600 group-hover/item:border-emerald-500/30 group-hover/item:bg-emerald-50/30 transition-all shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+                      {item.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-medium text-[#111] mb-0.5">{item.label}</h3>
-                      <p className="text-xs text-black/50">{item.desc}</p>
+                      <p className="text-xs text-black/50 leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -1209,7 +1559,21 @@ export default function NexusPage() {
 
             {/* Demonstration activity log */}
             <BentoCard className="p-6 lg:row-span-1" delay={0}>
-              <div className="text-xs text-black/35 tracking-widest uppercase mb-4">Activity log preview</div>
+              <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-md bg-black/[0.04] border border-black/[0.06] flex items-center justify-center text-black/60">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="4 17 10 11 4 5" />
+                      <line x1="12" x2="20" y1="19" y2="19" />
+                    </svg>
+                  </div>
+                  <div className="text-xs text-black/40 tracking-widest uppercase font-medium">Activity log preview</div>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/60 text-[10px] text-emerald-700">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Live Sync
+                </div>
+              </div>
               <div className="space-y-2">
                 {[
                   { time: "09:34", action: "Daily owner summary delivered", status: "done" },
@@ -1237,81 +1601,6 @@ export default function NexusPage() {
         </div>
       </section>
 
-      {/* ── SECTION 10: PROOF — PIVO & NEXUS LIVE ──────────────────────────── */}
-      <section id="proof" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
-        <div className="max-w-6xl mx-auto space-y-16">
-          
-          {/* Pivo Proof Section */}
-          <div className="rounded-2xl border border-black/[0.08] bg-white p-8 sm:p-12 shadow-sm">
-            <div className="max-w-3xl space-y-4">
-              <span className="px-2.5 py-1 rounded-full text-[10px] tracking-widest bg-[#111] text-white uppercase font-sans">
-                FLAGSHIP VERTICAL PROOF
-              </span>
-              <h2
-                className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
-                style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-              >
-                Built to prove business outcomes, not just generate answers.
-              </h2>
-              <p className="text-sm sm:text-base text-black/70 leading-relaxed font-light">
-                Pivo applies the Nexus approach to plumbing and trades businesses by helping recover missed opportunities, follow up with inquiries, and show owners the jobs and revenue influenced by the system.
-              </p>
-            </div>
-
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-              {[
-                { label: "Missed inquiries captured", sub: "Pilot measurement" },
-                { label: "Follow-ups completed", sub: "Pilot measurement" },
-                { label: "Bookings recovered", sub: "Pilot measurement" },
-                { label: "Response time", sub: "Pilot measurement" },
-                { label: "Estimated revenue influenced", sub: "Pilot measurement" },
-                { label: "Human approvals required", sub: "Pilot measurement" },
-              ].map((metric, i) => (
-                <div key={i} className="p-4 rounded-xl bg-[#F5F4F0] border border-black/[0.04] flex flex-col justify-between">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 mb-3" />
-                  <div>
-                    <h4 className="text-xs font-medium text-[#111] leading-snug">{metric.label}</h4>
-                    <span className="text-[10px] text-black/40 mt-1 block">{metric.sub}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-black/35">
-              ⚑ Measurements reflect active pilot criteria. Verified results are shared after business discovery.
-            </p>
-          </div>
-
-          {/* Nexus Live Operational Proof Preview */}
-          <div>
-            <div className="mb-10">
-              <Tag>NEXUS LIVE — CONCEPT PREVIEW</Tag>
-              <h3 className="mt-3 text-2xl sm:text-3xl font-light text-[#111] tracking-tight">
-                See what Nexus is doing for the business.
-              </h3>
-              <p className="mt-2 text-sm text-black/50 max-w-xl">
-                A privacy-safe operational view showing completed tasks, approvals, time returned, and system health without exposing customer conversations or sensitive information.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3" onMouseMove={handleMouse}>
-              {[
-                { label: "Work completed", value: "247 tasks", sub: "this month (demo)" },
-                { label: "Work awaiting approval", value: "3 items", sub: "owner review queue" },
-                { label: "Time returned to owner", value: "~14 hrs", sub: "estimated monthly" },
-                { label: "Opportunities followed up", value: "18 leads", sub: "demonstration" },
-                { label: "Usage & spending status", value: "On budget", sub: "within alert limits" },
-                { label: "System health", value: "100%", sub: "monitored & active" },
-              ].map((metric, i) => (
-                <BentoCard key={metric.label} className="p-5 flex flex-col" delay={i * 40}>
-                  <div className="text-xl font-light text-[#111] mb-1">{metric.value}</div>
-                  <div className="text-[11px] text-black/60 font-medium leading-snug">{metric.label}</div>
-                  <div className="text-[10px] text-black/35 mt-1">{metric.sub}</div>
-                </BentoCard>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── SECTION 11: FOR FOUNDERS — START YOUR BUSINESS CANADA ───────────── */}
       <section id="start-your-business" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
@@ -1341,7 +1630,11 @@ export default function NexusPage() {
             <div className="shrink-0 flex flex-col gap-3 w-full sm:w-auto">
               <a
                 href="#contact"
-                className="px-6 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSelectPackage("Start Your Business — Canada")
+                }}
+                className="px-6 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
               >
                 Book a Founder Consultation
               </a>
@@ -1621,7 +1914,12 @@ export default function NexusPage() {
 
                   <a
                     href="#contact"
-                    className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const planName = roi.plan === "cloud" ? "Nexus Cloud" : roi.plan === "edge" ? "Nexus Edge" : "Nexus Custom"
+                      handleSelectPackage(planName)
+                    }}
+                    className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
                   >
                     Book a Free Consultation
                   </a>
@@ -1752,7 +2050,11 @@ export default function NexusPage() {
 
               <a
                 href="#contact"
-                className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSelectPackage("Nexus Cloud")
+                }}
+                className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
               >
                 Start with a Consultation
               </a>
@@ -1770,10 +2072,18 @@ export default function NexusPage() {
 
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl font-light">
-                    {currency === "CAD" ? "From CAD $299" : `From USD $${Math.round(299 * USD_RATE)}`}
+                    {currency === "CAD"
+                      ? (billingCycle === "annual" ? "From CAD $239" : "From CAD $299")
+                      : `From USD $${Math.round((billingCycle === "annual" ? 239 : 299) * USD_RATE)}`}
                   </span>
                   <span className="text-black/40 text-sm">/month</span>
                 </div>
+                
+                {billingCycle === "annual" && (
+                  <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60 inline-block mb-1">
+                    From CAD $239/mo when billed annually
+                  </span>
+                )}
                 
                 <p className="text-[10px] text-black/40 tracking-wide mb-3">
                   Appliance setup priced according to selected configuration
@@ -1812,7 +2122,11 @@ export default function NexusPage() {
 
               <a
                 href="#contact"
-                className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSelectPackage("Nexus Edge")
+                }}
+                className="block w-full py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
               >
                 Discuss Nexus Edge
               </a>
@@ -1863,7 +2177,11 @@ export default function NexusPage() {
 
               <a
                 href="#contact"
-                className="block w-full py-3.5 border border-black/15 text-black/70 text-[11px] font-medium rounded-xl hover:border-black/30 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest text-center uppercase"
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleSelectPackage("Nexus Custom")
+                }}
+                className="block w-full py-3.5 border border-black/15 text-black/70 text-[11px] font-medium rounded-xl hover:border-black/30 hover:text-black hover:bg-black/[0.03] transition-all duration-200 tracking-widest text-center uppercase cursor-pointer"
               >
                 Plan a Custom Solution
               </a>
@@ -2019,21 +2337,35 @@ export default function NexusPage() {
                 </div>
               </div>
 
-              <div>
-                <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">INDUSTRY *</label>
-                <select id="industry" name="industry" required value={form.industry} onChange={handleFormChange}
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
-                  <option value="">Select industry</option>
-                  <option>Restaurant</option>
-                  <option>Barbershop / Salon</option>
-                  <option>Coffee Shop / Café</option>
-                  <option>Automotive / Dealership</option>
-                  <option>Marketing / Agency</option>
-                  <option>Trades / Plumbing / Home Services</option>
-                  <option>Clinic / Professional Office</option>
-                  <option>Start Your Business — Canada</option>
-                  <option>Other</option>
-                </select>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">INDUSTRY *</label>
+                  <select id="industry" name="industry" required value={form.industry} onChange={handleFormChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
+                    <option value="">Select industry</option>
+                    <option>Restaurant</option>
+                    <option>Barbershop / Salon</option>
+                    <option>Coffee Shop / Café</option>
+                    <option>Automotive / Dealership</option>
+                    <option>Marketing / Agency</option>
+                    <option>Trades / Plumbing / Home Services</option>
+                    <option>Clinic / Professional Office</option>
+                    <option>Start Your Business — Canada</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="package" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">PACKAGE *</label>
+                  <select id="package" name="package" required value={form.package} onChange={handleFormChange}
+                    className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/25 transition-colors">
+                    <option value="">Select package</option>
+                    <option value="Nexus Cloud">Nexus Cloud ($99/mo)</option>
+                    <option value="Nexus Edge">Nexus Edge (From $299/mo)</option>
+                    <option value="Nexus Custom">Nexus Custom (Custom Solution)</option>
+                    <option value="Start Your Business — Canada">Start Your Business — Canada</option>
+                    <option value="Not sure yet">Not sure yet / Need recommendation</option>
+                  </select>
+                </div>
               </div>
 
               <div>
