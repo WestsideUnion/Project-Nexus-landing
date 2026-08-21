@@ -6,7 +6,8 @@ const NAV_LINKS = [
   { label: "How It Helps",       href: "#how-it-helps" },
   { label: "Industries",         href: "#industries" },
   { label: "How It Works",       href: "#how-it-works" },
-  { label: "Pricing",            href: "#pricing" },
+  { label: "Packages",           href: "#pricing" },
+  { label: "Comparison",         href: "#roi" },
   { label: "For Founders",       href: "#start-your-business" },
   { label: "FAQ",                href: "#faq" },
 ]
