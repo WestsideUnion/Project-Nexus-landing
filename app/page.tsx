@@ -1230,7 +1230,7 @@ export default function NexusPage() {
               <div className="flex items-center justify-between mb-6">
                 <div>
                   <h3 className="text-lg font-light">Messaging channels</h3>
-                  <p className="text-xs text-black/40 mt-1">Directly supported across OpenClaw &amp; Hermes Agent gateways</p>
+                  <p className="text-xs text-black/40 mt-1">Directly supported across multi-channel agent gateways</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
