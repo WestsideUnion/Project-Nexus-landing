@@ -8,6 +8,8 @@ import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, StatusPill, FaqAccordionItem, BackToTop } from "@/components/shared-ui"
+import { NexusCloudEmblem, NexusEdgeEmblem, NexusCustomEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
+import { NexusOutcomeSummary } from "@/components/nexus-visuals/nexus-outcome-summary"
 import {
   PACKAGES,
   PILOT_TERMS,
@@ -110,7 +112,10 @@ export default function PricingPage() {
             {/* 1. Cloud Card */}
             <BentoCard className="p-8 flex flex-col justify-between" delay={0}>
               <div>
-                <div className="font-pixel text-xs tracking-widest text-black/40 mb-3">NEXUS CLOUD</div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="font-pixel text-xs tracking-widest text-black/40">NEXUS CLOUD</div>
+                  <NexusCloudEmblem className="w-12 h-12" />
+                </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl sm:text-4xl font-light">
                     CAD ${billingCycle === "annual" ? PACKAGES.cloud.annualMonthlyCad : PACKAGES.cloud.monthlyCad}
@@ -166,10 +171,13 @@ export default function PricingPage() {
             <BentoCard className="p-8 flex flex-col justify-between border-black/20 bg-[#FAF9F5]" delay={80}>
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="font-pixel text-xs tracking-widest text-black/50">NEXUS EDGE</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-700 text-white font-mono">
-                    ON-SITE PRIVACY
-                  </span>
+                  <div>
+                    <span className="font-pixel text-xs tracking-widest text-black/50 block">NEXUS EDGE</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-700 text-white font-mono mt-1 inline-block">
+                      ON-SITE PRIVACY
+                    </span>
+                  </div>
+                  <NexusEdgeEmblem className="w-12 h-12" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl sm:text-4xl font-light">CAD $299</span>
@@ -214,7 +222,10 @@ export default function PricingPage() {
             {/* 3. Custom Card */}
             <BentoCard className="p-8 flex flex-col justify-between" delay={160}>
               <div>
-                <div className="font-pixel text-xs tracking-widest text-black/40 mb-3">NEXUS CUSTOM</div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="font-pixel text-xs tracking-widest text-black/40">NEXUS CUSTOM</div>
+                  <NexusCustomEmblem className="w-12 h-12" />
+                </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl sm:text-4xl font-light">From CAD $799</span>
                   <span className="text-black/40 text-sm">/month</span>
@@ -552,6 +563,9 @@ export default function PricingPage() {
               Nexus absorbs routine drafting, reminders, reviews, and coordination that consume owner and staff hours. Use official Toronto wage benchmarks to estimate potential value.
             </p>
           </div>
+
+          {/* Visual Outcome Summary */}
+          <NexusOutcomeSummary />
 
           {/* Wage Table */}
           <div className="overflow-x-auto bg-white p-6 rounded-2xl border border-black/[0.07] shadow-xs">

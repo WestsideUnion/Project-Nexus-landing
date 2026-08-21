@@ -1,4 +1,4 @@
-// ─── Single Source of Truth for Project Nexus Marketing Site ─────────────────
+// ─── Single Source of Truth for Nexus Marketing Site ─────────────────
 
 export interface PlanFeature {
   text: string
@@ -599,9 +599,9 @@ export const ALL_FAQS: FaqItemData[] = [
     id: "what-is-project-nexus",
     category: "Getting Started",
     isHomepageTop5: true,
-    question: "What is Project Nexus?",
+    question: "What is Nexus?",
     answer:
-      "Project Nexus is a managed AI assistant for your business, built and operated by Westside Union. It organizes your follow-ups, reviews, customer inquiries, and routine tasks through the messaging tools you already use, keeping work moving forward with owner approval rules and clear summaries.",
+      "Nexus is a managed AI assistant for your business, built and operated by Westside Union. It organizes your follow-ups, reviews, customer inquiries, and routine tasks through the messaging tools you already use, keeping work moving forward with owner approval rules and clear summaries.",
   },
   {
     id: "does-nexus-replace-staff",

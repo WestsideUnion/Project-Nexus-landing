@@ -86,7 +86,7 @@ export default function StartBusinessCanadaPage() {
             <PixelIcon type="workflow" size={40} />
             <div className="mt-4"><Tag>THE ROADMAP</Tag></div>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              How Project Nexus guides your Canadian launch.
+              How Nexus guides your Canadian launch.
             </h2>
           </div>
 

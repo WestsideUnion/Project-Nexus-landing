@@ -249,7 +249,7 @@ export function ConsultationForm({
                 className="mt-0.5 w-4 h-4 rounded border-black/20 accent-black focus:ring-2 focus:ring-black/20"
               />
               <label htmlFor="consent" className="text-xs text-black/55 leading-relaxed">
-                I agree to be contacted by Westside Union regarding Project Nexus. My information will not be shared with third parties. *
+                I agree to be contacted by Westside Union regarding Nexus. My information will not be shared with third parties. *
               </label>
             </div>
 

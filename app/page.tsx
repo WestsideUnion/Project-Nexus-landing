@@ -10,6 +10,15 @@ import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, StatusPill, FaqAccordionItem, BackToTop } from "@/components/shared-ui"
 import { PACKAGES, ALL_FAQS } from "@/lib/site-data"
 
+// Visual Components
+import { NexusMessageToOutcome } from "@/components/nexus-visuals/nexus-message-to-outcome"
+import { NexusOwnerDayStory } from "@/components/nexus-visuals/nexus-owner-day-story"
+import { NexusTaskProgress } from "@/components/nexus-visuals/nexus-task-progress"
+import { NexusTransformationSection } from "@/components/nexus-visuals/nexus-transformation-section"
+import { NexusConnectionsMap } from "@/components/nexus-visuals/nexus-connections-map"
+import { NexusOutcomeSummary } from "@/components/nexus-visuals/nexus-outcome-summary"
+import { NexusCloudEmblem, NexusEdgeEmblem, NexusCustomEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
+
 export default function HomePage() {
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
 
@@ -30,7 +39,7 @@ export default function HomePage() {
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
       <section
         id="hero"
-        className="relative min-h-[90vh] md:min-h-screen flex flex-col justify-end overflow-hidden pt-32 pb-12 px-6 md:px-12 lg:px-20"
+        className="relative min-h-[90vh] md:min-h-screen flex flex-col justify-end overflow-hidden pt-36 pb-16 px-6 md:px-12 lg:px-20"
       >
         {/* Video background */}
         <video
@@ -47,7 +56,7 @@ export default function HomePage() {
         <div
           className="absolute inset-x-0 bottom-0 z-10 pointer-events-none"
           style={{
-            height: "70%",
+            height: "75%",
             background:
               "linear-gradient(to top, #F5F4F0 0%, #F5F4F0 25%, rgba(245,244,240,0.85) 45%, rgba(245,244,240,0.4) 70%, transparent 100%)",
           }}
@@ -64,7 +73,7 @@ export default function HomePage() {
         />
 
         {/* Status badge — center */}
-        <div className="absolute top-24 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-black/[0.08] shadow-sm whitespace-nowrap">
+        <div className="absolute top-28 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-black/[0.08] shadow-sm whitespace-nowrap">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
@@ -74,26 +83,27 @@ export default function HomePage() {
           </span>
         </div>
 
-        {/* Hero content card */}
-        <div className="relative z-30 max-w-3xl my-auto pt-8">
-          <div className="p-6 sm:p-10 rounded-2xl bg-[#F5F4F0]/85 backdrop-blur-md border border-black/[0.07] shadow-xl">
+        {/* Hero Grid: Content + Visual Flow */}
+        <div className="relative z-30 max-w-6xl mx-auto w-full my-auto pt-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          {/* Hero text card (7 cols) */}
+          <div className="lg:col-span-6 p-6 sm:p-10 rounded-2xl bg-[#F5F4F0]/90 backdrop-blur-md border border-black/[0.07] shadow-xl">
             <span className="text-[11px] tracking-[0.2em] text-black/60 uppercase mb-4 block font-sans font-medium">
-              A MANAGED BUSINESS ASSISTANT FROM WESTSIDE UNION
+              FOR BUSINESS OWNERS WHO CANNOT BE EVERYWHERE AT ONCE
             </span>
 
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl font-light text-[#111] leading-[1.08] tracking-tight mb-6"
+              className="text-3xl sm:text-4xl md:text-5xl font-light text-[#111] leading-[1.1] tracking-tight mb-5"
               style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
             >
-              More gets done, even when you are busy running the business.
+              Your customers keep reaching out—even when you are busy running the business.
             </h1>
 
-            <p className="text-sm sm:text-base text-black/75 leading-relaxed max-w-2xl mb-8">
-              Nexus helps organize the work you keep putting off—from customer follow-ups and review replies to reminders, business updates, and everyday tasks. Talk to it through the messaging tools you already use.
+            <p className="text-xs sm:text-sm text-black/75 leading-relaxed max-w-xl mb-6">
+              Reviews wait. Messages pile up. Follow-ups get buried. New opportunities quietly disappear. Nexus helps keep everyday work moving through WhatsApp, text, and email, so your customers feel heard and fewer opportunities slip away.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
               <div>
                 <a
                   href="#contact"
@@ -114,14 +124,14 @@ export default function HomePage() {
             </div>
 
             {/* Trust line */}
-            <div className="pt-6 border-t border-black/[0.08] space-y-4">
+            <div className="pt-5 border-t border-black/[0.08] space-y-3">
               <p className="text-xs font-medium text-black/70 tracking-wide">
                 Built around your business. Managed by Westside Union. You stay in control.
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 gap-2.5">
                 {[
                   { label: "Works where you already communicate" },
-                  { label: "Important actions wait for your approval" },
+                  { label: "Important actions wait for approval" },
                   { label: "See what was completed" },
                   { label: "Predictable monthly costs" },
                 ].map((stat, i) => (
@@ -133,98 +143,53 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* Hero Visual Flow (5 cols on desktop) */}
+          <div className="lg:col-span-6 w-full">
+            <NexusMessageToOutcome />
+          </div>
         </div>
       </section>
 
-      {/* ── 2. THE PROBLEM & HOW NEXUS HELPS (Combined Problem + Guide) ──────── */}
+      {/* ── 2. THE PROBLEM & HOW NEXUS HELPS ─────────────────────────────────── */}
       <section id="how-it-helps" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <Tag>THE REALITY</Tag>
             <h2
               className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light text-[#111] tracking-tight leading-[1.1]"
               style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
             >
-              Running the business should not mean doing everything yourself.
+              Your business can be busy and still lose the next customer.
             </h2>
-            <p className="mt-4 text-sm sm:text-base text-black/65 max-w-2xl mx-auto leading-relaxed">
-              Nexus helps keep that work visible, organized, and moving while you stay focused on the business.
+            <p className="mt-4 text-xs sm:text-sm text-black/65 max-w-2xl mx-auto leading-relaxed">
+              A customer sends a message, but nobody sees it. A review waits a week for a response. A catering, booking, or sales enquiry gets buried. None of this happens because you do not care. It happens because you are already doing too much.
             </p>
           </div>
 
-          {/* Pain stories grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            {[
-              {
-                role: "Café Owner",
-                text: "Reviews waiting during a café’s morning rush while staff focus on the line.",
-                img: "/images/scenario-coffee.png",
-              },
-              {
-                role: "Restaurant Owner",
-                text: "Promotion ideas thought of after closing that get forgotten by morning.",
-                img: "/images/scenario-restaurants.png",
-              },
-              {
-                role: "Barber & Stylist",
-                text: "Appointment and inquiry messages spread across different apps and DMs.",
-                img: "/images/scenario-barbershop.png",
-              },
-              {
-                role: "Business Owner",
-                text: "Customer follow-ups still waiting at the end of a long operating day.",
-                img: "/images/scenario-agency.png",
-              },
-              {
-                role: "Independent Operator",
-                text: "Administrative work and quote coordination following the owner home at night.",
-                img: "/images/industry-trades.png",
-              },
-              {
-                role: "Founder",
-                text: "Spending more hours organizing registrations and tools than serving early customers.",
-                img: "/images/industry-founders.png",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="group rounded-2xl bg-white border border-black/[0.06] p-5 shadow-xs hover:border-black/[0.12] transition-all flex flex-col justify-between"
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  <span className="text-[10px] tracking-widest uppercase font-mono text-black/50 font-medium">
-                    {item.role}
-                  </span>
-                </div>
-                <p className="text-xs sm:text-sm text-black/75 leading-relaxed mb-4">{item.text}</p>
-                <div className="pt-3 border-t border-black/[0.04] text-[11px] text-emerald-700 font-medium flex items-center gap-1.5">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  <span>Nexus keeps it moving</span>
-                </div>
-              </div>
-            ))}
+          {/* 3 Visual Business Stories */}
+          <div className="mb-14">
+            <NexusOwnerDayStory />
           </div>
 
-          {/* How Nexus helps: 6 Core Roles */}
+          {/* How Nexus helps: 3 Core Roles */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4" onMouseMove={handleMouse}>
             {[
               {
                 title: "Organize assigned work",
-                desc: "Message Nexus ideas, tasks, or follow-ups. It tracks deadlines and flags pending items.",
+                desc: "Message Nexus ideas, tasks, or follow-ups. It tracks deadlines and flags pending items in one place.",
                 icon: <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />,
                 delay: 0,
               },
               {
                 title: "Daily & weekly summaries",
-                desc: "Start each day knowing what was handled, what is waiting, and what needs approval.",
+                desc: "Start each day knowing what was handled overnight, what is waiting, and what needs approval.",
                 icon: <><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M8 10h8M8 14h5" /></>,
                 delay: 80,
               },
               {
                 title: "Draft replies & review responses",
-                desc: "Nexus prepares professional on-brand drafts for your review before anything goes out.",
+                desc: "Nexus prepares professional on-brand drafts and holds them ready for your one-tap review.",
                 icon: <><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" /></>,
                 delay: 160,
               },
@@ -248,7 +213,7 @@ export default function HomePage() {
       {/* ── 3. TASK EXPERIENCE (To Do / In Progress / Finished) ──────────────── */}
       <section id="experience" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-14">
+          <div className="mb-12 text-center md:text-left">
             <PixelIcon type="workflow" size={40} />
             <div className="mt-4"><Tag>TASK EXPERIENCE</Tag></div>
             <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
@@ -259,100 +224,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4" onMouseMove={handleMouse}>
-            {/* Stage 1: To Do */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={0}>
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-pixel text-xs text-black/40 tracking-widest uppercase">STAGE 01</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-amber-50 text-amber-700 border border-amber-200/60 font-sans">
-                    TO DO
-                  </span>
-                </div>
-                <h3 className="text-lg font-medium text-[#111] mb-2">Ideas & Reminders</h3>
-                <p className="text-xs text-black/55 leading-relaxed mb-5">
-                  Ideas, reminders, and work assigned by the owner.
-                </p>
-                <div className="space-y-2 p-3.5 rounded-xl bg-black/[0.02] border border-black/[0.04]">
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                    3 Google reviews awaiting draft
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                    Wednesday slow-period promo idea
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                    Pending quote callback: Smith project
-                  </div>
-                </div>
-              </div>
-              <p className="mt-5 text-[11px] text-black/40">Captured from text, voice notes, or scheduled checks</p>
-            </BentoCard>
-
-            {/* Stage 2: In Progress */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={80}>
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-pixel text-xs text-black/40 tracking-widest uppercase">STAGE 02</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-blue-50 text-blue-700 border border-blue-200/60 font-sans">
-                    IN PROGRESS
-                  </span>
-                </div>
-                <h3 className="text-lg font-medium text-[#111] mb-2">Active Coordination</h3>
-                <p className="text-xs text-black/55 leading-relaxed mb-5">
-                  Work Nexus is currently organizing, drafting, checking, or holding for approval.
-                </p>
-                <div className="space-y-2 p-3.5 rounded-xl bg-black/[0.02] border border-black/[0.04]">
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shrink-0" />
-                    Drafting catering menu proposal
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shrink-0" />
-                    Holding for review: 5-star review reply
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shrink-0" />
-                    Handling after-hours customer inquiry
-                  </div>
-                </div>
-              </div>
-              <p className="mt-5 text-[11px] text-black/40">Sensitive actions pause until you give approval</p>
-            </BentoCard>
-
-            {/* Stage 3: Finished */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={160}>
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="font-pixel text-xs text-black/40 tracking-widest uppercase">STAGE 03</span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-50 text-emerald-700 border border-emerald-200/60 font-sans">
-                    FINISHED
-                  </span>
-                </div>
-                <h3 className="text-lg font-medium text-[#111] mb-2">Completed & Logged</h3>
-                <p className="text-xs text-black/55 leading-relaxed mb-5">
-                  Completed work with a plain-language explanation and activity record.
-                </p>
-                <div className="space-y-2 p-3.5 rounded-xl bg-black/[0.02] border border-black/[0.04]">
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                    Morning owner summary delivered
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                    Appointment reminders confirmed (4/4)
-                  </div>
-                  <div className="text-xs text-black/75 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                    Approved review response published
-                  </div>
-                </div>
-              </div>
-              <p className="mt-5 text-[11px] text-black/40">Delivered to your messaging channel and summary feed</p>
-            </BentoCard>
-          </div>
+          {/* Interactive Task Progress Flow */}
+          <NexusTaskProgress />
 
           <div className="mt-8 flex items-center justify-between flex-wrap gap-4 p-4 rounded-2xl border border-black/[0.06] bg-[#FAF9F5] text-xs text-black/60">
             <span className="flex items-center gap-2">
@@ -376,7 +249,7 @@ export default function HomePage() {
               {"A simple 3-step onboarding plan."}
             </RevealText>
             <p className="mt-4 text-xs sm:text-sm text-black/60 leading-relaxed max-w-lg">
-              No complex software to learn. Westside Union configures Nexus around your business priorities.
+              No complicated software to learn. Westside Union configures Nexus around your business priorities.
             </p>
           </div>
 
@@ -442,35 +315,35 @@ export default function HomePage() {
             {[
               {
                 industry: "Restaurants",
-                sentence: "Keep customer follow-ups and review replies moving while you run the floor.",
+                sentence: "A full dining room should not mean online enquiries go unanswered.",
                 outcomes: ["Organize inquiries and table callbacks", "Draft review responses for owner approval"],
                 img: "/images/industry-restaurants.png",
                 delay: 0,
               },
               {
                 industry: "Cafés and coffee shops",
-                sentence: "Stay visible to customers even during the busiest morning rush.",
+                sentence: "The morning rush should not cost you the catering enquiry in your inbox.",
                 outcomes: ["Prepare Google review drafts", "Highlight quiet hours and draft promo ideas"],
                 img: "/images/industry-coffee.png",
                 delay: 80,
               },
               {
                 industry: "Barbershops and salons",
-                sentence: "Spend less time chasing appointment messages and more time serving clients.",
+                sentence: "An unanswered booking question can become an empty chair.",
                 outcomes: ["Coordinate appointment follow-ups", "Summarize pending owner tasks across chairs"],
                 img: "/images/industry-barbershop.png",
                 delay: 160,
               },
               {
                 industry: "Automotive dealerships",
-                sentence: "Ensure every sales or service inquiry receives a timely next step.",
+                sentence: "Every delayed response gives a buyer time to call another dealership.",
                 outcomes: ["Organize lead follow-ups across teams", "Prepare daily manager summaries"],
                 img: "/images/industry-automotive.png",
                 delay: 0,
               },
               {
                 industry: "Marketing agencies",
-                sentence: "Keep client deliverables moving without carrying every administrative detail yourself.",
+                sentence: "Client reporting should not consume your team's best productive hours.",
                 outcomes: ["Organize client briefs and recap action items", "Track recurring weekly reporting tasks"],
                 img: "/images/industry-agency.png",
                 delay: 80,
@@ -608,7 +481,10 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── 6. CHANNELS & CONNECTIONS SUMMARY ───────────────────────────────── */}
+      {/* ── 6. TRANSFORMATION SECTION (3 Outcomes Tabbed) ──────────────────── */}
+      <NexusTransformationSection />
+
+      {/* ── 7. CHANNELS & CONNECTIONS SUMMARY ───────────────────────────────── */}
       <section id="channels" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
@@ -622,25 +498,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* 6 Concise Categories */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
-            {[
-              { name: "WhatsApp", icon: "💬" },
-              { name: "Telegram", icon: "✈️" },
-              { name: "Email", icon: "✉️" },
-              { name: "SMS", icon: "📱" },
-              { name: "Booking platforms", icon: "📅" },
-              { name: "POS systems", icon: "💳" },
-            ].map((cat) => (
-              <div
-                key={cat.name}
-                className="p-4 rounded-xl bg-white border border-black/[0.06] text-center flex flex-col items-center justify-center gap-1.5 shadow-xs"
-              >
-                <span className="text-xl">{cat.icon}</span>
-                <span className="text-xs font-medium text-[#111]">{cat.name}</span>
-                <span className="text-[10px] text-emerald-700">Supported</span>
-              </div>
-            ))}
+          {/* Visual Connections Map */}
+          <div className="mb-10">
+            <NexusConnectionsMap isCompact={true} />
           </div>
 
           <div className="text-center">
@@ -648,13 +508,13 @@ export default function HomePage() {
               href="/connections"
               className="inline-flex items-center gap-2 px-6 py-3 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase shadow-sm"
             >
-              Explore Connections →
+              Explore All Connections &amp; Integrations →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── 7. COMPACT HOMEPAGE PRICING (3 Concise Cards) ──────────────────── */}
+      {/* ── 8. COMPACT HOMEPAGE PRICING (3 Concise Cards with Emblems) ──────── */}
       <section id="pricing" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 flex flex-col items-center">
@@ -675,7 +535,10 @@ export default function HomePage() {
             {/* 1. Cloud Card */}
             <BentoCard className="p-7 flex flex-col justify-between" delay={0}>
               <div>
-                <div className="font-pixel text-[11px] tracking-widest text-black/40 mb-2">NEXUS CLOUD</div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="font-pixel text-[11px] tracking-widest text-black/40">NEXUS CLOUD</div>
+                  <NexusCloudEmblem className="w-10 h-10" />
+                </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl font-light">CAD $99</span>
                   <span className="text-black/40 text-sm">/month</span>
@@ -711,11 +574,14 @@ export default function HomePage() {
             {/* 2. Edge Card */}
             <BentoCard className="p-7 flex flex-col justify-between border-black/20 bg-[#FAF9F5]" delay={80}>
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-pixel text-[11px] tracking-widest text-black/50">NEXUS EDGE</span>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] tracking-widest bg-emerald-700 text-white font-mono">
-                    ON-SITE PRIVACY
-                  </span>
+                <div className="flex items-center justify-between mb-3">
+                  <div>
+                    <span className="font-pixel text-[11px] tracking-widest text-black/50 block">NEXUS EDGE</span>
+                    <span className="px-2 py-0.5 rounded-full text-[9px] tracking-widest bg-emerald-700 text-white font-mono mt-1 inline-block">
+                      ON-SITE PRIVACY
+                    </span>
+                  </div>
+                  <NexusEdgeEmblem className="w-10 h-10" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl font-light">CAD $299</span>
@@ -749,7 +615,10 @@ export default function HomePage() {
             {/* 3. Custom Card */}
             <BentoCard className="p-7 flex flex-col justify-between" delay={160}>
               <div>
-                <div className="font-pixel text-[11px] tracking-widest text-black/40 mb-2">NEXUS CUSTOM</div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="font-pixel text-[11px] tracking-widest text-black/40">NEXUS CUSTOM</div>
+                  <NexusCustomEmblem className="w-10 h-10" />
+                </div>
                 <div className="flex items-baseline gap-1 mb-1">
                   <span className="text-3xl font-light">From CAD $799</span>
                   <span className="text-black/40 text-sm">/month</span>
@@ -796,34 +665,37 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 8. COMPACT ROI / REPETITIVE WORK VALUE ──────────────────────────── */}
+      {/* ── 9. COMPACT ROI / REPETITIVE WORK VALUE ──────────────────────────── */}
       <section id="roi-preview" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
-        <div className="max-w-4xl mx-auto rounded-3xl border border-black/[0.08] bg-white p-8 sm:p-12 text-center space-y-6 shadow-sm">
-          <Tag>CAPACITY VALUE</Tag>
-          <h2
-            className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
-            style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-          >
-            What is repetitive work costing your business?
-          </h2>
-          <p className="text-xs sm:text-sm text-black/65 max-w-xl mx-auto leading-relaxed">
-            Estimate the value of time spent on routine follow-ups, coordination, summaries, reviews, and reminders using Government of Canada Job Bank wage benchmarks.
-          </p>
-          <div>
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div className="text-center space-y-3">
+            <Tag>CAPACITY VALUE</Tag>
+            <h2
+              className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
+              style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
+            >
+              What is repetitive work costing your business?
+            </h2>
+            <p className="text-xs sm:text-sm text-black/65 max-w-xl mx-auto leading-relaxed">
+              Estimate the value of time spent on routine follow-ups, coordination, summaries, reviews, and reminders using Government of Canada Job Bank wage benchmarks.
+            </p>
+          </div>
+
+          {/* Business Outcome Summary Graphic */}
+          <NexusOutcomeSummary />
+
+          <div className="text-center pt-2">
             <Link
               href="/pricing#calculator"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase shadow-sm"
             >
-              Estimate Your Potential Value →
+              Estimate Your Potential Value in ROI Calculator →
             </Link>
           </div>
-          <p className="text-[10px] text-black/40 leading-normal">
-            Illustrative estimate only. Nexus does not guarantee specific cost savings.
-          </p>
         </div>
       </section>
 
-      {/* ── 9. COMPACT FOUNDER BANNER ───────────────────────────────────────── */}
+      {/* ── 10. COMPACT FOUNDER BANNER ───────────────────────────────────────── */}
       <section className="py-16 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-white">
         <div className="max-w-5xl mx-auto rounded-2xl border border-black/[0.07] bg-[#FAF9F5] p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
           <div className="space-y-2">
@@ -846,7 +718,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 10. HOMEPAGE FAQ (Top 5 Questions) ───────────────────────────────── */}
+      {/* ── 11. HOMEPAGE FAQ (Top 5 Questions) ───────────────────────────────── */}
       <section id="faq" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
@@ -873,7 +745,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 11. TRUST AND CONSULTATION FORM ─────────────────────────────────── */}
+      {/* ── 12. TRUST AND CONSULTATION FORM ─────────────────────────────────── */}
       <ConsultationForm />
 
       {/* ── FOOTER ────────────────────────────────────────────────────────── */}

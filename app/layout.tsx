@@ -11,9 +11,9 @@ const _courierPrime = Courier_Prime({ weight: ["400", "700"], subsets: ["latin"]
 const _ibmPlexSans = IBM_Plex_Sans({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Project Nexus | A Managed AI Assistant for Your Business',
-  description: 'Project Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
-  keywords: ['AI assistant', 'business assistant', 'managed AI', 'local business', 'WhatsApp business', 'Westside Union', 'Project Nexus', 'business automation', 'customer follow-up'],
+  title: 'Nexus | A Managed AI Assistant for Your Business',
+  description: 'Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
+  keywords: ['AI assistant', 'business assistant', 'managed AI', 'local business', 'WhatsApp business', 'Westside Union', 'Nexus', 'business automation', 'customer follow-up'],
   authors: [{ name: 'Westside Union' }],
   icons: {
     icon: [
@@ -24,15 +24,15 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: 'Project Nexus | A Managed AI Assistant for Your Business',
-    description: 'Project Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
+    title: 'Nexus | A Managed AI Assistant for Your Business',
+    description: 'Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
     type: 'website',
-    siteName: 'Project Nexus',
+    siteName: 'Nexus',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Project Nexus | A Managed AI Assistant for Your Business',
-    description: 'Project Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
+    title: 'Nexus | A Managed AI Assistant for Your Business',
+    description: 'Nexus helps business owners organize follow-ups, reviews, reminders, customer communication, and everyday work through one managed business assistant from Westside Union.',
   },
 }
 

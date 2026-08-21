@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Project Nexus",
+  title: "Privacy Policy — Nexus",
   description:
-    "Learn how Project Nexus and Westside Union collect, use, and protect your personal information.",
+    "Learn how Nexus and Westside Union collect, use, and protect your personal information.",
 }
 
 /* ─── Effective date ───────────────────────────────────────────────────────── */
@@ -79,14 +79,14 @@ export default function PrivacyPage() {
           {/* ── 1. Who we are ─────────────────────────────────────────────────── */}
           <Section id="who-we-are" heading="1. Who we are">
             <p>
-              Project Nexus is a managed AI assistant product built and operated
+              Nexus is a managed AI assistant product built and operated
               by <strong className="text-black/70">Westside Union</strong>{" "}
               (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), a
               company registered in Ontario, Canada. This Privacy Policy
               explains how we collect, use, disclose, and safeguard your
               information when you visit{" "}
               <strong className="text-black/70">nexus.westside-union.com</strong>{" "}
-              (the &ldquo;Site&rdquo;) or use the Project Nexus service.
+              (the &ldquo;Site&rdquo;) or use the Nexus service.
             </p>
           </Section>
 
@@ -152,7 +152,7 @@ export default function PrivacyPage() {
                 Respond to your inquiries and schedule workflow review sessions
               </li>
               <li>
-                Evaluate whether Project Nexus is a good fit for your business
+                Evaluate whether Nexus is a good fit for your business
               </li>
               <li>
                 Communicate with you about the product, updates, and relevant
@@ -324,7 +324,7 @@ export default function PrivacyPage() {
             </p>
             <div className="bg-black/[0.02] border border-black/[0.06] rounded-xl px-5 py-4 space-y-1 text-xs text-black/60">
               <p className="text-black/80 font-medium">
-                Westside Union — Project Nexus
+                Westside Union — Nexus
               </p>
               <p>
                 Email:{" "}

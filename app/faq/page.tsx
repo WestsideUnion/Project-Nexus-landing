@@ -32,7 +32,7 @@ export default function FaqPage() {
             {"Frequently asked questions."}
           </RevealText>
           <p className="text-sm sm:text-base text-black/65 max-w-2xl mx-auto leading-relaxed font-light">
-            Answers to common questions about Project Nexus packages, AI usage, on-site edge security, connections, and service setup.
+            Answers to common questions about Nexus packages, AI usage, on-site edge security, connections, and service setup.
           </p>
         </div>
       </section>

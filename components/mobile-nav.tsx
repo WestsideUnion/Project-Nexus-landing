@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 const NAV_LINKS = [
   { label: "Solutions", href: "/#industries" },
@@ -33,12 +34,7 @@ export function MobileNav() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded-lg p-1">
-            <img
-              src="/nexus-logo.png"
-              alt="Nexus logo"
-              className="w-8 h-8 object-contain"
-              style={{ imageRendering: "auto" }}
-            />
+            <Image src="/nexus-logo.png" alt="Nexus logo" width={36} height={36} className="object-contain" />
             <span className="font-pixel text-xs tracking-[0.25em] text-black/70 group-hover:text-black transition-colors">
               NEXUS
             </span>

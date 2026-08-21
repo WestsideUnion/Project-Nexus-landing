@@ -1,5 +1,6 @@
 import React from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 const FOOTER_NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -23,12 +24,7 @@ export function SiteFooter() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div>
           <Link href="/" className="flex items-center gap-3 group">
-            <img
-              src="/nexus-logo.png"
-              alt="Nexus logo"
-              className="w-9 h-9 object-contain"
-              style={{ imageRendering: "auto" }}
-            />
+            <Image src="/nexus-logo.png" alt="Nexus logo" width={36} height={36} className="object-contain" />
             <span className="font-pixel text-xs tracking-[0.25em] text-black/70 group-hover:text-black transition-colors">
               NEXUS
             </span>
@@ -66,7 +62,7 @@ export function SiteFooter() {
       </div>
 
       <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/[0.04] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-black/35">
-        <span>© 2026 Westside Union. Project Nexus is a Westside Union product. All rights reserved.</span>
+        <span>© 2026 Westside Union. Nexus is a Westside Union product. All rights reserved.</span>
         <span>Toronto, Ontario, Canada</span>
       </div>
     </footer>

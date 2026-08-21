@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Nexus Business Connections | Messaging, POS and More",
   description:
-    "Connect Project Nexus to the tools you already use—WhatsApp, Telegram, SMS, Email, POS systems, booking platforms, and CRMs. Managed setup, verified permissions, and tested reliability.",
+    "Connect Nexus to the tools you already use—WhatsApp, Telegram, SMS, Email, POS systems, booking platforms, and CRMs. Managed setup, verified permissions, and tested reliability.",
   keywords: [
     "Nexus Business Connections",
     "WhatsApp business assistant",
@@ -18,16 +18,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Nexus Business Connections | Messaging, POS and More",
     description:
-      "Explore supported communication channels and business software connections for Project Nexus.",
+      "Explore supported communication channels and business software connections for Nexus.",
     url: "/connections",
-    siteName: "Project Nexus",
+    siteName: "Nexus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Nexus Business Connections | Messaging, POS and More",
     description:
-      "Connect Project Nexus to WhatsApp, SMS, Email, POS, and booking platforms.",
+      "Connect Nexus to WhatsApp, SMS, Email, POS, and booking platforms.",
   },
 }
 

@@ -3,9 +3,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Terms of Service — Project Nexus",
+  title: "Terms of Service — Nexus",
   description:
-    "Terms and conditions governing your use of the Project Nexus website and managed AI assistant service by Westside Union.",
+    "Terms and conditions governing your use of the Nexus website and managed AI assistant service by Westside Union.",
 }
 
 /* ─── Effective date ───────────────────────────────────────────────────────── */
@@ -86,7 +86,7 @@ export default function TermsPage() {
               company registered in Ontario, Canada, governing your access to
               and use of the{" "}
               <strong className="text-black/70">nexus.westside-union.com</strong>{" "}
-              website (the &ldquo;Site&rdquo;) and the Project Nexus managed AI
+              website (the &ldquo;Site&rdquo;) and the Nexus managed AI
               assistant service (the &ldquo;Service&rdquo;).
             </p>
             <p>
@@ -107,7 +107,7 @@ export default function TermsPage() {
             <p>
               You must be at least 18 years of age and have the legal capacity
               to enter into a binding agreement to use the Site and Service. By
-              using Project Nexus, you represent and warrant that you meet these
+              using Nexus, you represent and warrant that you meet these
               requirements and that you are authorized to act on behalf of any
               business entity you represent.
             </p>
@@ -119,7 +119,7 @@ export default function TermsPage() {
             heading="3. Service description"
           >
             <p>
-              Project Nexus is a managed AI assistant for business owners. The
+              Nexus is a managed AI assistant for business owners. The
               Service may include, depending on your plan:
             </p>
             <ul className="list-disc pl-5 space-y-1">
@@ -147,7 +147,7 @@ export default function TermsPage() {
           {/* ── 4. Plans & billing ────────────────────────────────────────────── */}
           <Section id="plans-and-billing" heading="4. Plans &amp; billing">
             <p>
-              Project Nexus is offered through paid subscription plans. Pricing,
+              Nexus is offered through paid subscription plans. Pricing,
               features, and plan details are described on the Site and may change
               from time to time.
             </p>
@@ -220,7 +220,7 @@ export default function TermsPage() {
           >
             <p>
               All content on the Site — including text, graphics, logos, icons,
-              images, software, and the Project Nexus and Westside Union brand
+              images, software, and the Nexus and Westside Union brand
               marks — is the property of Westside Union or its licensors and is
               protected by Canadian and international intellectual property
               laws.
@@ -290,7 +290,7 @@ export default function TermsPage() {
               <strong className="text-black/70">
                 AI outputs require human review.
               </strong>{" "}
-              Project Nexus is designed to assist, not replace, human judgment.
+              Nexus is designed to assist, not replace, human judgment.
               You acknowledge that all AI-generated content should be reviewed
               before being relied upon or shared externally.
             </p>
@@ -398,7 +398,7 @@ export default function TermsPage() {
             </p>
             <div className="bg-black/[0.02] border border-black/[0.06] rounded-xl px-5 py-4 space-y-1 text-xs text-black/60">
               <p className="text-black/80 font-medium">
-                Westside Union — Project Nexus
+                Westside Union — Nexus
               </p>
               <p>
                 Email:{" "}

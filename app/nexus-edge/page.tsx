@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, BackToTop } from "@/components/shared-ui"
 import { PACKAGES, EDGE_AGREEMENT } from "@/lib/site-data"
+import { NexusEdgeEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
 
 export default function NexusEdgePage() {
   return (
@@ -18,6 +19,9 @@ export default function NexusEdgePage() {
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
       <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/[0.06] bg-white">
         <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="flex justify-center mb-2">
+            <NexusEdgeEmblem className="w-16 h-16" />
+          </div>
           <div className="flex items-center justify-center gap-2">
             <Tag>NEXUS EDGE</Tag>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-700 text-white font-mono uppercase">

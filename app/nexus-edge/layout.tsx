@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     description:
       "Keep more business knowledge on-site. Dedicated managed appliance, remote monitoring, backups, and predictable monthly pricing with zero IT hassle.",
     url: "/nexus-edge",
-    siteName: "Project Nexus",
+    siteName: "Nexus",
     type: "website",
   },
   twitter: {
