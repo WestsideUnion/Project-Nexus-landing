@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Link from "next/link"
 import { PixelIcon } from "@/components/pixel-icon"
 import { RevealText } from "@/components/reveal-text"
@@ -21,6 +21,20 @@ import { NexusCloudEmblem, NexusEdgeEmblem, NexusCustomEmblem } from "@/componen
 
 export default function HomePage() {
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!activeIndustry) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveIndustry(null)
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    window.addEventListener("keydown", handleKeyDown)
+    return () => {
+      document.body.style.overflow = originalOverflow
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [activeIndustry])
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget
@@ -397,12 +411,20 @@ export default function HomePage() {
 
                   <div className="pt-4 border-t border-black/[0.05]">
                     {"isFounderCard" in item && item.isFounderCard ? (
-                      <Link
-                        href="/start-business-canada"
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/70 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black transition-colors"
-                      >
-                        EXPLORE FOUNDER PROGRAM →
-                      </Link>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <button
+                          onClick={() => setActiveIndustry(item.industry)}
+                          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/60 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black transition-colors cursor-pointer"
+                        >
+                          SEE USE CASES →
+                        </button>
+                        <Link
+                          href="/start-business-canada"
+                          className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/70 bg-black/[0.04] hover:bg-black/[0.08] hover:text-black transition-colors"
+                        >
+                          FOUNDER PROGRAM →
+                        </Link>
+                      </div>
                     ) : (
                       <button
                         onClick={() => setActiveIndustry(item.industry)}
@@ -420,66 +442,277 @@ export default function HomePage() {
       </section>
 
       {/* ── USE CASES LIGHTBOX MODAL ────────────────────────────────────────── */}
-      {activeIndustry && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
-          style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(8px)" }}
-          onClick={() => setActiveIndustry(null)}
-        >
+      {activeIndustry && (() => {
+        const useCases: Record<
+          string,
+          { time: string; scenario: string; outcome: string; img: string }[]
+        > = {
+          "Restaurants": [
+            {
+              time: "11:31 PM — Wednesday",
+              scenario: "A customer messages asking if you're still open and requests tomorrow's specials.",
+              outcome: "Nexus replies instantly with your hours, menu highlights, and reservation link — while you sleep.",
+              img: "/images/scenario-restaurants.png",
+            },
+            {
+              time: "Monday 7:45 AM",
+              scenario: "You wake up to three new Google reviews from the weekend.",
+              outcome: "Nexus has already drafted professional, on-brand responses for each one. You approve with a single reply.",
+              img: "/images/scenario-restaurants-2.png",
+            },
+            {
+              time: "Friday 2:00 PM — slow service",
+              scenario: "Foot traffic is down and your team is idle.",
+              outcome: "Nexus flags the quiet window and asks if you'd like a weekend promotion drafted and queued for your approval.",
+              img: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Cafés and coffee shops": [
+            {
+              time: "Saturday 7:20 AM — pre-rush",
+              scenario: "A corporate client emails asking about catering options for a Monday team meeting.",
+              outcome: "Nexus captures the enquiry, sends your catering info, and flags it for your review — before the rush hits.",
+              img: "/images/scenario-coffee.png",
+            },
+            {
+              time: "Weekday 3:00 PM",
+              scenario: "A customer asks if your cold brew contains dairy via Instagram DM.",
+              outcome: "Nexus answers using your allergen information — consistent, accurate, no staff interruption needed.",
+              img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Tuesday morning",
+              scenario: "Three reviews came in over the weekend, including one complaint.",
+              outcome: "Nexus has drafted responses for all three. The complaint response includes your preferred tone and a recovery offer ready for your approval.",
+              img: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Barbershops and salons": [
+            {
+              time: "Sunday 9:55 PM",
+              scenario: "A new client DMs asking about availability, pricing, and whether you take walk-ins.",
+              outcome: "Nexus answers all three questions accurately and sends your booking link — no missed opportunity.",
+              img: "/images/scenario-barbershop.png",
+            },
+            {
+              time: "Tuesday 8:00 AM",
+              scenario: "You open the day and want to know what happened overnight.",
+              outcome: "Nexus delivers a morning summary: 4 confirmations sent, 1 review responded to, 2 callbacks queued.",
+              img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Thursday afternoon",
+              scenario: "A client texts asking about your cancellation policy mid-cut.",
+              outcome: "Nexus replies with your exact policy — accurate, professional, and without interrupting you.",
+              img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Automotive dealerships": [
+            {
+              time: "6:45 PM — after closing",
+              scenario: "A prospect submits a vehicle inquiry form after hours.",
+              outcome: "Nexus sends a personalised acknowledgement, captures their preferences, and schedules a callback reminder for your morning.",
+              img: "/images/scenario-automotive.png",
+            },
+            {
+              time: "Wednesday 9:00 AM",
+              scenario: "You have 6 open service quotes that haven't had follow-up in 3 days.",
+              outcome: "Nexus flags all six and queues polite follow-up messages for your approval — one review, one tap to send.",
+              img: "https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Friday afternoon",
+              scenario: "A customer calls to ask about a specific model's towing capacity.",
+              outcome: "Your team is with a customer. Nexus handles the SMS follow-up with the exact spec from your inventory knowledge.",
+              img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Marketing agencies": [
+            {
+              time: "Post-meeting — same day",
+              scenario: "A client strategy meeting just wrapped with 11 action items across three teams.",
+              outcome: "Nexus drafts a structured recap and action list, ready to send within minutes of the meeting ending.",
+              img: "/images/scenario-agency.png",
+            },
+            {
+              time: "End of month",
+              scenario: "Three client reports are due and your team is stretched.",
+              outcome: "Nexus pulls the agreed data points, populates your report template, and flags items needing human review.",
+              img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Monday morning",
+              scenario: "Four client threads went quiet last week with no follow-up sent.",
+              outcome: "Nexus identifies the gaps and queues personalised follow-up drafts for each account — ready for you to approve.",
+              img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+          "Start Your Business — Canada": [
+            {
+              time: "Discovery & launch planning",
+              scenario: "A founder has a business idea but needs clarity on registrations, province requirements, and operating tools.",
+              outcome: "Nexus generates a personalized launch checklist referencing official Canadian sources and guides initial milestones.",
+              img: "/images/industry-founders.png",
+            },
+            {
+              time: "Toolkit setup & referrals",
+              scenario: "Organizing domain, banking, bookkeeping, and communications before opening day.",
+              outcome: "Nexus helps configure your initial tools and coordinates warm handoffs to verified accountants, lawyers, and banks.",
+              img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=800&q=80",
+            },
+            {
+              time: "Post-launch operating support",
+              scenario: "Transitioning from launch into daily business operations.",
+              outcome: "Nexus transitions seamlessly into your ongoing business assistant on Nexus Cloud to organize follow-ups and messages.",
+              img: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
+            },
+          ],
+        }
+
+        // Aliases support
+        useCases["Coffee Shops"] = useCases["Cafés and coffee shops"]
+        useCases["Barbershops & Salons"] = useCases["Barbershops and salons"]
+        useCases["Dealerships"] = useCases["Automotive dealerships"]
+        useCases["Agencies"] = useCases["Marketing agencies"]
+
+        const scenarios = useCases[activeIndustry] ?? []
+        const coverImg =
+          {
+            "Restaurants": "/images/industry-restaurants.png",
+            "Cafés and coffee shops": "/images/industry-coffee.png",
+            "Coffee Shops": "/images/industry-coffee.png",
+            "Barbershops and salons": "/images/industry-barbershop.png",
+            "Barbershops & Salons": "/images/industry-barbershop.png",
+            "Automotive dealerships": "/images/industry-automotive.png",
+            "Dealerships": "/images/industry-automotive.png",
+            "Marketing agencies": "/images/industry-agency.png",
+            "Agencies": "/images/industry-agency.png",
+            "Start Your Business — Canada": "/images/industry-founders.png",
+          }[activeIndustry] || "/images/industry-restaurants.png"
+
+        return (
           <div
-            className="relative w-full sm:max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-[#F5F4F0] p-6 sm:p-8 shadow-2xl space-y-4"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6"
+            style={{
+              background: "rgba(0,0,0,0.6)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+            onClick={() => setActiveIndustry(null)}
           >
-            <div className="flex items-center justify-between pb-3 border-b border-black/[0.08]">
-              <div>
-                <Tag>USE CASES</Tag>
-                <h3 className="text-xl font-light mt-1 text-[#111]">{activeIndustry}</h3>
-              </div>
+            <div
+              className="relative w-full sm:max-w-3xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[#F5F4F0] shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Cover image header */}
+              {coverImg && (
+                <div className="relative h-48 overflow-hidden rounded-t-3xl sm:rounded-t-2xl">
+                  <img src={coverImg} alt={activeIndustry} className="w-full h-full object-cover" />
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(245,244,240,1) 0%, rgba(245,244,240,0.3) 60%, transparent 100%)",
+                    }}
+                  />
+                  <div className="absolute bottom-4 left-6">
+                    <Tag>USE CASES</Tag>
+                    <h2 className="mt-2 text-2xl font-light tracking-tight text-[#111]">{activeIndustry}</h2>
+                  </div>
+                </div>
+              )}
+
+              {/* Close button */}
               <button
                 onClick={() => setActiveIndustry(null)}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-black/[0.08] text-black/50 hover:text-black transition-colors cursor-pointer"
-                aria-label="Close"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-black/[0.08] text-black/50 hover:text-black transition-colors z-10 cursor-pointer shadow-xs"
+                aria-label="Close modal"
               >
-                ✕
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                >
+                  <path d="M2 2l10 10M12 2L2 12" />
+                </svg>
               </button>
-            </div>
 
-            <div className="space-y-3 pt-2">
-              <div className="p-4 rounded-xl bg-white border border-black/[0.06] space-y-2">
-                <span className="text-[10px] tracking-widest uppercase font-mono text-black/40">Scenario 01</span>
-                <p className="text-xs sm:text-sm text-black/75">
-                  Customer inquires after hours about availability, pricing, and services.
-                </p>
-                <div className="flex items-start gap-2 pt-1 text-xs text-emerald-700">
-                  <span>✓</span>
-                  <span>Nexus replies using approved business knowledge and queues the next step.</span>
-                </div>
+              {/* Scenario cards — side-by-side image + content, alternating left/right */}
+              <div className="p-6 space-y-4">
+                {scenarios.map((c, i) => {
+                  const imgLeft = i % 2 === 0
+                  return (
+                    <div
+                      key={i}
+                      className="rounded-xl border border-black/[0.07] bg-white overflow-hidden flex flex-col sm:flex-row shadow-sm"
+                    >
+                      {/* Image — left for even */}
+                      {imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-video sm:aspect-square border-b sm:border-b-0 sm:border-r border-black/[0.07]">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      {/* Content */}
+                      <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
+                        <span className="text-[10px] tracking-widest text-black/40 uppercase font-mono font-medium">
+                          {c.time}
+                        </span>
+                        <p className="mt-2 text-sm font-light text-black/75 leading-relaxed">{c.scenario}</p>
+                        <div className="mt-3 flex gap-2 items-start">
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="text-emerald-600 mt-0.5 shrink-0"
+                          >
+                            <path d="M2 7l3.5 3.5L12 3" />
+                          </svg>
+                          <p className="text-xs sm:text-sm text-black/60 leading-relaxed">{c.outcome}</p>
+                        </div>
+                      </div>
+                      {/* Image — right for odd */}
+                      {!imgLeft && (
+                        <div className="w-full sm:w-[35%] shrink-0 overflow-hidden aspect-video sm:aspect-square border-t sm:border-t-0 sm:border-l border-black/[0.07] order-first sm:order-last">
+                          <img src={c.img} alt="" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
 
-              <div className="p-4 rounded-xl bg-white border border-black/[0.06] space-y-2">
-                <span className="text-[10px] tracking-widest uppercase font-mono text-black/40">Scenario 02</span>
-                <p className="text-xs sm:text-sm text-black/75">
-                  New customer review posted online while the owner is busy serving guests.
-                </p>
-                <div className="flex items-start gap-2 pt-1 text-xs text-emerald-700">
-                  <span>✓</span>
-                  <span>Nexus drafts a polite, on-brand response and holds it for one-tap owner approval.</span>
-                </div>
+              {/* Modal CTA */}
+              <div className="px-6 pb-8 pt-2 flex flex-col sm:flex-row gap-3">
+                <a
+                  href="#contact"
+                  onClick={() => setActiveIndustry(null)}
+                  className="flex-1 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
+                >
+                  Book a Free Consultation
+                </a>
+                {activeIndustry === "Start Your Business — Canada" && (
+                  <Link
+                    href="/start-business-canada"
+                    onClick={() => setActiveIndustry(null)}
+                    className="py-3.5 px-6 border border-black/15 text-black/75 hover:text-black hover:border-black/30 text-[11px] font-medium rounded-xl transition-colors tracking-widest text-center uppercase"
+                  >
+                    Founder Program Details →
+                  </Link>
+                )}
               </div>
-            </div>
-
-            <div className="pt-4">
-              <a
-                href="#contact"
-                onClick={() => setActiveIndustry(null)}
-                className="block w-full py-3 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase"
-              >
-                Book a Free Consultation
-              </a>
             </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
 
       {/* ── 6. TRANSFORMATION SECTION (3 Outcomes Tabbed) ──────────────────── */}
       <NexusTransformationSection />
