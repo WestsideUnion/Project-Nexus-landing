@@ -17,7 +17,7 @@ import { NexusTaskProgress } from "@/components/nexus-visuals/nexus-task-progres
 import { NexusTransformationSection } from "@/components/nexus-visuals/nexus-transformation-section"
 import { NexusConnectionsMap } from "@/components/nexus-visuals/nexus-connections-map"
 import { NexusOutcomeSummary } from "@/components/nexus-visuals/nexus-outcome-summary"
-import { NexusCloudEmblem, NexusEdgeEmblem, NexusCustomEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
+import { NexusCloudEmblem, NexusEdgeEmblem, NexusEnterpriseEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
 
 export default function HomePage() {
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
@@ -776,7 +776,7 @@ export default function HomePage() {
                   <span className="text-3xl font-light">CAD $99</span>
                   <span className="text-black/40 text-sm">/month</span>
                 </div>
-                <p className="text-[11px] text-black/50 mb-1">CAD $299 onboarding</p>
+                <p className="text-[11px] text-black/50 mb-1">CAD $299 initial setup</p>
                 <p className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full inline-block mb-4 border border-emerald-200/50">
                   CAD $79/month when billed annually
                 </p>
@@ -793,13 +793,13 @@ export default function HomePage() {
 
               <div>
                 <p className="text-[10px] text-black/45 mb-3 leading-tight">
-                  First 30 days of managed service included. Onboarding applies.
+                  AI usage is included within the plan’s monthly allowance. Customers may optionally connect a supported AI account where appropriate.
                 </p>
                 <Link
-                  href="/pricing#pilot"
+                  href="/pricing"
                   className="block w-full py-3 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm"
                 >
-                  Start a 30-Day Pilot
+                  Start with Nexus Cloud
                 </Link>
               </div>
             </BentoCard>
@@ -817,10 +817,11 @@ export default function HomePage() {
                   <NexusEdgeEmblem className="w-10 h-10" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl font-light">CAD $299</span>
+                  <span className="text-3xl font-light">From CAD $499</span>
                   <span className="text-black/50 text-sm">/month</span>
                 </div>
-                <p className="text-[11px] text-black/60 mb-4">CAD $699 activation · 24-month term</p>
+                <p className="text-[11px] text-black/60 mb-1">CAD $1,499 activation and deployment · 36-month initial term</p>
+                <p className="text-[10px] text-black/45 mb-4">A 24-month option is available at CAD $599/month.</p>
 
                 <ul className="space-y-2 mb-6 pt-2 border-t border-black/[0.05]">
                   {PACKAGES.edge.compactBullets.map((b, i) => (
@@ -834,7 +835,7 @@ export default function HomePage() {
 
               <div>
                 <p className="text-[10px] text-black/45 mb-3 leading-tight">
-                  Appliance remains Westside Union property. Minimum 24-month agreement applies.
+                  The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property.
                 </p>
                 <Link
                   href="/nexus-edge"
@@ -845,18 +846,18 @@ export default function HomePage() {
               </div>
             </BentoCard>
 
-            {/* 3. Custom Card */}
+            {/* 3. Enterprise Card */}
             <BentoCard className="p-7 flex flex-col justify-between" delay={160}>
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="font-pixel text-[11px] tracking-widest text-black/40">NEXUS CUSTOM</div>
-                  <NexusCustomEmblem className="w-10 h-10" />
+                  <div className="font-pixel text-[11px] tracking-widest text-black/40">NEXUS ENTERPRISE</div>
+                  <NexusEnterpriseEmblem className="w-10 h-10" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl font-light">From CAD $799</span>
+                  <span className="text-3xl font-light">From CAD $1,499</span>
                   <span className="text-black/40 text-sm">/month</span>
                 </div>
-                <p className="text-[11px] text-black/50 mb-4">Deployment from CAD $2,500</p>
+                <p className="text-[11px] text-black/50 mb-4">Deployment from CAD $7,500</p>
 
                 <ul className="space-y-2 mb-6 pt-2 border-t border-black/[0.05]">
                   {PACKAGES.custom.compactBullets.map((b, i) => (
@@ -870,13 +871,13 @@ export default function HomePage() {
 
               <div>
                 <p className="text-[10px] text-black/45 mb-3 leading-tight">
-                  Final scope and price confirmed after workflow review.
+                  Final pricing is confirmed after operational and infrastructure assessment.
                 </p>
                 <a
                   href="#contact"
                   className="block w-full py-3 border border-black/20 text-black/80 text-[11px] font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.03] transition-all tracking-widest text-center uppercase"
                 >
-                  Plan a Custom Solution
+                  Plan an Enterprise Solution
                 </a>
               </div>
             </BentoCard>

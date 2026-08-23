@@ -8,7 +8,7 @@ import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, StatusPill, FaqAccordionItem, BackToTop } from "@/components/shared-ui"
-import { NexusCloudEmblem, NexusEdgeEmblem, NexusCustomEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
+import { NexusCloudEmblem, NexusEdgeEmblem, NexusEnterpriseEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
 import { NexusOutcomeSummary } from "@/components/nexus-visuals/nexus-outcome-summary"
 import {
   PACKAGES,
@@ -21,6 +21,8 @@ import {
   ALL_FAQS,
 } from "@/lib/site-data"
 
+type PlanOption = "cloud" | "edge_36" | "edge_24" | "enterprise"
+
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "annual">("monthly")
 
@@ -30,18 +32,55 @@ export default function PricingPage() {
     hourlyRole: "administrative" as "receptionist" | "administrative" | "marketing" | "custom",
     customRate: 26.5,
     offsetPercent: 50,
-    plan: "cloud" as "cloud" | "edge" | "custom",
+    plan: "cloud" as PlanOption,
     recoveredOpportunities: 0,
     contributionValue: 0,
     variableCosts: 0,
   })
 
+  const getPlanDetails = (plan: PlanOption, cycle: "monthly" | "annual") => {
+    switch (plan) {
+      case "cloud":
+        return {
+          name: "Nexus Cloud",
+          monthlyCad: cycle === "annual" ? 79 : 99,
+          setupCad: 299,
+          amortizedMonths: 12,
+          displayLabel: `Nexus Cloud (${cycle === "annual" ? "CAD $79" : "CAD $99"}/mo + CAD $25 setup eq.)`,
+        }
+      case "edge_36":
+        return {
+          name: "Nexus Edge — 36 months",
+          monthlyCad: 499,
+          setupCad: 1499,
+          amortizedMonths: 36,
+          displayLabel: "Nexus Edge (36 mo · CAD $499/mo + CAD $42 activation eq.)",
+        }
+      case "edge_24":
+        return {
+          name: "Nexus Edge — 24 months",
+          monthlyCad: 599,
+          setupCad: 1499,
+          amortizedMonths: 24,
+          displayLabel: "Nexus Edge (24 mo · CAD $599/mo + CAD $62 activation eq.)",
+        }
+      case "enterprise":
+        return {
+          name: "Nexus Enterprise",
+          monthlyCad: 1499,
+          setupCad: 7500,
+          amortizedMonths: 12,
+          displayLabel: "Nexus Enterprise (From CAD $1,499/mo + CAD $625 deployment eq.)",
+        }
+    }
+  }
+
+  const selectedPlanDetails = getPlanDetails(roi.plan, billingCycle)
   const roiHourlyRate = roi.hourlyRole === "custom" ? roi.customRate : (HOURLY_RATES[roi.hourlyRole] ?? 26.5)
   const roiMonthlyWorkValue = (roi.hoursPerWeek * 52) / 12 * roiHourlyRate
   const roiOffsetValue = roiMonthlyWorkValue * (roi.offsetPercent / 100)
-  const roiPlanData = PACKAGES[roi.plan] || PACKAGES.cloud
-  const roiSetupAmortized = roiPlanData.onboardingFeeCad > 0 ? roiPlanData.onboardingFeeCad / (roiPlanData.commitmentMonths > 1 ? roiPlanData.commitmentMonths : 12) : 0
-  const roiNexusCost = (roi.plan === "cloud" && billingCycle === "annual" ? roiPlanData.annualMonthlyCad : roiPlanData.monthlyCad) + roiSetupAmortized + roi.variableCosts
+  const roiSetupAmortized = selectedPlanDetails.setupCad / selectedPlanDetails.amortizedMonths
+  const roiNexusCost = selectedPlanDetails.monthlyCad + roiSetupAmortized + roi.variableCosts
   const roiRecoveredContribution = roi.recoveredOpportunities * roi.contributionValue
   const roiDiff = roiOffsetValue + roiRecoveredContribution - roiNexusCost
 
@@ -156,7 +195,7 @@ export default function PricingPage() {
 
               <div className="pt-4 border-t border-black/[0.05]">
                 <p className="text-[11px] text-emerald-800 bg-emerald-50 p-2.5 rounded-lg mb-4 leading-relaxed">
-                  Managed AI usage included. Zero automatic overages.
+                  AI usage is included within the plan’s monthly allowance. Customers may optionally connect a supported AI account where appropriate.
                 </p>
                 <a
                   href="#contact"
@@ -180,10 +219,11 @@ export default function PricingPage() {
                   <NexusEdgeEmblem className="w-12 h-12" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl sm:text-4xl font-light">CAD $299</span>
-                  <span className="text-black/50 text-sm">/month · 24-month term</span>
+                  <span className="text-3xl sm:text-4xl font-light">From CAD $499</span>
+                  <span className="text-black/50 text-sm">/month · 36-month initial term</span>
                 </div>
-                <p className="text-xs text-black/60 mb-4">{PACKAGES.edge.onboardingLabel}</p>
+                <p className="text-xs text-black/60 mb-2">{PACKAGES.edge.onboardingLabel}</p>
+                <p className="text-[11px] text-black/45 mb-4">A 24-month option is available at CAD $599/month.</p>
 
                 <div className="p-3.5 rounded-xl bg-white border border-black/[0.06] mb-5">
                   <p className="text-xs text-black/70 italic leading-snug">
@@ -208,7 +248,7 @@ export default function PricingPage() {
 
               <div className="pt-4 border-t border-black/[0.05]">
                 <div className="p-3 rounded-lg bg-black/[0.03] border border-black/[0.05] mb-4 text-[11px] text-black/70 leading-relaxed">
-                  Total 24-month minimum commitment: <strong>CAD $7,875</strong> before taxes (CAD $699 activation + 24 × $299). Appliance remains property of Westside Union.
+                  The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property.
                 </div>
                 <Link
                   href="/nexus-edge"
@@ -219,15 +259,15 @@ export default function PricingPage() {
               </div>
             </BentoCard>
 
-            {/* 3. Custom Card */}
+            {/* 3. Enterprise Card */}
             <BentoCard className="p-8 flex flex-col justify-between" delay={160}>
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="font-pixel text-xs tracking-widest text-black/40">NEXUS CUSTOM</div>
-                  <NexusCustomEmblem className="w-12 h-12" />
+                  <div className="font-pixel text-xs tracking-widest text-black/40">NEXUS ENTERPRISE</div>
+                  <NexusEnterpriseEmblem className="w-12 h-12" />
                 </div>
                 <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-3xl sm:text-4xl font-light">From CAD $799</span>
+                  <span className="text-3xl sm:text-4xl font-light">From CAD $1,499</span>
                   <span className="text-black/40 text-sm">/month</span>
                 </div>
                 <p className="text-xs text-black/50 mb-4">{PACKAGES.custom.onboardingLabel}</p>
@@ -255,13 +295,13 @@ export default function PricingPage() {
 
               <div className="pt-4 border-t border-black/[0.05]">
                 <p className="text-[11px] text-black/50 mb-4 leading-relaxed">
-                  Final price and architecture confirmed after business workflow consultation.
+                  Final pricing is confirmed after operational and infrastructure assessment.
                 </p>
                 <a
                   href="#contact"
                   className="block w-full py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.03] transition-all tracking-widest text-center uppercase"
                 >
-                  Plan a Custom Solution
+                  Plan an Enterprise Solution
                 </a>
               </div>
             </BentoCard>
@@ -289,28 +329,28 @@ export default function PricingPage() {
                   <th className="text-left py-3.5 pr-4 text-xs font-medium uppercase tracking-wider text-black/50">Feature / Outcome</th>
                   <th className="text-left py-3.5 px-4 text-xs font-medium uppercase tracking-wider text-black/80">Nexus Cloud</th>
                   <th className="text-left py-3.5 px-4 text-xs font-medium uppercase tracking-wider text-black/80 bg-black/[0.02] rounded-t-lg">Nexus Edge</th>
-                  <th className="text-left py-3.5 pl-4 text-xs font-medium uppercase tracking-wider text-black/80">Nexus Custom</th>
+                  <th className="text-left py-3.5 pl-4 text-xs font-medium uppercase tracking-wider text-black/80">Nexus Enterprise</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-black/[0.05] text-black/70">
                 {[
-                  { row: "Best for", cloud: "Single location & fast start", edge: "Higher on-site privacy & local work", custom: "Multi-location & specialized tools" },
-                  { row: "Business locations", cloud: "1 location", edge: "1 location (on-site)", custom: "Multiple locations" },
-                  { row: "Messaging channels", cloud: "1 channel included", edge: "1 channel included", custom: "Multiple channels" },
-                  { row: "Standard connections", cloud: "1 connection included", edge: "Up to 2 connections", custom: "Tailored connections" },
-                  { row: "Managed AI allowance", cloud: "CAD $10/mo included", edge: "CAD $10/mo cloud fallback", custom: "Custom allowance" },
-                  { row: "Local appliance", cloud: "No (Cloud managed)", edge: "Yes (Dedicated appliance)", custom: "Hybrid / On-premise option" },
-                  { row: "Local business knowledge", cloud: "Cloud isolated", edge: "Kept on-site", custom: "Custom data isolation" },
-                  { row: "Monitoring & support", cloud: "Standard managed support", edge: "Priority remote monitoring", custom: "Dedicated account support" },
-                  { row: "Commitment", cloud: "Monthly (or annual)", edge: "24-month managed agreement", custom: "Annual agreement" },
-                  { row: "Onboarding / Activation", cloud: "CAD $299 onboarding", edge: "CAD $699 activation", custom: "From CAD $2,500" },
-                  { row: "Upgrade options", cloud: "Credit $299 toward Edge within 6 mo", edge: "Renew, refresh, or cloud transition", custom: "Custom scaling" },
+                  { row: "Best for", cloud: "Single location & fast start", edge: "Higher on-site privacy & local work", enterprise: "Multi-location & specialized tools" },
+                  { row: "Business locations", cloud: "1 location", edge: "1 location (on-site)", enterprise: "Multiple locations" },
+                  { row: "Messaging channels", cloud: "1 channel included", edge: "1 channel included", enterprise: "Multiple channels" },
+                  { row: "Standard connections", cloud: "1 connection included", edge: "Up to 2 connections", enterprise: "Tailored connections" },
+                  { row: "Managed AI allowance", cloud: "Included monthly allowance", edge: "Local execution + cloud assistance", enterprise: "Custom allowance" },
+                  { row: "Appliance infrastructure", cloud: "Cloud managed", edge: "Dedicated Nexus Edge appliance", enterprise: "Private / customer-owned options" },
+                  { row: "Business knowledge", cloud: "Cloud prepared", edge: "Private & kept on-site", enterprise: "Custom data isolation" },
+                  { row: "Monitoring & support", cloud: "Managed updates & monitoring", edge: "Remote monitoring & replacement coverage", enterprise: "Dedicated service & support plan" },
+                  { row: "Commitment", cloud: "Monthly (or annual)", edge: "36-month initial term (24-mo available)", enterprise: "Custom agreement" },
+                  { row: "Setup & deployment", cloud: "CAD $299 setup", edge: "CAD $1,499 activation & deployment", enterprise: "From CAD $7,500" },
+                  { row: "Upgrade options", cloud: "Credit $299 toward Edge within 6 mo", edge: "Renew, refresh, or scale to Enterprise", enterprise: "Custom scaling" },
                 ].map((item, idx) => (
                   <tr key={idx} className="hover:bg-black/[0.01] transition-colors">
                     <td className="py-3.5 pr-4 font-medium text-[#111]">{item.row}</td>
                     <td className="py-3.5 px-4">{item.cloud}</td>
                     <td className="py-3.5 px-4 bg-black/[0.02] font-medium text-black/90">{item.edge}</td>
-                    <td className="py-3.5 pl-4">{item.custom}</td>
+                    <td className="py-3.5 pl-4">{item.enterprise}</td>
                   </tr>
                 ))}
               </tbody>
@@ -442,7 +482,7 @@ export default function PricingPage() {
               <span className="px-3 py-1 rounded-full text-[10px] tracking-widest bg-emerald-700 text-white font-mono uppercase">
                 NEXUS EDGE AGREEMENT
               </span>
-              <span className="text-xs text-black/40 font-mono">24-Month Term</span>
+              <span className="text-xs text-black/40 font-mono">36-Month Initial Term</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-light text-[#111]">
@@ -452,15 +492,15 @@ export default function PricingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
               <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
                 <div className="text-[11px] text-black/45 font-mono uppercase">Monthly Fee</div>
-                <div className="text-xl font-light text-[#111] mt-1">CAD $299/mo</div>
+                <div className="text-xl font-light text-[#111] mt-1">From CAD $499/mo</div>
               </div>
               <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
                 <div className="text-[11px] text-black/45 font-mono uppercase">Activation Fee</div>
-                <div className="text-xl font-light text-[#111] mt-1">CAD $699 one-time</div>
+                <div className="text-xl font-light text-[#111] mt-1">CAD $1,499 one-time</div>
               </div>
               <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
-                <div className="text-[11px] text-black/45 font-mono uppercase">Minimum Commitment</div>
-                <div className="text-xl font-light text-[#111] mt-1">CAD $7,875 before tax</div>
+                <div className="text-[11px] text-black/45 font-mono uppercase">Initial Term</div>
+                <div className="text-xl font-light text-[#111] mt-1">36-month initial term</div>
               </div>
               <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
                 <div className="text-[11px] text-black/45 font-mono uppercase">Appliance Property</div>
@@ -469,7 +509,7 @@ export default function PricingPage() {
             </div>
 
             <p className="text-xs text-black/60 leading-relaxed">
-              Standard managed appliance included. The appliance remains the property of Westside Union to enable continuous monitoring, security updates, and covered hardware replacement. Higher-capacity hardware, specialized custom connections, or optional add-ons are separate.
+              The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property to enable continuous monitoring, security updates, and covered hardware replacement. A 24-month option is available at CAD $599/month. Higher-capacity hardware, specialized custom connections, or optional add-ons are separate.
             </p>
 
             {/* Cloud-to-Edge Upgrade Credit Box */}
@@ -694,9 +734,10 @@ export default function PricingPage() {
                     onChange={handleRoiChange}
                     className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-[#111]"
                   >
-                    <option value="cloud">Nexus Cloud — CAD $99/mo (CAD $299 onboarding)</option>
-                    <option value="edge">Nexus Edge — CAD $299/mo (CAD $699 activation · 24-mo term)</option>
-                    <option value="custom">Nexus Custom — From CAD $799/mo</option>
+                    <option value="cloud">Nexus Cloud</option>
+                    <option value="edge_36">Nexus Edge — 36 months</option>
+                    <option value="edge_24">Nexus Edge — 24 months</option>
+                    <option value="enterprise">Nexus Enterprise — consultation required</option>
                   </select>
                 </div>
               </div>
@@ -716,9 +757,7 @@ export default function PricingPage() {
                   </div>
                   <div className="flex justify-between text-black/60 border-t border-black/[0.06] pt-2">
                     <span>
-                      {roi.plan === "cloud"
-                        ? `Nexus Cloud (${billingCycle === "annual" ? "CAD $79" : "CAD $99"}/mo + CAD $${roiSetupAmortized.toFixed(0)} setup eq.)`
-                        : `${roiPlanData.name} (CAD $${roiPlanData.monthlyCad}/mo + CAD $${roiSetupAmortized.toFixed(0)} setup eq.)`}
+                      {selectedPlanDetails.displayLabel}
                     </span>
                     <span className="font-medium text-black/80 tabular-nums">−CAD ${roiNexusCost.toFixed(0)}</span>
                   </div>

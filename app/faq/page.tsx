@@ -71,7 +71,7 @@ export default function FaqPage() {
               className="p-4 rounded-xl bg-white border border-black/[0.06] text-center hover:border-black/20 transition-colors shadow-xs"
             >
               <span className="text-xs font-medium text-[#111] block">View Packages</span>
-              <span className="text-[10px] text-black/50">Cloud, Edge &amp; Custom →</span>
+              <span className="text-[10px] text-black/50">Cloud, Edge &amp; Enterprise →</span>
             </Link>
             <Link
               href="/nexus-edge"

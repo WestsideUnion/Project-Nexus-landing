@@ -176,8 +176,8 @@ export default function NexusEdgePage() {
                 <p className="text-xs sm:text-sm text-black/60 mt-1">Everything you need for managed on-site assistance.</p>
               </div>
               <div className="text-left md:text-right">
-                <div className="text-3xl font-light text-[#111]">CAD $299<span className="text-sm text-black/40">/mo</span></div>
-                <div className="text-xs text-black/50">CAD $699 activation · 24-month agreement</div>
+                <div className="text-3xl font-light text-[#111]">From CAD $499<span className="text-sm text-black/40">/mo</span></div>
+                <div className="text-xs text-black/50">CAD $1,499 activation &amp; deployment · 36-month initial term</div>
               </div>
             </div>
 
@@ -198,19 +198,19 @@ export default function NexusEdgePage() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 <div>
                   <span className="text-black/40 block text-[10px] uppercase font-mono">Monthly Managed Fee</span>
-                  <span className="text-black/80 font-medium">CAD $299 / month</span>
+                  <span className="text-black/80 font-medium">From CAD $499 / mo (36 mo) · CAD $599 / mo (24 mo)</span>
                 </div>
                 <div>
-                  <span className="text-black/40 block text-[10px] uppercase font-mono">Activation &amp; Setup</span>
-                  <span className="text-black/80 font-medium">CAD $699 one-time</span>
+                  <span className="text-black/40 block text-[10px] uppercase font-mono">Activation &amp; Deployment</span>
+                  <span className="text-black/80 font-medium">CAD $1,499 one-time</span>
                 </div>
                 <div>
-                  <span className="text-black/40 block text-[10px] uppercase font-mono">Minimum 24-Month Commitment</span>
-                  <span className="text-black/80 font-medium">CAD $7,875 before taxes</span>
+                  <span className="text-black/40 block text-[10px] uppercase font-mono">Initial Term</span>
+                  <span className="text-black/80 font-medium">36-month initial term (24-mo available)</span>
                 </div>
               </div>
               <p className="text-[11px] text-black/55 leading-relaxed pt-2 border-t border-black/[0.04]">
-                Standard managed appliance included. The appliance remains the property of Westside Union throughout the term. Higher-capacity equipment, specialized on-site cabling, or optional add-ons are separate.
+                The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property throughout the term. Higher-capacity equipment, specialized on-site cabling, or optional add-ons are separate.
               </p>
             </div>
           </div>
@@ -283,7 +283,7 @@ export default function NexusEdgePage() {
 
       {/* ── 8. ASSESSMENT CTA / FORM ────────────────────────────────────────── */}
       <ConsultationForm
-        defaultPackage="Nexus Edge — CAD $299/month, 24-month term"
+        defaultPackage="Nexus Edge — From CAD $499/month, 36-month term"
         title="Book an Edge Assessment for your business."
         subtitle="We will evaluate your physical location, privacy requirements, and workflow volume to determine if Nexus Edge is the right fit."
       />

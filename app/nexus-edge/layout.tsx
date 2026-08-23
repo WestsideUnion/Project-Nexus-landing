@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Nexus Edge | Managed Local AI for Your Business",
   description:
-    "Nexus Edge adds a dedicated managed appliance at your business—keeping more approved business knowledge on-site, reducing cloud AI dependence, and providing predictable CAD $299/mo service.",
+    "Nexus Edge adds a dedicated managed appliance at your business—keeping more approved business knowledge on-site, reducing cloud AI dependence, and providing predictable service from CAD $499/mo.",
   keywords: [
     "Nexus Edge",
     "Local AI appliance",

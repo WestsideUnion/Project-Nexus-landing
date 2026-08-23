@@ -301,7 +301,7 @@ export default function ConnectionsPage() {
               Don&apos;t see your specific business tool?
             </h3>
             <p className="text-xs sm:text-sm text-black/65 max-w-xl leading-relaxed">
-              We frequently connect custom booking systems, niche POS platforms, webhooks, and private databases through Nexus Custom deployments.
+              We frequently connect custom booking systems, niche POS platforms, webhooks, and private databases through Nexus Enterprise deployments.
             </p>
           </div>
           <a

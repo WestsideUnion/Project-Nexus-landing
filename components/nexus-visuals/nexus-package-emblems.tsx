@@ -130,9 +130,9 @@ export function NexusEdgeEmblem({ className = "w-12 h-12" }: { className?: strin
   )
 }
 
-// ─── 3. Nexus Custom Emblem ──────────────────────────────────────────────────
+// ─── 3. Nexus Enterprise Emblem ──────────────────────────────────────────────
 // Meaning: Flexible systems working together. Interconnected modular nodes with multi-location synchronization.
-export function NexusCustomEmblem({ className = "w-12 h-12" }: { className?: string }) {
+export function NexusEnterpriseEmblem({ className = "w-12 h-12" }: { className?: string }) {
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
       <svg
@@ -190,3 +190,5 @@ export function NexusCustomEmblem({ className = "w-12 h-12" }: { className?: str
     </div>
   )
 }
+
+export const NexusCustomEmblem = NexusEnterpriseEmblem
