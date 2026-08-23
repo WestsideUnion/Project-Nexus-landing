@@ -8,7 +8,8 @@ import {
   SlackIcon,
   GoogleBusinessIcon,
   SquarePosIcon,
-  CloverPosIcon,
+  CrmPlatformIcon,
+  AccountingSystemIcon,
   EmailChannelIcon,
   SmsChannelIcon,
   BookingChannelIcon,
@@ -16,19 +17,19 @@ import {
 
 export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean }) {
   const leftChannels = [
-    { name: "WhatsApp", icon: <WhatsAppIcon className="w-4 h-4 text-emerald-600" />, status: "Available" },
-    { name: "SMS / Text", icon: <SmsChannelIcon className="w-4 h-4 text-sky-600" />, status: "Available" },
-    { name: "Telegram", icon: <TelegramIcon className="w-4 h-4 text-blue-500" />, status: "Available" },
-    { name: "Email Inbox", icon: <EmailChannelIcon className="w-4 h-4 text-amber-600" />, status: "Available" },
-    { name: "Slack", icon: <SlackIcon className="w-4 h-4 text-purple-600" />, status: "Available" },
+    { name: "WhatsApp", icon: <WhatsAppIcon className="w-4 h-4" />, status: "Available" },
+    { name: "SMS / Text", icon: <SmsChannelIcon className="w-4 h-4" />, status: "Available" },
+    { name: "Telegram", icon: <TelegramIcon className="w-4 h-4" />, status: "Available" },
+    { name: "Email Inbox", icon: <EmailChannelIcon className="w-4 h-4" />, status: "Available" },
+    { name: "Slack", icon: <SlackIcon className="w-4 h-4" />, status: "Available" },
   ]
 
   const rightTools = [
-    { name: "POS & Sales (Square, Clover)", icon: <SquarePosIcon className="w-4 h-4 text-black" />, status: "Supported" },
-    { name: "Booking Calendars", icon: <BookingChannelIcon className="w-4 h-4 text-teal-600" />, status: "Supported" },
+    { name: "POS & Sales (Square, Clover)", icon: <SquarePosIcon className="w-4 h-4" />, status: "Supported" },
+    { name: "Booking Calendars", icon: <BookingChannelIcon className="w-4 h-4" />, status: "Supported" },
     { name: "Google Business Reviews", icon: <GoogleBusinessIcon className="w-4 h-4" />, status: "Planned" },
-    { name: "CRM & Customer Records", icon: <CloverPosIcon className="w-4 h-4 text-emerald-600" />, status: "Configured" },
-    { name: "Accounting & Invoices", icon: <BookingChannelIcon className="w-4 h-4 text-blue-600" />, status: "Configured" },
+    { name: "CRM & Customer Records", icon: <CrmPlatformIcon className="w-4 h-4" />, status: "Configured" },
+    { name: "Accounting & Invoices", icon: <AccountingSystemIcon className="w-4 h-4" />, status: "Configured" },
   ]
 
   return (

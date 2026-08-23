@@ -16,10 +16,10 @@ export function NexusMessageToOutcome() {
   }, [])
 
   const channels = [
-    { id: "whatsapp", name: "WhatsApp", icon: <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-600" /> },
-    { id: "telegram", name: "Telegram", icon: <TelegramIcon className="w-3.5 h-3.5 text-blue-500" /> },
-    { id: "sms", name: "SMS / Text", icon: <SmsChannelIcon className="w-3.5 h-3.5 text-sky-600" /> },
-    { id: "email", name: "Email", icon: <EmailChannelIcon className="w-3.5 h-3.5 text-amber-600" /> },
+    { id: "whatsapp", name: "WhatsApp", icon: <WhatsAppIcon className="w-3.5 h-3.5" /> },
+    { id: "telegram", name: "Telegram", icon: <TelegramIcon className="w-3.5 h-3.5" /> },
+    { id: "sms", name: "SMS / Text", icon: <SmsChannelIcon className="w-3.5 h-3.5" /> },
+    { id: "email", name: "Email", icon: <EmailChannelIcon className="w-3.5 h-3.5" /> },
   ] as const
 
   const steps = [

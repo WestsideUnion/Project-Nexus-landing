@@ -14,9 +14,18 @@ import {
   WhatsAppIcon,
   TelegramIcon,
   SlackIcon,
+  TeamsIcon,
+  SignalIcon,
+  AppleMessagesIcon,
+  WebChatIcon,
+  OtherChannelsIcon,
   GoogleBusinessIcon,
   SquarePosIcon,
   CloverPosIcon,
+  CrmPlatformIcon,
+  InventorySystemIcon,
+  AccountingSystemIcon,
+  CustomApiIcon,
   EmailChannelIcon,
   SmsChannelIcon,
   BookingChannelIcon,
@@ -31,25 +40,41 @@ export default function ConnectionsPage() {
   const getIconForType = (type: string, name: string) => {
     switch (type) {
       case "whatsapp":
-        return <WhatsAppIcon className="w-5 h-5 text-emerald-600" />
+        return <WhatsAppIcon className="w-5 h-5" />
       case "telegram":
-        return <TelegramIcon className="w-5 h-5 text-blue-500" />
+        return <TelegramIcon className="w-5 h-5" />
       case "email":
-        return <EmailChannelIcon className="w-5 h-5 text-amber-600" />
+        return <EmailChannelIcon className="w-5 h-5" />
       case "sms":
-        return <SmsChannelIcon className="w-5 h-5 text-sky-600" />
+        return <SmsChannelIcon className="w-5 h-5" />
       case "slack":
-        return <SlackIcon className="w-5 h-5 text-purple-600" />
+        return <SlackIcon className="w-5 h-5" />
+      case "teams":
+        return <TeamsIcon className="w-5 h-5" />
+      case "webchat":
+        return <WebChatIcon className="w-5 h-5" />
+      case "signal":
+        return <SignalIcon className="w-5 h-5" />
+      case "imessage":
+        return <AppleMessagesIcon className="w-5 h-5" />
+      case "other_channel":
+        return <OtherChannelsIcon className="w-5 h-5" />
       case "google":
         return <GoogleBusinessIcon className="w-5 h-5" />
       case "pos":
-        return <SquarePosIcon className="w-5 h-5 text-black" />
+        return <SquarePosIcon className="w-5 h-5" />
       case "calendar":
-        return <BookingChannelIcon className="w-5 h-5 text-teal-600" />
+        return <BookingChannelIcon className="w-5 h-5" />
       case "crm":
-        return <CloverPosIcon className="w-5 h-5 text-emerald-600" />
+        return <CrmPlatformIcon className="w-5 h-5" />
+      case "inventory":
+        return <InventorySystemIcon className="w-5 h-5" />
+      case "accounting":
+        return <AccountingSystemIcon className="w-5 h-5" />
+      case "custom_api":
+        return <CustomApiIcon className="w-5 h-5" />
       default:
-        return <BookingChannelIcon className="w-5 h-5 text-black/70" />
+        return <OtherChannelsIcon className="w-5 h-5" />
     }
   }
 
