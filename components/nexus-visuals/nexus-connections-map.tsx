@@ -76,22 +76,22 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
         {/* Center Column: Nexus Core (3 cols) */}
         <div className="md:col-span-3 flex flex-col items-center justify-center p-4 my-2 md:my-0">
           {/* Central Nexus Orb */}
-          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-[#111] text-white shadow-xl border border-black/20 w-full max-w-[220px]">
+          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white text-black shadow-lg border border-black/[0.08] w-full max-w-[220px]">
             {/* Glow backing */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-purple-500/20 rounded-2xl blur-md -z-10" />
+            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/15 via-cyan-500/15 to-purple-500/15 rounded-2xl blur-md -z-10" />
 
             <Image src="/nexus-logo.png" alt="Nexus" width={48} height={48} className="object-contain mb-3" />
-            <span className="font-pixel text-xs tracking-widest text-white font-bold">NEXUS</span>
-            <span className="text-[10px] text-white/60 font-mono mt-1">Managed Assistant Core</span>
+            <span className="font-pixel text-xs tracking-widest text-black font-bold">NEXUS</span>
+            <span className="text-[10px] text-black/60 font-mono mt-1">Managed Assistant Core</span>
 
-            <div className="mt-3 pt-3 border-t border-white/10 w-full space-y-1 text-[10px] text-white/80">
+            <div className="mt-3 pt-3 border-t border-black/[0.08] w-full space-y-1.5 text-[10px] text-black/80">
               <div className="flex items-center justify-between">
-                <span className="text-white/50">Knowledge:</span>
-                <span className="text-emerald-400 font-medium">Approved</span>
+                <span className="text-black/50">Knowledge:</span>
+                <span className="text-emerald-600 font-semibold">Approved</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-white/50">Approvals:</span>
-                <span className="text-cyan-300 font-medium">Owner-in-Loop</span>
+                <span className="text-black/50">Approvals:</span>
+                <span className="text-sky-600 font-semibold">Owner-in-Loop</span>
               </div>
             </div>
           </div>
