@@ -160,9 +160,9 @@ export function FaqAccordionItem({
       </button>
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
-        style={{ maxHeight: open ? "600px" : "0px", opacity: open ? 1 : 0 }}
+        style={{ maxHeight: open ? "1000px" : "0px", opacity: open ? 1 : 0 }}
       >
-        <p className="mt-3 text-xs sm:text-sm text-black/60 leading-relaxed pr-6">
+        <p className="mt-3 text-xs sm:text-sm text-black/65 leading-relaxed pr-6 whitespace-pre-line">
           {answer}
         </p>
       </div>

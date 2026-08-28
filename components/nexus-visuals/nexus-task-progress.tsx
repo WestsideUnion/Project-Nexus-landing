@@ -56,8 +56,8 @@ export function NexusTaskProgress() {
     {
       id: 2,
       stageNumber: "STAGE 03",
-      title: "Finished",
-      subtitle: "Completed & Logged",
+      title: "Completed",
+      subtitle: "Reported & Delivered",
       badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
       description: "Completed work with a clear plain-language explanation and logged activity record.",
       items: [
@@ -65,7 +65,7 @@ export function NexusTaskProgress() {
         { title: "Appointment Confirmations", sub: "4/4 tomorrow reminders confirmed", time: "8:30 AM", done: true },
         { title: "Review Reply Published", sub: "Approved response posted to Google", time: "9:15 AM", done: true },
       ],
-      footerNote: "Delivered to your messaging channel and summary feed.",
+      footerNote: "Delivered through WhatsApp, Telegram, email or the Nexus dashboard.",
     },
   ]
 

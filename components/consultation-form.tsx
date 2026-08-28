@@ -264,7 +264,7 @@ export function ConsultationForm({
               disabled={formState === "loading"}
               className="w-full py-4 bg-[#111] text-white text-xs sm:text-sm rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase font-medium disabled:opacity-60 disabled:cursor-not-allowed shadow-sm cursor-pointer"
             >
-              {formState === "loading" ? "SENDING…" : "Book a Free Consultation"}
+              {formState === "loading" ? "SENDING…" : "Book a free consultation"}
             </button>
           </form>
         )}

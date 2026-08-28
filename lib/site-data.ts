@@ -556,33 +556,102 @@ export interface FaqItemData {
   answer: string
   category:
     | "Getting Started"
+    | "AI Systems & Architecture"
     | "Packages and Pricing"
     | "AI Usage"
     | "Privacy and Control"
     | "Nexus Edge"
+    | "Nexus Sense & Hardware"
     | "Connections and Add-ons"
     | "Dashboard and Future Features"
     | "Start Your Business — Canada"
-  isHomepageTop5?: boolean
+  isHomepageTop3?: boolean
 }
 
 export const FAQ_CATEGORIES = [
   "Getting Started",
+  "AI Systems & Architecture",
   "Packages and Pricing",
   "AI Usage",
   "Privacy and Control",
   "Nexus Edge",
+  "Nexus Sense & Hardware",
   "Connections and Add-ons",
   "Dashboard and Future Features",
   "Start Your Business — Canada",
 ] as const
 
+// ─── Top 3 Homepage Preview FAQs ──────────────────────────────────────────────
+export const HOMEPAGE_FAQS: FaqItemData[] = [
+  {
+    id: "different-from-other-agents",
+    category: "AI Systems & Architecture",
+    isHomepageTop3: true,
+    question: "What makes Nexus different from other AI agents?",
+    answer:
+      "Other systems give an AI the ability to work. Nexus turns that ability into a managed system built around your business. Westside Union connects Nexus to your messaging channels, business software, approved workflows, and optional on-site devices. Nexus maintains one consistent business identity, shared company knowledge, permissions, task history, and human approvals—even when different AI systems are used behind the scenes. You talk to one Nexus assistant, and Westside Union manages the technology supporting it.",
+  },
+  {
+    id: "need-technical-knowledge",
+    category: "Getting Started",
+    isHomepageTop3: true,
+    question: "Do I need technical knowledge to use Nexus?",
+    answer:
+      "No. You and your team communicate with Nexus through everyday messaging apps like WhatsApp, SMS, or Telegram just like messaging a trusted team member. Westside Union handles the technical setup, integrations, security monitoring, and platform updates so you never have to manage complicated software.",
+  },
+  {
+    id: "need-sensors-hardware",
+    category: "Nexus Sense & Hardware",
+    isHomepageTop3: true,
+    question: "Do I need sensors or special hardware?",
+    answer:
+      "No. Nexus works entirely with your existing messaging channels and business software without physical sensors. Optional on-site Nexus Sense devices are available if you want physical awareness (such as customer traffic or equipment alerts), but they are recommended only when they solve a clear operational problem.",
+  },
+]
+
 export const ALL_FAQS: FaqItemData[] = [
-  // 1. Getting Started
+  // 1. AI Systems & Architecture (StoryBrand & Competitive Positioning)
+  {
+    id: "different-from-openclaw-hermes-claude",
+    category: "AI Systems & Architecture",
+    isHomepageTop3: true,
+    question: "What makes Nexus different from OpenClaw, Hermes Agent, Claude Cowork or other AI agent systems?",
+    answer:
+      "OpenClaw, Hermes Agent and Claude Cowork are powerful systems that can help an AI perform work. Nexus is the managed business platform that brings the pieces together around your company.\n\nWestside Union connects Nexus to your messaging channels, business software, approved workflows and optional on-site devices. Nexus maintains one consistent business identity, shared company knowledge, permissions, task history and approval process—even when different AI systems are used behind the scenes.\n\nYou do not need to choose, configure or maintain those systems yourself. You talk to one Nexus assistant, and Westside Union manages the technology supporting it.\n\nOther systems give an AI the ability to work. Nexus turns that ability into a managed system built around your business.",
+  },
+  {
+    id: "does-nexus-replace-underlying-agents",
+    category: "AI Systems & Architecture",
+    question: "Does Nexus replace OpenClaw, Hermes Agent or Claude Cowork?",
+    answer:
+      "Not necessarily. Nexus may use one appropriate system, multiple systems or a future Nexus runtime depending on your business, privacy requirements and package.\n\nThe technology behind Nexus can change without requiring you to rebuild your business assistant or start its company knowledge over again.",
+  },
+  {
+    id: "why-not-install-agent-myself",
+    category: "AI Systems & Architecture",
+    question: "Why not install an AI agent myself?",
+    answer:
+      "A self-installed AI agent gives you software. Nexus gives you a managed business service.\n\nWestside Union configures the assistant around your company, connects approved tools, controls what it may do, monitors its work, maintains the system and helps improve it over time.",
+  },
+  {
+    id: "speak-to-one-assistant",
+    category: "AI Systems & Architecture",
+    question: "Will I still speak to one assistant if Nexus uses multiple AI systems?",
+    answer:
+      "Yes. Nexus maintains one business identity and shared company knowledge across supported systems.\n\nWhether work is completed by one agent or another behind the scenes, you continue speaking to the same Nexus assistant.",
+  },
+  {
+    id: "underlying-technology-changes",
+    category: "AI Systems & Architecture",
+    question: "What happens if the AI technology behind Nexus changes?",
+    answer:
+      "Nexus is designed so that its underlying AI technology can be maintained or replaced without changing the customer-facing Nexus identity.\n\nThe goal is to preserve the business’s approved knowledge, preferences, workflows and history while Westside Union manages changes behind the scenes.",
+  },
+
+  // 2. Getting Started
   {
     id: "what-is-project-nexus",
     category: "Getting Started",
-    isHomepageTop5: true,
     question: "What is Nexus?",
     answer:
       "Nexus is a managed AI assistant for your business, built and operated by Westside Union. It organizes your follow-ups, reviews, customer inquiries, and routine tasks through the messaging tools you already use, keeping work moving forward with owner approval rules and clear summaries.",
@@ -590,7 +659,6 @@ export const ALL_FAQS: FaqItemData[] = [
   {
     id: "does-nexus-replace-staff",
     category: "Getting Started",
-    isHomepageTop5: true,
     question: "Does Nexus replace my staff?",
     answer:
       "No. Nexus is designed to support you and your existing team, not replace employees. It absorbs repetitive coordination, draft preparation, reminder tracking, and after-hours triage so you and your team can focus on serving customers, doing skilled work, and running the business.",
@@ -598,10 +666,17 @@ export const ALL_FAQS: FaqItemData[] = [
   {
     id: "how-do-i-communicate-with-nexus",
     category: "Getting Started",
-    isHomepageTop5: true,
     question: "How do I communicate with Nexus?",
     answer:
       "You and your team communicate with Nexus through familiar messaging channels like WhatsApp, SMS/text, Telegram, or email. There is no complicated new software to train your team on—you message Nexus just like you would a trusted assistant.",
+  },
+  {
+    id: "need-technical-knowledge-full",
+    category: "Getting Started",
+    isHomepageTop3: true,
+    question: "Do I need technical knowledge to use Nexus?",
+    answer:
+      "No. You and your team communicate with Nexus through everyday messaging apps like WhatsApp, SMS, or Telegram just like messaging a team member. Westside Union handles the technical setup, integrations, security, and ongoing maintenance with you.",
   },
   {
     id: "who-manages-technical-setup",
@@ -611,14 +686,37 @@ export const ALL_FAQS: FaqItemData[] = [
       "Westside Union handles all business knowledge setup, channel configuration, connector health, security monitoring, and platform updates so you never have to deal with technical complexity.",
   },
 
-  // 2. Packages and Pricing
+  // 3. Nexus Sense & Hardware
+  {
+    id: "what-are-nexus-sense-addons",
+    category: "Nexus Sense & Hardware",
+    question: "What are Nexus Sense add-ons?",
+    answer:
+      "Nexus Sense add-ons are optional on-site devices that help Nexus recognize useful conditions inside your physical business—for example occupancy, temperature, water leaks, equipment status or after-hours activity.\n\nWhen something requires attention, Nexus can notify you, create a task or begin an approved workflow.",
+  },
+  {
+    id: "do-i-need-sensors-or-hardware",
+    category: "Nexus Sense & Hardware",
+    isHomepageTop3: true,
+    question: "Do I need sensors or special hardware?",
+    answer:
+      "No. Nexus can work with your existing messaging channels and business software without physical sensors.\n\nNexus Sense devices are optional and are recommended only when they solve a clear operational problem.",
+  },
+  {
+    id: "do-sensors-record-customers",
+    category: "Nexus Sense & Hardware",
+    question: "Do Nexus Sense devices record customers?",
+    answer:
+      "It depends on the selected device, but Westside Union will clearly explain what every device detects, processes and stores before installation.\n\nWhenever practical, Nexus will favour minimal data collection and local processing. No device should be activated without documented business approval and any notice or consent required for the intended use.",
+  },
+
+  // 4. Packages and Pricing
   {
     id: "difference-cloud-edge",
     category: "Packages and Pricing",
-    isHomepageTop5: true,
     question: "What is the difference between Nexus Cloud and Nexus Edge?",
     answer:
-      "Plans start at CAD $99/month for Nexus Cloud. Each plan includes a defined usage allowance, clear limits, and managed support. Nexus Edge includes a dedicated appliance with a 24- or 36-month initial term.",
+      "Plans start at CAD $99/month for Nexus Cloud. Each plan includes a defined usage allowance, clear limits, and managed support. Nexus Edge includes a dedicated appliance with a 24- or 36-month initial term for on-site privacy and predictable local capacity.",
   },
   {
     id: "pilot-details",
@@ -642,11 +740,10 @@ export const ALL_FAQS: FaqItemData[] = [
       "Yes. If you upgrade from Nexus Cloud to Nexus Edge within six months, your CAD $299 Cloud onboarding payment is credited toward the CAD $1,499 Edge activation fee, subject to a routine Edge assessment.",
   },
 
-  // 3. AI Usage
+  // 5. AI Usage
   {
     id: "is-ai-usage-included",
     category: "AI Usage",
-    isHomepageTop5: true,
     question: "Is managed AI usage included?",
     answer:
       "Yes. Every Nexus Cloud and Nexus Edge package includes CAD $10 of managed AI usage each month. We provide proactive notifications at 70% and 90% usage, and safely pause new AI work at 100% so you never receive surprise bills or automatic overages.",
@@ -673,7 +770,7 @@ export const ALL_FAQS: FaqItemData[] = [
       "If you reach 100% of your monthly allowance, new AI-powered tasks pause safely. Non-AI functions, task records, and summaries remain active. You can wait for your allowance to reset monthly or add an optional prepaid AI Usage Pack (e.g. CAD $10 usage for CAD $15).",
   },
 
-  // 4. Privacy and Control
+  // 6. Privacy and Control
   {
     id: "is-business-information-private",
     category: "Privacy and Control",
@@ -696,7 +793,7 @@ export const ALL_FAQS: FaqItemData[] = [
       "You own your business data, customer conversations, configurations, and activity logs. You can request a data export at any time.",
   },
 
-  // 5. Nexus Edge
+  // 7. Nexus Edge
   {
     id: "own-edge-appliance",
     category: "Nexus Edge",
@@ -719,7 +816,7 @@ export const ALL_FAQS: FaqItemData[] = [
       "You may renew Nexus Edge, discuss an equipment refresh, transition to Nexus Cloud, or return the appliance and end the service according to your agreement. Westside Union securely wipes customer data prior to equipment decommissioning.",
   },
 
-  // 6. Connections and Add-ons
+  // 8. Connections and Add-ons
   {
     id: "tools-already-used",
     category: "Connections and Add-ons",
@@ -735,7 +832,7 @@ export const ALL_FAQS: FaqItemData[] = [
       "Add-on fees are divided into one-time setup fees (covering setup, authorization, mapping, and testing) and monthly fees (covering monitoring, maintenance, updates, and support). Variable usage from telecom or third-party providers is separate.",
   },
 
-  // 7. Dashboard and Future Features
+  // 9. Dashboard and Future Features
   {
     id: "dashboard-role",
     category: "Dashboard and Future Features",
@@ -744,7 +841,7 @@ export const ALL_FAQS: FaqItemData[] = [
       "No. Daily operation is messaging-first. The web dashboard is an optional control center (currently labelled Preview / In Development for pilot customers) for reviewing broad activity history, adjusting preferences, or inspecting tasks.",
   },
 
-  // 8. Start Your Business — Canada
+  // 10. Start Your Business — Canada
   {
     id: "founder-program-scope",
     category: "Start Your Business — Canada",

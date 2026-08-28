@@ -6,7 +6,7 @@ import Image from "next/image"
 
 const NAV_LINKS = [
   { label: "Solutions", href: "/#industries" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "How It Works", href: "/#workflow" },
   { label: "Pricing", href: "/pricing" },
   { label: "For Founders", href: "/start-business-canada" },
 ]
@@ -60,7 +60,7 @@ export function MobileNav() {
               className="text-xs px-4 py-2 rounded-xl bg-[#111] text-white hover:bg-black/80 hover:shadow-sm active:scale-[0.98] transition-all duration-200 tracking-wider whitespace-nowrap hidden md:block uppercase font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
-              Book a Consultation
+              Book a free consultation
             </Link>
 
             {/* Burger — mobile only */}
@@ -123,7 +123,7 @@ export function MobileNav() {
                 className="block w-full text-center text-xs px-4 py-3 rounded-xl bg-[#111] text-white hover:bg-black/80 active:scale-[0.98] transition-all duration-200 tracking-wider uppercase font-medium shadow-xs"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
-                Book a Consultation
+                Book a free consultation
               </Link>
             </div>
           </div>
