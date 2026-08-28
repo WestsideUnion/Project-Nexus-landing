@@ -72,7 +72,7 @@ export default function NexusEdgePage() {
               },
               {
                 title: "Unpredictable Cloud Costs",
-                desc: "Variable per-token API fees can fluctuate wildly during seasonal rushes and marketing campaigns.",
+                desc: "Variable API and cloud usage charges can fluctuate wildly during seasonal rushes and marketing campaigns.",
               },
               {
                 title: "Cloud Dependence",
@@ -124,12 +124,12 @@ export default function NexusEdgePage() {
               },
               {
                 title: "Routine work handled locally",
-                desc: "Repetitive drafting, task tracking, and FAQ triage run directly on your appliance without consuming cloud AI tokens.",
+                desc: "Repetitive drafting, task tracking, and FAQ triage run directly on your appliance without consuming external cloud capacity.",
                 tag: "Cost Control",
               },
               {
                 title: "Cloud fallback available",
-                desc: "CAD $10/month managed cloud fallback is included for complex queries or burst operations when needed.",
+                desc: "Monthly Nexus AI Credits are included for supported cloud work, complex queries or burst operations when needed.",
                 tag: "Hybrid Resilience",
               },
               {

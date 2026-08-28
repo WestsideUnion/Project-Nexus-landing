@@ -40,35 +40,49 @@ export default function HomePage() {
     el.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`)
   }
 
-  // 4 Primary Industries for Homepage
+  // 6 Primary Industries for Homepage (3 cols x 2 rows on desktop)
   const industryTiles = [
     {
       industry: "Restaurants and cafés",
-      headline: "A full dining room should not mean online enquiries go unanswered.",
-      outcome: "Nexus handles reservation inquiries, allergen questions, and drafts review replies for your approval.",
+      headline: "A full dining room should not mean online enquiries and promotions are forgotten.",
+      outcome: "Nexus helps handle customer inquiries, review replies, follow-ups and approved social promotions while you focus on serving customers.",
       img: "/images/industry-restaurants.png",
       delay: 0,
     },
     {
       industry: "Barbershops and salons",
       headline: "An unanswered booking question can become an empty chair.",
-      outcome: "Nexus answers availability and pricing questions instantly and shares your booking link.",
+      outcome: "Nexus helps answer booking questions, share approved information and prepare social content that keeps your services visible.",
       img: "/images/industry-barbershop.png",
-      delay: 80,
+      delay: 60,
     },
     {
       industry: "Dealerships",
       headline: "Every delayed response gives a buyer time to call another dealership.",
       outcome: "Nexus responds to after-hours inventory and test-drive inquiries and queues callbacks for your team.",
       img: "/images/industry-automotive.png",
-      delay: 160,
+      delay: 120,
     },
     {
-      industry: "Agencies and professional services",
-      headline: "Client reporting should not consume your team's best hours.",
-      outcome: "Nexus tracks action items, prepares meeting recaps, and monitors weekly reporting tasks.",
+      industry: "Agencies, firms and professional services",
+      headline: "Client work should not be interrupted by the administration surrounding it.",
+      outcome: "Nexus organizes inquiries, action items, meeting recaps, follow-ups, recurring reports and approved business content.",
       img: "/images/industry-agency.png",
+      delay: 180,
+    },
+    {
+      industry: "Clinics and wellness practices",
+      headline: "Patient and client questions do not stop when the front desk gets busy.",
+      outcome: "Nexus helps with approved FAQs, appointment reminders and administrative follow-ups while sensitive decisions remain with your staff.",
+      img: "/images/industry-clinics.png",
       delay: 240,
+    },
+    {
+      industry: "Artists, creators and studios",
+      headline: "Creative work should not disappear beneath inquiries and administration.",
+      outcome: "Nexus organizes commissions, bookings and client follow-ups while helping create and schedule portfolio updates, promotions and animated content.",
+      img: "/images/industry-creators.png",
+      delay: 300,
     },
   ]
 
@@ -137,7 +151,7 @@ export default function HomePage() {
         img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
       },
     ],
-    "Agencies and professional services": [
+    "Agencies, firms and professional services": [
       {
         time: "Post-meeting — same day",
         scenario: "A client strategy meeting just wrapped with 11 action items across three teams.",
@@ -157,13 +171,55 @@ export default function HomePage() {
         img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
       },
     ],
+    "Clinics and wellness practices": [
+      {
+        time: "10:15 AM — morning rush",
+        scenario: "A patient messages inquiring about clinic hours, parking, and intake forms for their initial wellness consultation.",
+        outcome: "Nexus replies with approved clinic details and intake instructions, ensuring clinical questions are routed directly to staff.",
+        img: "/images/industry-clinics.png",
+      },
+      {
+        time: "Sunday 6:30 PM",
+        scenario: "A client asks whether an appointment can be rescheduled for later in the week.",
+        outcome: "Nexus provides your approved rescheduling policy and self-service booking link, notifying the front desk of the change.",
+        img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        time: "Friday 4:00 PM",
+        scenario: "Staff finishes treating clients and needs to send tomorrow's appointment reminders.",
+        outcome: "Nexus delivers scheduled, friendly appointment reminders with preparation notes, reducing no-shows while keeping staff focused.",
+        img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    "Artists, creators and studios": [
+      {
+        time: "Tuesday 11:15 AM",
+        scenario: "An art collector or brand reaches out inquiring about an original canvas commission, print pricing, and gallery exhibition availability.",
+        outcome: "Nexus shares your commission guidelines, digital portfolio, and framing/shipping details, gathering collector specs before you begin creating.",
+        img: "/images/scenario-visual-artist.jpg",
+      },
+      {
+        time: "Friday 11:45 PM — post-set",
+        scenario: "A festival organizer or club promoter messages about booking you for an upcoming weekend set, asking for your fee and technical rider (CDJs & mixer setup).",
+        outcome: "Nexus checks your live performance calendar, provides your approved booking rates and DJ equipment rider, and queues the date for your 1-tap confirmation.",
+        img: "/images/scenario-dj.jpg",
+      },
+      {
+        time: "Wednesday 3:30 PM",
+        scenario: "You have an upcoming song release, tour date, or creative studio showcase to announce.",
+        outcome: "Nexus drafts the announcement captions, designs promotional graphics, and prepares short animated teaser clips ready for your approval and scheduling.",
+        img: "/images/industry-creators.png",
+      },
+    ],
   }
 
   const coverImgMap: Record<string, string> = {
     "Restaurants and cafés": "/images/industry-restaurants.png",
     "Barbershops and salons": "/images/industry-barbershop.png",
     "Dealerships": "/images/industry-automotive.png",
-    "Agencies and professional services": "/images/industry-agency.png",
+    "Agencies, firms and professional services": "/images/industry-agency.png",
+    "Clinics and wellness practices": "/images/industry-clinics.png",
+    "Artists, creators and studios": "/images/industry-creators.png",
   }
 
   return (
@@ -450,8 +506,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* 4 Primary Industry Tiles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6" onMouseMove={handleMouse}>
+          {/* 6 Industry Tiles (3 cols x 2 rows on desktop) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" onMouseMove={handleMouse}>
             {industryTiles.map((item) => (
               <BentoCard key={item.industry} className="flex flex-col overflow-hidden" delay={item.delay}>
                 {/* Photo */}
@@ -472,7 +528,7 @@ export default function HomePage() {
                 {/* Body */}
                 <div className="p-6 pt-3 flex flex-col flex-1 justify-between">
                   <div>
-                    <h3 className="text-xl font-medium text-[#111] mb-2">{item.industry}</h3>
+                    <h3 className="text-lg font-medium text-[#111] mb-2">{item.industry}</h3>
                     <p className="text-xs sm:text-sm font-normal text-black/85 leading-relaxed mb-3">
                       {item.headline}
                     </p>
@@ -500,13 +556,25 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-10 text-center">
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 text-xs text-black/70 hover:text-black underline underline-offset-4 transition-colors font-medium"
+          {/* Secondary Founder Banner */}
+          <div className="mt-8 p-6 sm:p-8 rounded-2xl bg-white border border-black/[0.07] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-xs">
+            <div className="space-y-1.5 max-w-xl">
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-widest uppercase bg-black/[0.04] text-black/60 font-medium">
+                Founder Launchpath
+              </div>
+              <h3 className="text-lg sm:text-xl font-medium text-[#111]">
+                Starting something new?
+              </h3>
+              <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
+                Nexus helps Canadian founders organize business setup, launch tasks and early operations—then continues supporting the company as it grows.
+              </p>
+            </div>
+            <Link
+              href="/start-business-canada"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs font-medium tracking-wide bg-[#111] text-white hover:bg-black/80 transition-colors shrink-0 cursor-pointer shadow-xs"
             >
-              Explore Nexus solutions for your industry →
-            </a>
+              Explore Nexus for Founders →
+            </Link>
           </div>
         </div>
       </section>
@@ -798,7 +866,7 @@ export default function HomePage() {
           {/* Pricing Footer */}
           <div className="mt-10 p-6 rounded-2xl border border-black/[0.06] bg-white flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left shadow-2xs">
             <div>
-              <h4 className="text-sm font-medium text-[#111]">Compare packages, managed AI usage rules, add-ons, and ROI calculator.</h4>
+              <h4 className="text-sm font-medium text-[#111]">Compare packages, Nexus AI Credits, add-ons, and ROI calculator.</h4>
               <p className="text-xs text-black/55">Review the full feature breakdown and estimate time recovered on the pricing page.</p>
             </div>
             <Link
@@ -889,7 +957,7 @@ export default function HomePage() {
                 href="/faq"
                 className="inline-flex items-center gap-2 text-xs text-black/70 hover:text-black underline underline-offset-2 transition-colors font-medium"
               >
-                View all frequently asked questions →
+                View all FAQs →
               </Link>
             </div>
           </div>

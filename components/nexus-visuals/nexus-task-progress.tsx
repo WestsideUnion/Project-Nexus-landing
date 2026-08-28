@@ -33,8 +33,8 @@ export function NexusTaskProgress() {
       badgeClass: "bg-amber-50 text-amber-800 border-amber-200/80",
       description: "Thoughts, reminders, and unassigned work captured from texts, voice notes, or scheduled checks.",
       items: [
+        { title: "Friday Promotion", sub: "Promote this Friday’s café special.", time: "10:15 AM" },
         { title: "Review Draft Request", sub: "3 Google reviews awaiting response draft", time: "11:42 PM" },
-        { title: "Promotion Planning", sub: "Wednesday slow-period promo concept", time: "Yesterday" },
         { title: "Quote Callback", sub: "Smith project estimate follow-up", time: "Pending" },
       ],
       footerNote: "Captured from WhatsApp, SMS, or Telegram without friction.",
@@ -47,9 +47,9 @@ export function NexusTaskProgress() {
       badgeClass: "bg-blue-50 text-blue-800 border-blue-200/80",
       description: "Work Nexus is organizing, drafting in brand voice, verifying against knowledge, or holding for approval.",
       items: [
+        { title: "Preparing Social Content", sub: "Nexus is creating the caption, promotional graphic and short animated video.", time: "Active", pulse: true },
         { title: "Drafting Proposal", sub: "Catering package draft for 45 guests", time: "Active", pulse: true },
         { title: "Awaiting 1-Tap Approval", sub: "5-star Google review response", time: "Holding", pulse: true },
-        { title: "Customer Inquiry Triage", sub: "After-hours availability & pricing check", time: "Active", pulse: true },
       ],
       footerNote: "Sensitive and public actions always pause for your review.",
     },
@@ -61,8 +61,8 @@ export function NexusTaskProgress() {
       badgeClass: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
       description: "Completed work with a clear plain-language explanation and logged activity record.",
       items: [
+        { title: "Campaign Scheduled", sub: "Approved content scheduled across connected social channels.", time: "10:45 AM", done: true },
         { title: "Morning Briefing Delivered", sub: "Daily 7:00 AM summary sent to owner", time: "7:00 AM", done: true },
-        { title: "Appointment Confirmations", sub: "4/4 tomorrow reminders confirmed", time: "8:30 AM", done: true },
         { title: "Review Reply Published", sub: "Approved response posted to Google", time: "9:15 AM", done: true },
       ],
       footerNote: "Delivered through WhatsApp, Telegram, email or the Nexus dashboard.",

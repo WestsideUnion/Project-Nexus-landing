@@ -427,10 +427,10 @@ export default function PricingPage() {
           <div className="max-w-3xl space-y-3">
             <Tag>AI USAGE CONTROLS</Tag>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              CAD $10 of managed AI usage included every month.
+              Monthly Nexus AI Credits included with every package.
             </h2>
             <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
-              Your included allowance covers routine customer follow-ups, review draft preparation, summaries, and notifications. Nexus provides clear visibility and spending safeguards.
+              Your included monthly credits cover routine customer follow-ups, review draft preparation, summaries, and notifications. Additional credits are available when needed. Nexus alerts you before your included usage runs low.
             </p>
           </div>
 
@@ -447,8 +447,8 @@ export default function PricingPage() {
           <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/[0.08] space-y-4 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="text-base font-medium text-[#111]">Optional Prepaid AI Usage Packs</h3>
-                <p className="text-xs text-black/50">Need more capacity during a high-volume promotion? Add a prepaid pack anytime.</p>
+                <h3 className="text-base font-medium text-[#111]">Optional Prepaid Nexus AI Credit Packs</h3>
+                <p className="text-xs text-black/50">Need more capacity during a high-volume promotion? Add a prepaid credit pack anytime.</p>
               </div>
               <span className="text-xs text-emerald-700 font-medium font-mono">No automatic overages</span>
             </div>

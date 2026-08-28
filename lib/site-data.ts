@@ -42,17 +42,17 @@ export const PACKAGES: Record<"cloud" | "edge" | "custom", PlanData> = {
       "One primary messaging channel",
       "One starting business workflow",
       "Task tracking and owner summaries",
-      "Included monthly AI usage with clear limits",
+      "Monthly Nexus AI Credits included",
     ],
     fullFeatures: [
       { text: "One primary messaging channel" },
       { text: "One starting business workflow" },
       { text: "Business information and preferences prepared for Nexus" },
       { text: "Task tracking and owner summaries" },
-      { text: "Included monthly AI usage with clear limits" },
+      { text: "Monthly Nexus AI Credits included" },
       { text: "Monitoring and managed updates" },
     ],
-    note: "AI usage is included within the plan’s monthly allowance. Customers may optionally connect a supported AI account where appropriate.",
+    note: "Monthly Nexus AI Credits are included with your plan. Additional credits are available when needed. Nexus alerts you before your included usage runs low.",
     ctaText: "Start with Nexus Cloud",
     ctaHref: "#contact",
   },
@@ -72,13 +72,13 @@ export const PACKAGES: Record<"cloud" | "edge" | "custom", PlanData> = {
     compactBullets: [
       "Dedicated Nexus Edge appliance",
       "Private business knowledge",
-      "Selected work handled locally",
+      "Local AI processing with monthly Nexus AI Credits for supported cloud work",
       "Hardware maintenance and replacement coverage",
     ],
     fullFeatures: [
       { text: "Dedicated Nexus Edge appliance", highlight: true },
       { text: "Private business knowledge", highlight: true },
-      { text: "Selected work handled locally", highlight: true },
+      { text: "Local AI processing with monthly Nexus AI Credits for supported cloud work", highlight: true },
       { text: "Approved cloud assistance when needed" },
       { text: "Remote monitoring and managed updates" },
       { text: "Hardware maintenance and replacement coverage" },
@@ -103,12 +103,13 @@ export const PACKAGES: Record<"cloud" | "edge" | "custom", PlanData> = {
     compactBullets: [
       "Multiple locations, teams, or departments",
       "Coordinated business assistants and workflows",
-      "Advanced permissions and approval controls",
+      "Custom AI capacity based on your organization’s needs",
       "Dedicated service and support plan",
     ],
     fullFeatures: [
       { text: "Multiple locations, teams, or departments" },
       { text: "Coordinated business assistants and workflows" },
+      { text: "Custom AI capacity based on your organization’s needs" },
       { text: "Advanced permissions and approval controls" },
       { text: "Custom reporting and system connections" },
       { text: "Private or customer-owned infrastructure options" },
@@ -125,10 +126,9 @@ export const PILOT_TERMS = {
   name: "30-Day Nexus Cloud Pilot",
   onboardingFeeCad: 299,
   includedSubscriptionValueCad: 99,
-  includedTrialAiUsageCad: 10,
   headline: "See what Nexus can take off your plate in 30 days.",
   subheadline:
-    "Experience a managed business assistant built around your actual routines. Your first 30 days of the CAD $99 Cloud subscription and CAD $10 of managed AI usage are included with onboarding.",
+    "Experience a managed business assistant built around your actual routines. Your first 30 days of the CAD $99 Cloud subscription and monthly Nexus AI Credits are included with onboarding.",
   clarification:
     "Your first 30 days of managed service are included. CAD $299 onboarding applies.",
   inclusions: [
@@ -136,7 +136,7 @@ export const PILOT_TERMS = {
     { title: "One messaging channel", desc: "WhatsApp, SMS/Text, Telegram, or email." },
     { title: "One primary workflow", desc: "Configured around your highest-priority administrative bottleneck." },
     { title: "One standard business connection", desc: "Supported calendar, booking, or messaging connection." },
-    { title: "CAD $10 trial AI usage", desc: "Included managed usage with zero automatic overage." },
+    { title: "Monthly Nexus AI Credits", desc: "Included managed AI capacity with zero automatic overages." },
     { title: "No automatic subscription charge", desc: "Evaluate real outcomes before committing to your ongoing plan." },
   ],
   endOfPilotChoices: [
@@ -146,7 +146,7 @@ export const PILOT_TERMS = {
     "End the pilot with no further subscription charge",
   ],
   disclosure:
-    "CAD $299 onboarding applies. The first 30 days of the Cloud subscription and CAD $10 of managed AI usage are included. Third-party services and optional add-ons are separate. The 30 days begin on the confirmed go-live date, not the signing date.",
+    "CAD $299 onboarding applies. The first 30 days of the Cloud subscription and included Nexus AI Credits are covered. Third-party services and optional add-ons are separate. The 30 days begin on the confirmed go-live date, not the signing date.",
 }
 
 // ─── Nexus Edge Agreement Calculations ───────────────────────────────────────
@@ -160,23 +160,24 @@ export const EDGE_AGREEMENT = {
     return this.activationFeeCad + this.monthlyFeeCad * this.termMonths // 1499 + (499 * 36) = 19,463
   },
   propertyNotice: "The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property.",
-  cloudFallbackAllowanceCad: 10,
+  cloudFallbackNote: "Monthly Nexus AI Credits are included for supported cloud work, complex queries or burst operations when needed.",
   cloudToEdgeCreditText:
     "Upgrade from Nexus Cloud to Nexus Edge within six months and receive the CAD $299 Cloud onboarding payment as a credit toward Edge activation, subject to an Edge assessment.",
 }
 
 // ─── Managed AI Usage & Safeguards ───────────────────────────────────────────
 export const AI_USAGE_RULES = {
-  monthlyAllowanceCad: 10,
-  resetPeriod: "Monthly reset · Unused allowance does not roll over",
+  headline: "Monthly Nexus AI Credits included with every package.",
+  subheadline: "Additional credits are available when needed. Nexus alerts you before your included usage runs low.",
+  resetPeriod: "Monthly reset · Unused credits do not roll over",
   rules: [
     {
       title: "Monthly Reset",
-      desc: "Allowance resets every month. Unused allowance does not roll over.",
+      desc: "Included credits reset every month. Unused credits do not roll over.",
     },
     {
       title: "70% Alert",
-      desc: "Receive a proactive message notification when 70% of monthly allowance is consumed.",
+      desc: "Receive a proactive message notification when 70% of monthly credits are consumed.",
     },
     {
       title: "90% Warning",
@@ -188,7 +189,7 @@ export const AI_USAGE_RULES = {
     },
     {
       title: "Zero Automatic Overage",
-      desc: "Nexus never charges surprise fees or automatic per-token overages.",
+      desc: "Nexus never charges surprise fees or automatic overages.",
     },
     {
       title: "Activity History Active",
@@ -197,25 +198,22 @@ export const AI_USAGE_RULES = {
   ],
   usagePacks: [
     {
-      usageValueCad: 10,
       priceCad: 15,
-      label: "CAD $10 additional AI usage",
+      label: "Nexus AI Credits — Starter Pack",
       priceDisplay: "CAD $15",
-      desc: "Ideal for short busy periods",
+      desc: "Ideal for short busy periods or promotions",
     },
     {
-      usageValueCad: 25,
       priceCad: 35,
-      label: "CAD $25 additional AI usage",
+      label: "Nexus AI Credits — Growth Pack",
       priceDisplay: "CAD $35",
-      desc: "Popular for seasonal promotions",
+      desc: "Popular for seasonal campaigns and events",
     },
     {
-      usageValueCad: 50,
       priceCad: 65,
-      label: "CAD $50 additional AI usage",
+      label: "Nexus AI Credits — Expansion Pack",
       priceDisplay: "CAD $65",
-      desc: "For high-volume customer months",
+      desc: "For high-volume customer communications",
     },
   ],
   customerOwnedProviderInfo: {
@@ -317,22 +315,22 @@ export const ADD_ON_CATEGORIES: AddOnCategory[] = [
     description: "Prepaid bundles to expand monthly AI capacity on demand with zero overage risk.",
     items: [
       {
-        name: "CAD $10 AI Usage Pack",
+        name: "Nexus AI Credit Pack (Starter)",
         price: "CAD $15 one-time",
         type: "one-time",
-        desc: "Prepaid buffer for short busy periods",
+        desc: "Prepaid capacity buffer for short busy periods",
       },
       {
-        name: "CAD $25 AI Usage Pack",
+        name: "Nexus AI Credit Pack (Growth)",
         price: "CAD $35 one-time",
         type: "one-time",
-        desc: "Prepaid buffer for seasonal promotions",
+        desc: "Prepaid capacity buffer for seasonal promotions",
       },
       {
-        name: "CAD $50 AI Usage Pack",
+        name: "Nexus AI Credit Pack (Expansion)",
         price: "CAD $65 one-time",
         type: "one-time",
-        desc: "Prepaid buffer for high-volume customer months",
+        desc: "Prepaid capacity buffer for high-volume customer months",
       },
     ],
   },
@@ -589,23 +587,23 @@ export const HOMEPAGE_FAQS: FaqItemData[] = [
     isHomepageTop3: true,
     question: "What makes Nexus different from other AI agents?",
     answer:
-      "Other systems give an AI the ability to work. Nexus turns that ability into a managed system built around your business. Westside Union connects Nexus to your messaging channels, business software, approved workflows, and optional on-site devices. Nexus maintains one consistent business identity, shared company knowledge, permissions, task history, and human approvals—even when different AI systems are used behind the scenes. You talk to one Nexus assistant, and Westside Union manages the technology supporting it.",
+      "Nexus is a managed business platform—not simply another AI agent. Westside Union connects it to your approved business tools, workflows and optional devices while maintaining one business identity, shared company knowledge, permissions and visible task history.",
   },
   {
-    id: "need-technical-knowledge",
-    category: "Getting Started",
+    id: "manage-social-media",
+    category: "Connections and Add-ons",
     isHomepageTop3: true,
-    question: "Do I need technical knowledge to use Nexus?",
+    question: "Can Nexus help manage our social media?",
     answer:
-      "No. You and your team communicate with Nexus through everyday messaging apps like WhatsApp, SMS, or Telegram just like messaging a trusted team member. Westside Union handles the technical setup, integrations, security monitoring, and platform updates so you never have to manage complicated software.",
+      "Yes. Nexus can help plan content, write captions, create graphics and short animated videos, and schedule approved posts through supported social accounts. Public content waits for your approval by default.",
   },
   {
-    id: "need-sensors-hardware",
-    category: "Nexus Sense & Hardware",
+    id: "what-are-nexus-ai-credits",
+    category: "AI Usage",
     isHomepageTop3: true,
-    question: "Do I need sensors or special hardware?",
+    question: "What are Nexus AI Credits?",
     answer:
-      "No. Nexus works entirely with your existing messaging channels and business software without physical sensors. Optional on-site Nexus Sense devices are available if you want physical awareness (such as customer traffic or equipment alerts), but they are recommended only when they solve a clear operational problem.",
+      "Nexus AI Credits cover the AI work performed by your assistant. You see one simple monthly balance instead of tokens, model names or individual API charges. Nexus notifies you before your included credits run low.",
   },
 ]
 
@@ -723,7 +721,7 @@ export const ALL_FAQS: FaqItemData[] = [
     category: "Packages and Pricing",
     question: "How does the 30-Day Cloud Pilot work?",
     answer:
-      "The pilot includes your first 30 days of the CAD $99/month Cloud subscription and CAD $10 of trial AI usage. A CAD $299 onboarding fee applies for setup and configuration. The 30 days begin on your confirmed go-live date, and there is no automatic subscription charge at the end—you decide whether to continue.",
+      "The pilot includes your first 30 days of the CAD $99/month Cloud subscription and monthly Nexus AI Credits. A CAD $299 onboarding fee applies for setup and configuration. The 30 days begin on your confirmed go-live date, and there is no automatic subscription charge at the end—you decide whether to continue.",
   },
   {
     id: "currency-and-taxes",
@@ -742,18 +740,25 @@ export const ALL_FAQS: FaqItemData[] = [
 
   // 5. AI Usage
   {
-    id: "is-ai-usage-included",
+    id: "what-are-nexus-ai-credits-full",
     category: "AI Usage",
-    question: "Is managed AI usage included?",
+    question: "What are Nexus AI Credits?",
     answer:
-      "Yes. Every Nexus Cloud and Nexus Edge package includes CAD $10 of managed AI usage each month. We provide proactive notifications at 70% and 90% usage, and safely pause new AI work at 100% so you never receive surprise bills or automatic overages.",
+      "Nexus AI Credits cover the AI work performed by your Nexus assistant, including conversations, summaries, content drafts and other supported tasks.\n\nCustomers see one simple monthly balance instead of tokens or individual model charges. Nexus provides a notification before the included credits run low.",
+  },
+  {
+    id: "unexpected-ai-bill",
+    category: "AI Usage",
+    question: "Will I receive an unexpected AI bill?",
+    answer:
+      "No. Nexus monitors your included monthly usage and alerts you before additional credits are required.\n\nAdditional usage is handled according to the billing rules agreed for your account.",
   },
   {
     id: "need-separate-ai-account",
     category: "AI Usage",
     question: "Do I need a separate AI provider account to begin?",
     answer:
-      "No. Managed AI usage (CAD $10/month) is included with your Nexus subscription, so you do not need to create a separate AI-provider account to begin. If you prefer direct provider billing and control, you may optionally connect a supported provider business account.",
+      "No. Monthly Nexus AI Credits are included with your Nexus subscription, so you do not need to create a separate AI-provider account to begin. If you prefer direct provider billing and control, you may optionally connect a supported provider business account.",
   },
   {
     id: "consumer-chatgpt-gemini-grok",
@@ -767,10 +772,17 @@ export const ALL_FAQS: FaqItemData[] = [
     category: "AI Usage",
     question: "What happens when my monthly AI allowance is reached?",
     answer:
-      "If you reach 100% of your monthly allowance, new AI-powered tasks pause safely. Non-AI functions, task records, and summaries remain active. You can wait for your allowance to reset monthly or add an optional prepaid AI Usage Pack (e.g. CAD $10 usage for CAD $15).",
+      "If you reach 100% of your monthly allowance, new AI-powered tasks pause safely. Non-AI functions, task records, and summaries remain active. You can wait for your allowance to reset monthly or add an optional prepaid Nexus AI Credit Pack. Additional credits are available when needed, and Nexus alerts you before your included usage runs low.",
   },
 
   // 6. Privacy and Control
+  {
+    id: "publish-without-approval",
+    category: "Privacy and Control",
+    question: "Will Nexus publish content without our approval?",
+    answer:
+      "Not by default. Nexus normally prepares public content for review.\n\nBusinesses may optionally enable approved autopilot for specific content types, campaigns, accounts and schedules. Anything outside those approved rules can be held for review.",
+  },
   {
     id: "is-business-information-private",
     category: "Privacy and Control",
@@ -817,6 +829,27 @@ export const ALL_FAQS: FaqItemData[] = [
   },
 
   // 8. Connections and Add-ons
+  {
+    id: "can-nexus-manage-social-media",
+    category: "Connections and Add-ons",
+    question: "Can Nexus manage our social media?",
+    answer:
+      "Yes. Nexus can help plan your content calendar, write captions, create graphics and short animated promotional videos, adapt content for supported platforms and schedule approved posts.\n\nPublishing availability depends on the social platform, account permissions, selected package and enabled Nexus add-ons.",
+  },
+  {
+    id: "can-nexus-create-videos",
+    category: "Connections and Add-ons",
+    question: "Can Nexus create videos?",
+    answer:
+      "Nexus can create short animated promotional videos and other supported visual content for announcements, offers, events and social campaigns.\n\nAvailable formats, volume and generation services depend on the selected package and enabled add-ons.",
+  },
+  {
+    id: "can-nexus-post-to-every-social-platform",
+    category: "Connections and Add-ons",
+    question: "Can Nexus post to every social platform?",
+    answer:
+      "Nexus can publish through supported platforms and approved account connections. Availability depends on each provider’s API access, account eligibility and permissions.\n\nWestside Union confirms supported publishing channels during consultation.",
+  },
   {
     id: "tools-already-used",
     category: "Connections and Add-ons",
