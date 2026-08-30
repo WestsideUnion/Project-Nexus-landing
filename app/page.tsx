@@ -306,12 +306,12 @@ export default function HomePage() {
                   Book a free business workflow review.
                 </span>
               </div>
-              <a
-                href="#workflow"
+              <Link
+                href="/demo"
                 className="px-6 py-3.5 border border-black/20 text-black/80 text-[11px] font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.04] transition-all duration-200 tracking-widest uppercase self-start sm:self-auto"
               >
                 See how Nexus works
-              </a>
+              </Link>
             </div>
 
             {/* Trust line */}
