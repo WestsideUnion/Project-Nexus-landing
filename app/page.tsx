@@ -696,12 +696,12 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-14">
             <PixelIcon type="integrations" size={40} />
-            <div className="mt-4"><Tag>CONNECTIONS &amp; SENSING</Tag></div>
+            <div className="mt-4"><Tag>1,500+ CONNECTIONS &amp; SENSING</Tag></div>
             <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
               {"Works where you already work."}
             </RevealText>
             <p className="mt-4 text-xs sm:text-sm text-black/65 max-w-xl mx-auto leading-relaxed">
-              Connect the communication channels and business tools you already use, with optional on-site awareness when your physical business needs it.
+              Connect across 1,500+ supported business applications and communication channels—from messaging apps to CRMs, POS, accounting, and workspace tools—with optional on-site awareness when your physical business needs it.
             </p>
           </div>
 

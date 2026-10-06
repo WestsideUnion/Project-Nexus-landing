@@ -1,33 +1,36 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Nexus Business Connections | Messaging, POS and More",
+  title: "1,500+ Business Connections & Integrations | Nexus",
   description:
-    "Connect Nexus to the tools you already use—WhatsApp, Telegram, SMS, Email, POS systems, booking platforms, and CRMs. Managed setup, verified permissions, and tested reliability.",
+    "Connect Nexus to 1,500+ business tools and communication channels—WhatsApp, Slack, Gmail, Google Calendar, Notion, Salesforce, HubSpot, QuickBooks, Square, Shopify, and any custom API or MCP server. Managed authentication, least-privilege scoping, and owner approval rules.",
   keywords: [
     "Nexus Business Connections",
+    "1500+ AI integrations",
     "WhatsApp business assistant",
+    "Slack AI assistant",
+    "CRM AI integrations",
+    "QuickBooks AI assistant",
     "POS integration AI",
-    "booking calendar assistant",
-    "Telegram business bot",
+    "Model Context Protocol integrations",
     "business tools integration",
   ],
   alternates: {
     canonical: "/connections",
   },
   openGraph: {
-    title: "Nexus Business Connections | Messaging, POS and More",
+    title: "1,500+ Business Connections & Integrations | Nexus",
     description:
-      "Explore supported communication channels and business software connections for Nexus.",
+      "Explore 1,500+ supported communication channels, workspace apps, CRMs, POS, and financial software connections for Nexus.",
     url: "/connections",
     siteName: "Nexus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexus Business Connections | Messaging, POS and More",
+    title: "1,500+ Business Connections & Integrations | Nexus",
     description:
-      "Connect Nexus to WhatsApp, SMS, Email, POS, and booking platforms.",
+      "Connect Nexus to 1,500+ apps: WhatsApp, Slack, Gmail, Notion, Salesforce, QuickBooks, Square, Shopify, and more.",
   },
 }
 

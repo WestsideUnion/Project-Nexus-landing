@@ -8,12 +8,13 @@ import {
   SlackIcon,
   GoogleBusinessIcon,
   SquarePosIcon,
-  CrmPlatformIcon,
-  AccountingSystemIcon,
   EmailChannelIcon,
   SmsChannelIcon,
   BookingChannelIcon,
+  NotionIcon,
+  GithubIcon,
 } from "@/components/nexus-icons/nexus-icons"
+import { HubSpotIcon, QuickBooksIcon } from "@/components/nexus-icons/app-logo"
 
 export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean }) {
   const leftChannels = [
@@ -25,11 +26,11 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
   ]
 
   const rightTools = [
-    { name: "POS & Sales (Square, Clover)", icon: <SquarePosIcon className="w-4 h-4" />, status: "Supported" },
-    { name: "Booking Calendars", icon: <BookingChannelIcon className="w-4 h-4" />, status: "Supported" },
-    { name: "Google Business Reviews", icon: <GoogleBusinessIcon className="w-4 h-4" />, status: "Planned" },
-    { name: "CRM & Customer Records", icon: <CrmPlatformIcon className="w-4 h-4" />, status: "Configured" },
-    { name: "Accounting & Invoices", icon: <AccountingSystemIcon className="w-4 h-4" />, status: "Configured" },
+    { name: "CRMs & Sales (HubSpot, Salesforce)", icon: <HubSpotIcon className="w-4 h-4" />, status: "120+ Apps" },
+    { name: "Workspace & Docs (Notion, Google Docs)", icon: <NotionIcon className="w-4 h-4" />, status: "180+ Apps" },
+    { name: "POS & Commerce (Square, Shopify)", icon: <SquarePosIcon className="w-4 h-4" />, status: "90+ Apps" },
+    { name: "Accounting & Finance (QuickBooks, Stripe)", icon: <QuickBooksIcon className="w-4 h-4" />, status: "80+ Apps" },
+    { name: "Engineering & MCP (GitHub, Custom APIs)", icon: <GithubIcon className="w-4 h-4" />, status: "300+ Apps" },
   ]
 
   return (
@@ -39,7 +40,7 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[11px] font-mono tracking-widest text-black/60 uppercase font-semibold">
-            Unified Communication &amp; Business Tool Map
+            Unified Communication &amp; 1,500+ Business App Map
           </span>
         </div>
         <span className="text-xs text-black/50">
@@ -127,6 +128,11 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
               </span>
             </div>
           ))}
+          <div className="p-2 rounded-xl bg-black/[0.03] border border-black/[0.05] text-center">
+            <span className="text-[10px] font-mono text-black/55 font-medium">
+              + 1,500+ integrations across all major business platforms
+            </span>
+          </div>
         </div>
       </div>
     </div>

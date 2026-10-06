@@ -354,3 +354,245 @@ export function BookingChannelIcon({ className = "w-5 h-5" }: { className?: stri
     </svg>
   )
 }
+
+export function NotionIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Notion">
+      <rect width="24" height="24" rx="6" fill="#000000" />
+      <path
+        d="M4.9 4.8l2.9-.3c.4 0 .7.3.8.6l3.9 6.2 3.8-6.4c.1-.2.4-.4.7-.4h2.7c.3 0 .5.3.4.6l-5.6 9c-.2.3-.6.5-1 .5h-.2c-.4 0-.8-.2-1-.5L4.5 5.4c-.1-.3.1-.6.4-.6z"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M6 18h12c.5 0 1-.5 1-1s-.5-1-1-1H6c-.5 0-1 .5-1 1s.5 1 1 1z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  )
+}
+
+export function GithubIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="GitHub">
+      <rect width="24" height="24" rx="6" fill="#24292F" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 4C7.58 4 4 7.67 4 12.2c0 3.62 2.29 6.7 5.47 7.78.4.08.55-.18.55-.4v-1.4c-2.23.5-2.7-1.1-2.7-1.1-.36-.95-.89-1.2-.89-1.2-.73-.51.06-.5.06-.5.8.06 1.23.85 1.23.85.71 1.26 1.88.9 2.33.68.08-.53.28-.9.51-1.1-1.78-.2-3.64-.91-3.64-4.05 0-.9.31-1.63.82-2.2-.08-.21-.36-1.05.08-2.18 0 0 .67-.22 2.2.84a7.46 7.46 0 0 1 4 0c1.53-1.06 2.2-.84 2.2-.84.44 1.13.16 1.97.08 2.18.52.57.82 1.3.82 2.2 0 3.15-1.87 3.85-3.65 4.05.29.26.55.77.55 1.55v2.3c0 .22.14.49.56.4C17.71 18.9 20 15.82 20 12.2 20 7.67 16.42 4 12 4Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  )
+}
+
+export function ShopifyIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Shopify">
+      <rect width="24" height="24" rx="6" fill="#95BF47" />
+      <path
+        d="M17.2 6.5c-.1 0-.3.1-.4.2l-1.3 1.2s-.6-.6-1.4-.6c-1.2 0-2.2 1.2-2.2 2.7 0 1.2.6 1.9 1.5 2.5 1 .6 1.3.9 1.3 1.5 0 .6-.5 1-1.2 1-.8 0-1.5-.5-1.8-.9l-.8 1.1c.6.7 1.6 1.2 2.7 1.2 1.5 0 2.6-1.1 2.6-2.7 0-1.1-.6-1.8-1.5-2.4-.9-.6-1.3-.9-1.3-1.5 0-.5.4-.9 1-.9.7 0 1.2.4 1.4.7l1.1-.9c-.4-.5-1-1.1-2.1-1.1"
+        fill="#FFFFFF"
+      />
+      <path
+        d="M6.5 8.2l1.6 10.3 7.8 1.5 3.6-2.5L16.2 6l-9.7 2.2zm7.6-.2l-2.4.6-.9-2.3 2.1-.5 1.2 2.2z"
+        fill="#FFFFFF"
+        fillOpacity="0.4"
+      />
+    </svg>
+  )
+}
+
+export function StripeIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Stripe">
+      <rect width="24" height="24" rx="6" fill="#635BFF" />
+      <path
+        d="M13.2 9.5c0-.6.5-.9 1.3-.9.9 0 2.1.3 3 .8V6.5c-1-.4-2-.6-3-.6-2.5 0-4.2 1.3-4.2 3.6 0 3.5 4.8 2.9 4.8 4.5 0 .7-.6 1-1.5 1-1.1 0-2.5-.5-3.6-1.1v2.9c1.2.5 2.4.7 3.6.7 2.6 0 4.4-1.3 4.4-3.7-.1-3.7-4.5-3.1-4.5-4.3Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  )
+}
+
+export function GoogleCalendarIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Google Calendar">
+      <rect width="24" height="24" rx="6" fill="#4285F4" />
+      <rect x="5" y="6" width="14" height="13" rx="2" fill="#FFFFFF" />
+      <rect x="5" y="6" width="14" height="4" fill="#EA4335" />
+      <circle cx="8.5" cy="13.5" r="1" fill="#4285F4" />
+      <circle cx="12" cy="13.5" r="1" fill="#34A853" />
+      <circle cx="15.5" cy="13.5" r="1" fill="#FBBC05" />
+      <circle cx="8.5" cy="16.5" r="1" fill="#4285F4" />
+      <circle cx="12" cy="16.5" r="1" fill="#4285F4" />
+    </svg>
+  )
+}
+
+export function GoogleDocsIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Google Docs">
+      <rect width="24" height="24" rx="6" fill="#4285F4" />
+      <path d="M7 5h7l4 4v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" fill="#FFFFFF" />
+      <path d="M9 11h6M9 14h6M9 17h4" stroke="#4285F4" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function GoogleSheetsIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Google Sheets">
+      <rect width="24" height="24" rx="6" fill="#34A853" />
+      <path d="M7 5h7l4 4v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" fill="#FFFFFF" />
+      <path d="M8.5 11h7v6h-7z" stroke="#34A853" strokeWidth="1.2" fill="none" />
+      <path d="M8.5 14h7M12 11v6" stroke="#34A853" strokeWidth="1.2" />
+    </svg>
+  )
+}
+
+export function GoogleDriveIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Google Drive">
+      <rect width="24" height="24" rx="6" fill="#1A73E8" />
+      <path d="M8.5 5.5h7L20 13.5l-3.5 6H9.5L5 13.5z" fill="#FFFFFF" fillOpacity="0.2" />
+      <path d="M8.5 5.5l-3.5 8 3.5 6h7l-3.5-6z" fill="#34A853" />
+      <path d="M8.5 5.5h7l4.5 8h-7z" fill="#FBBC05" />
+      <path d="M16.5 19.5l3.5-6-4.5-8-3.5 6z" fill="#4285F4" />
+    </svg>
+  )
+}
+
+export function LinearIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Linear">
+      <rect width="24" height="24" rx="6" fill="#5E6AD2" />
+      <path
+        d="M5.5 15.5A7 7 0 0 1 15.5 5.5m3 3a7 7 0 0 1-10 10m2.5-7.5l5 5"
+        stroke="#FFFFFF"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function JiraIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Jira">
+      <rect width="24" height="24" rx="6" fill="#0052CC" />
+      <path
+        d="M12 4.5l5 5-5 5-5-5 5-5zm0 5l2.5 2.5-2.5 2.5-2.5-2.5 2.5-2.5zm0 5l5 5-5 5-5-5 5-5z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  )
+}
+
+export function AsanaIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Asana">
+      <rect width="24" height="24" rx="6" fill="#F06A6A" />
+      <circle cx="12" cy="8" r="3" fill="#FFFFFF" />
+      <circle cx="7.5" cy="15.5" r="3" fill="#FFFFFF" />
+      <circle cx="16.5" cy="15.5" r="3" fill="#FFFFFF" />
+    </svg>
+  )
+}
+
+export function AirtableIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Airtable">
+      <rect width="24" height="24" rx="6" fill="#18BFFF" />
+      <path d="M12 5l6.5 3.5v2L12 7 5.5 10.5v-2L12 5z" fill="#FFFFFF" />
+      <path d="M5.5 12.5L11 15v4l-5.5-2.5v-6.5z" fill="#FFFFFF" fillOpacity="0.8" />
+      <path d="M13 15l5.5-2.5v6.5L13 19v-4z" fill="#FFFFFF" fillOpacity="0.9" />
+    </svg>
+  )
+}
+
+export function DiscordIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Discord">
+      <rect width="24" height="24" rx="6" fill="#5865F2" />
+      <path
+        d="M17.5 7.5A11.5 11.5 0 0 0 14.8 6.6c-.1.2-.2.6-.4.9a11 11 0 0 0-4.8 0c-.2-.3-.3-.7-.4-.9A11.5 11.5 0 0 0 6.5 7.5c-2 3.1-2.5 6.1-2.2 9.1a12 12 0 0 0 4.1 2.1c.3-.5.6-1 .9-1.5-.7-.3-1.3-.6-1.9-1 .2.1.3.2.5.3 3.4 1.6 7.1 1.6 10.5 0 .2-.1.3-.2.5-.3-.6.4-1.2.7-1.9 1 .3.5.6 1 .9 1.5a12 12 0 0 0 4.1-2.1c.3-3.4-.6-6.4-2.2-9.1ZM9.5 14c-.8 0-1.5-.7-1.5-1.6s.7-1.6 1.5-1.6 1.5.7 1.5 1.6c0 .9-.7 1.6-1.5 1.6Zm5 0c-.8 0-1.5-.7-1.5-1.6s.7-1.6 1.5-1.6 1.5.7 1.5 1.6c0 .9-.7 1.6-1.5 1.6Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  )
+}
+
+export function MailchimpIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Mailchimp">
+      <rect width="24" height="24" rx="6" fill="#FFE01B" />
+      <circle cx="12" cy="12" r="7" fill="#000000" />
+      <circle cx="9.5" cy="10.5" r="1.5" fill="#FFE01B" />
+      <circle cx="14.5" cy="10.5" r="1.5" fill="#FFE01B" />
+      <path d="M8.5 13.5c1 1.8 6 1.8 7 0" stroke="#FFE01B" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function ZendeskIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Zendesk">
+      <rect width="24" height="24" rx="6" fill="#03363D" />
+      <path d="M7 6v6a6 6 0 0 1-6-6h6zm10 12v-6a6 6 0 0 1 6 6h-6zM11 6a6 6 0 0 1 6 6h-6V6zm2 12a6 6 0 0 1-6-6h6v6z" fill="#00A656" />
+    </svg>
+  )
+}
+
+export function IntercomIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Intercom">
+      <rect width="24" height="24" rx="6" fill="#0057FF" />
+      <path
+        d="M7 8.5v7c0 .8.7 1.5 1.5 1.5h7c.8 0 1.5-.7 1.5-1.5v-7C17 7.7 16.3 7 15.5 7h-7C7.7 7 7 7.7 7 8.5z"
+        fill="#FFFFFF"
+      />
+      <circle cx="10" cy="11.5" r="1" fill="#0057FF" />
+      <circle cx="14" cy="11.5" r="1" fill="#0057FF" />
+      <path d="M10 14h4" stroke="#0057FF" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+export function FigmaIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Figma">
+      <rect width="24" height="24" rx="6" fill="#1E1E1E" />
+      <rect x="6" y="5" width="4" height="4" rx="2" fill="#F24E1E" />
+      <rect x="10" y="5" width="4" height="4" rx="2" fill="#FF7262" />
+      <rect x="6" y="9" width="4" height="4" rx="2" fill="#A259FF" />
+      <circle cx="12" cy="11" r="2" fill="#1ABCFE" />
+      <rect x="6" y="13" width="4" height="4" rx="2" fill="#0ACF83" />
+    </svg>
+  )
+}
+
+export function SupabaseIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Supabase">
+      <rect width="24" height="24" rx="6" fill="#1C1C1C" />
+      <path
+        d="M13.2 4.5L5.5 14.8c-.3.4 0 1 .5 1h6.2l-1.4 5.7c-.3.8.8 1.3 1.3.6l7.7-10.3c.3-.4 0-1-.5-1h-6.2l1.4-5.7c.3-.8-.8-1.3-1.3-.6z"
+        fill="#3ECF8E"
+      />
+    </svg>
+  )
+}
+
+export function McpServerIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-label="Model Context Protocol">
+      <rect width="24" height="24" rx="6" fill="#0F172A" />
+      <circle cx="12" cy="12" r="3" fill="#38BDF8" />
+      <circle cx="6" cy="6" r="2" fill="#38BDF8" fillOpacity="0.8" />
+      <circle cx="18" cy="6" r="2" fill="#38BDF8" fillOpacity="0.8" />
+      <circle cx="6" cy="18" r="2" fill="#38BDF8" fillOpacity="0.8" />
+      <circle cx="18" cy="18" r="2" fill="#38BDF8" fillOpacity="0.8" />
+      <path d="M7.5 7.5L10.5 10.5M16.5 7.5L13.5 10.5M7.5 16.5L10.5 13.5M16.5 16.5L13.5 13.5" stroke="#38BDF8" strokeWidth="1.2" />
+    </svg>
+  )
+}

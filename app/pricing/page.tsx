@@ -578,14 +578,14 @@ export default function PricingPage() {
                 <h3 className="text-xs font-medium text-black/80">Future Nexus Control Centre Catalogue</h3>
               </div>
               <p className="text-xs text-black/60 max-w-2xl">
-                Browse and request add-on connections from the web dashboard preview. Westside Union verifies permissions, connects your account, and tests compatibility with your assistant.
+                Browse and request connections from over 1,500+ supported business applications and communication channels. Westside Union verifies permissions, connects your account, and tests compatibility with your assistant.
               </p>
             </div>
             <Link
               href="/connections"
               className="shrink-0 px-4 py-2.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors uppercase tracking-wider"
             >
-              Explore All Connections
+              Explore All 1,500+ Connections
             </Link>
           </div>
         </div>

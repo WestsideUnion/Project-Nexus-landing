@@ -1,37 +1,11 @@
 "use client"
 
 import React from "react"
-import { Cable, ShieldCheck, CheckCircle2, Info } from "lucide-react"
+import { ShieldCheck, CheckCircle2, Info } from "lucide-react"
 import { DEMO_CONNECTIONS } from "@/lib/demo-data"
-import {
-  WhatsAppIcon,
-  TelegramIcon,
-  EmailChannelIcon,
-  GoogleBusinessIcon,
-  SquarePosIcon,
-  BookingChannelIcon,
-} from "@/components/nexus-icons/nexus-icons"
+import { AppLogo } from "@/components/nexus-icons/app-logo"
 
 export function DemoConnectionsTab() {
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "whatsapp":
-        return <WhatsAppIcon className="w-5 h-5" />
-      case "telegram":
-        return <TelegramIcon className="w-5 h-5" />
-      case "email":
-        return <EmailChannelIcon className="w-5 h-5" />
-      case "google":
-        return <GoogleBusinessIcon className="w-5 h-5" />
-      case "pos":
-        return <SquarePosIcon className="w-5 h-5" />
-      case "booking":
-        return <BookingChannelIcon className="w-5 h-5" />
-      default:
-        return <Cable className="w-5 h-5 text-black/60" />
-    }
-  }
-
   const getSafeBadgeStyle = (label: string) => {
     switch (label) {
       case "Demo connection":
@@ -61,7 +35,7 @@ export function DemoConnectionsTab() {
           Connected Communication &amp; Business Software
         </h3>
         <p className="text-xs text-black/60 max-w-2xl">
-          Nexus connects to the communication apps and tools you already rely on. Westside Union verifies permissions, security protocols, and approval triggers during setup.
+          Nexus connects to the communication apps and business tools you already rely on across our 1,500+ integration ecosystem. Westside Union verifies permissions, security protocols, and approval triggers during setup.
         </p>
       </div>
 
@@ -86,8 +60,8 @@ export function DemoConnectionsTab() {
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#FAF9F5] border border-black/[0.06] flex items-center justify-center shrink-0">
-                    {getIcon(conn.iconType)}
+                  <div className="w-9 h-9 rounded-xl bg-white border border-black/[0.08] flex items-center justify-center shrink-0 shadow-2xs overflow-hidden p-1.5">
+                    <AppLogo id={conn.id} name={conn.name} iconType={conn.iconType} className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="text-xs sm:text-sm font-semibold text-black leading-tight">

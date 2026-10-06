@@ -4,11 +4,11 @@ import React from "react"
 import Link from "next/link"
 import {
   SquarePosIcon,
-  BookingChannelIcon,
-  EmailChannelIcon,
   GoogleBusinessIcon,
-  CrmPlatformIcon,
+  GoogleCalendarIcon,
+  EmailChannelIcon,
 } from "@/components/nexus-icons/nexus-icons"
+import { AppLogo } from "@/components/nexus-icons/app-logo"
 
 export function NexusConnectionsAndSense() {
   const businessSystems = [
@@ -20,7 +20,7 @@ export function NexusConnectionsAndSense() {
     {
       name: "Booking & Appointments",
       sub: "Calendly, Acuity, Fresha, Mindbody",
-      icon: <BookingChannelIcon className="w-5 h-5" />,
+      icon: <AppLogo id="calendly" name="Calendly" className="w-5 h-5" />,
     },
     {
       name: "Email Inboxes",
@@ -30,19 +30,12 @@ export function NexusConnectionsAndSense() {
     {
       name: "Business Calendars",
       sub: "Google Calendar, Microsoft 365",
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="w-5 h-5 text-black/70">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" />
-        </svg>
-      ),
+      icon: <GoogleCalendarIcon className="w-5 h-5" />,
     },
     {
       name: "Customer Records & CRM",
       sub: "HubSpot, Salesforce, Pipedrive",
-      icon: <CrmPlatformIcon className="w-5 h-5" />,
+      icon: <AppLogo id="hubspot" name="HubSpot" className="w-5 h-5" />,
     },
     {
       name: "Google Business Profile",
@@ -94,14 +87,14 @@ export function NexusConnectionsAndSense() {
             <span className="font-mono text-[10px] tracking-widest uppercase text-black/50 font-semibold">
               PANEL A · SOFTWARE &amp; TOOLS
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/60 font-mono">
-              CONNECTED TOOLS
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-50 text-emerald-800 border border-emerald-200/60 font-mono font-medium">
+              1,500+ APPS SUPPORTED
             </span>
           </div>
 
           <h3 className="text-2xl font-light text-[#111] mb-2">Your business systems</h3>
           <p className="text-xs sm:text-sm text-black/65 leading-relaxed mb-6">
-            Nexus connects with the tools your business already depends on.
+            Nexus coordinates work across 1,500+ tools your business already depends on—with managed OAuth authentication, least-privilege scoping, and owner approval rules.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
@@ -130,7 +123,7 @@ export function NexusConnectionsAndSense() {
             href="/connections"
             className="text-xs font-medium text-black hover:opacity-75 transition-opacity underline underline-offset-4 whitespace-nowrap"
           >
-            Explore all connections &amp; integrations →
+            Explore all 1,500+ connections &amp; integrations →
           </Link>
         </div>
       </div>
