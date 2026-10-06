@@ -3338,7 +3338,7 @@ export const CONSULTATION_PACKAGE_OPTIONS = [
   "Nexus Cloud 30-Day Pilot",
   "Nexus Edge — From CAD $499/month, 36-month term",
   "Nexus Edge — CAD $599/month, 24-month term",
-  "Nexus Enterprise — From CAD $1,499/month",
+  "Nexus Enterprise — Setup from CAD $7,500; recurring service priced by custom scope",
   "Start Your Business — Canada",
   "Not sure yet",
 ] as const
