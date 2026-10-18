@@ -15,6 +15,7 @@ import { NexusMessageToOutcome } from "@/components/nexus-visuals/nexus-message-
 import { NexusTaskProgress } from "@/components/nexus-visuals/nexus-task-progress"
 import { NexusConnectionsAndSense } from "@/components/nexus-visuals/nexus-sense-panel"
 import { NexusCloudEmblem, NexusEdgeEmblem, NexusEnterpriseEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
+import { ClientLogosSection } from "@/components/client-logos-section"
 
 export default function HomePage() {
   const [activeIndustry, setActiveIndustry] = useState<string | null>(null)
@@ -338,6 +339,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
+      {/* ── CLIENT LOGOS TRUST BAR ──────────────────────────────────────────── */}
+      <ClientLogosSection />
 
       {/* ── 2. WHAT KEEPS FOLLOWING YOU HOME? ─────────────────────────────────── */}
       <section id="how-it-helps" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
