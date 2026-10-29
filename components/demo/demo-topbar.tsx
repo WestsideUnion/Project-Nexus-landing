@@ -18,13 +18,13 @@ export function DemoTopbar({
   setIsMobileMenuOpen,
 }: DemoTopbarProps) {
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-black/[0.08] px-4 sm:px-6 py-3 transition-colors">
+    <header className="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-black/8 px-4 sm:px-6 py-3 transition-colors">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Left Side: Mobile Menu Button + Nexus Brand + Northstar Cafe Badge */}
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 -ml-2 rounded-xl text-black/70 hover:text-black hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            className="lg:hidden p-2 -ml-2 rounded-xl text-black/70 hover:text-black hover:bg-black/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
             aria-label={isMobileMenuOpen ? "Close dashboard navigation" : "Open dashboard navigation"}
             aria-expanded={isMobileMenuOpen}
           >
@@ -56,7 +56,7 @@ export function DemoTopbar({
               <span className="text-xs sm:text-sm font-semibold text-black tracking-tight">
                 Northstar Café
               </span>
-              <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-black/[0.04] text-black/60 border border-black/[0.06]">
+              <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-mono font-medium bg-black/4 text-black/60 border border-black/6">
                 Fictional demonstration business
               </span>
             </div>
@@ -79,7 +79,7 @@ export function DemoTopbar({
               onReset()
               trackDemoEvent("demo_reset")
             }}
-            className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-mono uppercase tracking-wider font-semibold text-black/70 hover:text-black bg-white hover:bg-black/[0.04] border border-black/[0.12] rounded-xl transition-all shadow-2xs active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 text-[11px] font-mono uppercase tracking-wider font-semibold text-black/70 hover:text-black bg-white hover:bg-black/4 border border-black/12 rounded-xl transition-all shadow-2xs active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 cursor-pointer"
             title="Reset demonstration to initial state"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -98,7 +98,7 @@ export function DemoTopbar({
       </div>
 
       {/* Mobile-only persistent preview badge */}
-      <div className="xl:hidden mt-2 pt-2 border-t border-black/[0.05] flex items-center justify-center gap-2 text-center text-[10px] font-mono text-amber-900 bg-amber-500/10 py-1 px-2 rounded-lg border border-amber-500/15">
+      <div className="xl:hidden mt-2 pt-2 border-t border-black/5 flex items-center justify-center gap-2 text-center text-[10px] font-mono text-amber-900 bg-amber-500/10 py-1 px-2 rounded-lg border border-amber-500/15">
         <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 animate-pulse" />
         <span>Interactive Preview — Sample Business Data</span>
       </div>

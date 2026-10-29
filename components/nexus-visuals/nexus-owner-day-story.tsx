@@ -12,7 +12,7 @@ export function NexusOwnerDayStory() {
       title: "Never miss an inquiry while serving customers",
       sentence: "When your hands are full during rush hour, Nexus captures booking and catering requests instantly so new customers never walk away.",
       visual: (
-        <div className="w-full h-48 relative rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-4 overflow-hidden flex flex-col justify-between">
+        <div className="w-full h-48 relative rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-4 overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between text-[11px] text-white/50 font-mono">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-amber-400" />
@@ -47,7 +47,7 @@ export function NexusOwnerDayStory() {
       title: "Keep review replies and callbacks moving",
       sentence: "Nexus drafts courteous on-brand replies to fresh reviews and prepares quote follow-ups for your one-tap review.",
       visual: (
-        <div className="w-full h-48 relative rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-4 overflow-hidden flex flex-col justify-between">
+        <div className="w-full h-48 relative rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-4 overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between text-[11px] text-white/50 font-mono">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-blue-400" />
@@ -83,7 +83,7 @@ export function NexusOwnerDayStory() {
       title: "Leave midnight admin at the door",
       sentence: "Send thoughts and reminders late at night; Nexus converts them into organized morning work so you can rest.",
       visual: (
-        <div className="w-full h-48 relative rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-4 overflow-hidden flex flex-col justify-between">
+        <div className="w-full h-48 relative rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-4 overflow-hidden flex flex-col justify-between">
           <div className="flex items-center justify-between text-[11px] text-white/50 font-mono">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-purple-400" />
@@ -125,7 +125,7 @@ export function NexusOwnerDayStory() {
             className={`rounded-2xl border transition-all duration-300 p-6 flex flex-col justify-between cursor-pointer ${
               activeStory === idx
                 ? "bg-white border-black/25 shadow-md ring-1 ring-black/5"
-                : "bg-white/70 border-black/[0.06] hover:bg-white hover:border-black/15 shadow-xs"
+                : "bg-white/70 border-black/6 hover:bg-white hover:border-black/15 shadow-xs"
             }`}
           >
             <div>

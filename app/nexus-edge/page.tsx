@@ -17,7 +17,7 @@ export default function NexusEdgePage() {
       <MobileNav />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
-      <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/[0.06] bg-white">
+      <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <div className="flex justify-center mb-2">
             <NexusEdgeEmblem className="w-16 h-16" />
@@ -25,25 +25,25 @@ export default function NexusEdgePage() {
           <div className="flex items-center justify-center gap-2">
             <Tag>NEXUS EDGE</Tag>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] tracking-widest bg-emerald-700 text-white font-mono uppercase">
-              LOCAL MANAGED AI
+              DEDICATED CAPACITY
             </span>
           </div>
           <RevealText className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#111] leading-[1.08]">
-            {"Keep more business knowledge on-site with managed local AI."}
+            {"More room for the work your business depends on."}
           </RevealText>
           <p className="text-sm sm:text-base text-black/65 max-w-2xl mx-auto leading-relaxed font-light">
-            Nexus Edge places a dedicated managed appliance at your business—combining high on-site privacy and predictable operational spending with managed peace of mind.
+            Nexus Edge gives growing businesses dedicated managed AI capacity, deeper workflow configuration, and priority operational support — hosted, monitored, and maintained by Westside Union.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#contact"
               className="px-6 py-3.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase shadow-sm"
             >
-              Book an Edge Assessment
+              Talk to Us About Edge
             </a>
             <Link
               href="/pricing"
-              className="px-6 py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.03] transition-all tracking-widest uppercase"
+              className="px-6 py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/3 transition-all tracking-widest uppercase"
             >
               Compare All Packages
             </Link>
@@ -51,48 +51,48 @@ export default function NexusEdgePage() {
         </div>
       </section>
 
-      {/* ── 2. THE PROBLEM (Why Edge?) ───────────────────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/[0.06]">
+      {/* ── 2. THE CHALLENGE (Why Edge?) ─────────────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
-            <Tag>THE CHALLENGE</Tag>
+            <Tag>WHEN TO STEP UP</Tag>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              When your business relies on AI daily, you want control over data and costs.
+              When daily operations depend on consistent workflows, you need dedicated capacity.
             </h2>
             <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
-              As your operations scale and customer interactions increase, sending sensitive records and high task volumes to public cloud APIs creates new friction.
+              As your team relies on Nexus across more customer inquiries, bookings, follow-ups, and reporting, stepping up from standard shared capacity ensures tailored workflows and predictable performance.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
               {
-                title: "Higher Privacy Requirements",
-                desc: "Customer records, internal notes, and confidential operational rules require strict physical isolation.",
+                title: "Higher Daily Workload",
+                desc: "Busy shops, clinics, and service teams need expanded capacity for frequent customer communication and daily coordination.",
               },
               {
-                title: "Unpredictable Cloud Costs",
-                desc: "Variable API and cloud usage charges can fluctuate wildly during seasonal rushes and marketing campaigns.",
+                title: "Deeper Workflow Setup",
+                desc: "Businesses with specific intake rules, multi-step follow-ups, or custom approval paths benefit from hands-on workflow mapping.",
               },
               {
-                title: "Cloud Dependence",
-                desc: "Outages, latency spikes, and third-party policy changes introduce external risk to daily workflows.",
+                title: "Dedicated Environment",
+                desc: "Dedicated managed capacity hosted by Westside Union keeps your business knowledge and workflows isolated and responsive.",
               },
               {
-                title: "Local Knowledge Access",
-                desc: "Routine inquiries, inventory lookups, and draft preparation work best when processed immediately on-site.",
+                title: "More Connected Tools",
+                desc: "Coordinate across multiple business systems, calendars, or communication channels with guided configuration.",
               },
               {
-                title: "No In-House IT Burden",
-                desc: "Small businesses need enterprise-grade security and backups without hiring a dedicated IT department.",
+                title: "Zero Hardware to House",
+                desc: "Westside Union hosts, monitors, and maintains the underlying system so your team never has to manage equipment or IT.",
               },
               {
-                title: "Predictable Budgeting",
-                desc: "Fixed monthly service replaces erratic infrastructure bills and expensive capital hardware purchases.",
+                title: "Priority Operational Support",
+                desc: "Get closer ongoing support as your team refines templates, seasonal campaigns, and operational rules.",
               },
             ].map((p, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white border border-black/[0.06] shadow-xs space-y-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+              <div key={i} className="p-6 rounded-2xl bg-white border border-black/6 shadow-xs space-y-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
                 <h3 className="text-sm font-medium text-[#111]">{p.title}</h3>
                 <p className="text-xs text-black/60 leading-relaxed">{p.desc}</p>
               </div>
@@ -101,58 +101,58 @@ export default function NexusEdgePage() {
         </div>
       </section>
 
-      {/* ── 3. THE GUIDE & BENEFITS ──────────────────────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/[0.06]">
+      {/* ── 3. THE SOLUTION & BENEFITS ───────────────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
             <PixelIcon type="platform" size={40} />
-            <div className="mt-4"><Tag>THE SOLUTION</Tag></div>
+            <div className="mt-4"><Tag>MANAGED BY WESTSIDE UNION</Tag></div>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              Westside Union provides, monitors, and maintains your on-site appliance.
+              Dedicated capacity and tailored workflows — hosted and managed for you.
             </h2>
             <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
-              Nexus Edge gives you the speed and privacy of local execution with the simplicity of a fully managed service.
+              You focus on running your business while Westside Union handles the environment, workflow configuration, monitoring, and ongoing care.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               {
-                title: "Approved information stays on-site",
-                desc: "Your business knowledge, customer records, and daily task context are processed and stored locally.",
-                tag: "Privacy First",
+                title: "Dedicated managed capacity",
+                desc: "More room for daily customer communication, scheduling preparation, and internal operational summaries.",
+                tag: "Capacity",
               },
               {
-                title: "Routine work handled locally",
-                desc: "Repetitive drafting, task tracking, and FAQ triage run directly on your appliance without consuming external cloud capacity.",
-                tag: "Cost Control",
+                title: "Tailored workflow mapping",
+                desc: "We work with you to map your services, policies, escalation rules, and preferred tone into repeatable workflows.",
+                tag: "Guided Setup",
               },
               {
-                title: "Cloud fallback available",
-                desc: "Monthly Nexus AI Credits are included for supported cloud work, complex queries or burst operations when needed.",
-                tag: "Hybrid Resilience",
+                title: "Hosted by Westside Union",
+                desc: "No equipment to install at your workplace and no servers for your staff to troubleshoot or maintain.",
+                tag: "Zero IT Burden",
               },
               {
-                title: "Remote monitoring & maintenance",
-                desc: "Westside Union applies security patches, performance updates, and health monitoring remotely.",
-                tag: "Zero IT Hassle",
+                title: "Approval-first guardrails",
+                desc: "Keep sensitive replies, refunds, or schedule changes behind your explicit approval before anything is sent.",
+                tag: "Owner Control",
               },
               {
-                title: "Covered hardware replacement",
-                desc: "If standard appliance hardware fails during ordinary operation, Westside Union repairs or replaces it under service.",
-                tag: "Worry-Free",
+                title: "Continuous monitoring & updates",
+                desc: "Westside Union monitors system health, applies updates, and keeps your workflows running smoothly.",
+                tag: "Managed Care",
               },
               {
-                title: "Customer-owned data",
-                desc: "Your data remains yours. We support approved data exports and securely wipe hardware before decommissioning.",
-                tag: "Data Integrity",
+                title: "Optional Nexus Sense add-on",
+                desc: "Ready to pair with optional connected workplace devices when your business wants alerts or status checks.",
+                tag: "Expandable",
               },
             ].map((b, i) => (
               <BentoCard key={i} className="p-6 flex flex-col justify-between" delay={i * 60}>
                 <div>
                   <div className="flex items-center justify-between mb-3">
                     <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span className="text-[10px] tracking-widest uppercase font-mono text-black/40 bg-black/[0.04] px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] tracking-widest uppercase font-mono text-black/40 bg-black/4 px-2 py-0.5 rounded-full">
                       {b.tag}
                     </span>
                   </div>
@@ -165,65 +165,65 @@ export default function NexusEdgePage() {
         </div>
       </section>
 
-      {/* ── 4. WHAT IS INCLUDED & 5. AGREEMENT SUMMARY ───────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/[0.06]">
+      {/* ── 4. WHAT IS INCLUDED & 5. COMMERCIAL SUMMARY ──────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-5xl mx-auto space-y-8">
-          <div className="rounded-3xl border border-black/[0.08] bg-white p-8 sm:p-12 shadow-sm space-y-8">
+          <div className="rounded-3xl border border-black/8 bg-white p-8 sm:p-12 shadow-sm space-y-8">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
               <div>
                 <Tag>PACKAGE SPECIFICATIONS</Tag>
                 <h2 className="text-3xl font-light text-[#111] mt-2">Nexus Edge Package Inclusions</h2>
-                <p className="text-xs sm:text-sm text-black/60 mt-1">Everything you need for managed on-site assistance.</p>
+                <p className="text-xs sm:text-sm text-black/60 mt-1">Dedicated capacity and deeper workflow support for growing teams.</p>
               </div>
               <div className="text-left md:text-right">
                 <div className="text-3xl font-light text-[#111]">From CAD $499<span className="text-sm text-black/40">/mo</span></div>
-                <div className="text-xs text-black/50">CAD $1,499 activation &amp; deployment · 36-month initial term</div>
+                <div className="text-xs text-black/60 font-medium">One-time setup fee applies: CAD $1,499</div>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-black/[0.06]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-black/6">
               {PACKAGES.edge.fullFeatures.map((feat, i) => (
-                <div key={i} className="flex items-start gap-2.5 text-xs text-black/75 p-2 rounded-lg bg-[#FAF9F5]">
+                <div key={i} className="flex items-start gap-2.5 text-xs text-black/75 p-3 rounded-xl bg-[#FAF9F5]">
                   <div className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />
                   <span className={feat.highlight ? "font-medium text-[#111]" : ""}>{feat.text}</span>
                 </div>
               ))}
             </div>
 
-            {/* Agreement Terms Box */}
-            <div className="p-6 rounded-2xl bg-black/[0.02] border border-black/[0.06] space-y-3">
+            {/* Commercial Terms Box */}
+            <div className="p-6 rounded-2xl bg-black/2 border border-black/6 space-y-3">
               <h3 className="text-xs font-semibold uppercase tracking-widest text-black/70 font-mono">
-                Agreement &amp; Financial Terms
+                Commercial &amp; Setup Summary
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
                 <div>
-                  <span className="text-black/40 block text-[10px] uppercase font-mono">Monthly Managed Fee</span>
-                  <span className="text-black/80 font-medium">From CAD $499 / mo (36 mo) · CAD $599 / mo (24 mo)</span>
+                  <span className="text-black/40 block text-[10px] uppercase font-mono">Recurring Service</span>
+                  <span className="text-black/80 font-medium">From CAD $499 / month (Monthly or Annual options)</span>
                 </div>
                 <div>
-                  <span className="text-black/40 block text-[10px] uppercase font-mono">Activation &amp; Deployment</span>
+                  <span className="text-black/40 block text-[10px] uppercase font-mono">One-Time Setup Fee</span>
                   <span className="text-black/80 font-medium">CAD $1,499 one-time</span>
                 </div>
                 <div>
-                  <span className="text-black/40 block text-[10px] uppercase font-mono">Initial Term</span>
-                  <span className="text-black/80 font-medium">36-month initial term (24-mo available)</span>
+                  <span className="text-black/40 block text-[10px] uppercase font-mono">Hosting &amp; Care</span>
+                  <span className="text-black/80 font-medium">Hosted &amp; managed by Westside Union</span>
                 </div>
               </div>
-              <p className="text-[11px] text-black/55 leading-relaxed pt-2 border-t border-black/[0.04]">
-                The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property throughout the term. Higher-capacity equipment, specialized on-site cabling, or optional add-ons are separate.
+              <p className="text-[11px] text-black/55 leading-relaxed pt-2 border-t border-black/4">
+                The one-time setup fee covers initial configuration, workflow mapping, and dedicated environment preparation, and is confirmed clearly before work begins.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 6. LIFECYCLE & 7. UPGRADE PATH ───────────────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/[0.06]">
+      {/* ── 6. ONBOARDING STEPS & UPGRADE PATH ───────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
-            <Tag>MANAGED LIFECYCLE</Tag>
+            <Tag>HOW WE SET UP EDGE</Tag>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              From deployment to refresh: what to expect.
+              From workflow review to daily operation.
             </h2>
           </div>
 
@@ -231,26 +231,26 @@ export default function NexusEdgePage() {
             {[
               {
                 step: "01",
-                title: "Setup & Delivery",
-                desc: "We configure your business knowledge, test connections, and deliver the pre-configured appliance.",
+                title: "Workflow Mapping",
+                desc: "We review your busiest communication, scheduling, and follow-up bottlenecks with you.",
               },
               {
                 step: "02",
-                title: "Monitoring & Patches",
-                desc: "Westside Union securely monitors appliance uptime, software health, and security updates.",
+                title: "Environment Setup",
+                desc: "Westside Union prepares your dedicated Nexus Edge environment, business knowledge, and tool connections.",
               },
               {
                 step: "03",
-                title: "Covered Replacement",
-                desc: "Hardware faults during ordinary operation are covered with prompt equipment replacement.",
+                title: "Guided Launch",
+                desc: "We test responses, approval rules, and summaries with your team before going live.",
               },
               {
                 step: "04",
-                title: "Renewal or Secure Return",
-                desc: "At term end, renew, refresh hardware, transition to Cloud, or return the unit with certified data wipe.",
+                title: "Ongoing Management",
+                desc: "Westside Union monitors performance, applies updates, and supports your workflows as you grow.",
               },
             ].map((st) => (
-              <div key={st.step} className="p-5 rounded-2xl bg-[#FAF9F5] border border-black/[0.05] space-y-2">
+              <div key={st.step} className="p-5 rounded-2xl bg-[#FAF9F5] border border-black/5 space-y-2">
                 <span className="font-mono text-xs text-black/40">{st.step}</span>
                 <h3 className="text-sm font-medium text-[#111]">{st.title}</h3>
                 <p className="text-xs text-black/55 leading-relaxed">{st.desc}</p>
@@ -262,10 +262,10 @@ export default function NexusEdgePage() {
           <div className="p-6 sm:p-8 rounded-2xl bg-[#FAF9F5] border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div className="space-y-1">
               <span className="text-[10px] tracking-widest uppercase font-mono text-emerald-800 font-medium">
-                START WITH CLOUD · UPGRADE TO EDGE
+                START WITH CLOUD · STEP UP TO EDGE ANYTIME
               </span>
               <h3 className="text-lg font-medium text-[#111]">
-                Receive credit for your Cloud onboarding.
+                Already using Nexus Cloud?
               </h3>
               <p className="text-xs text-black/65 max-w-xl leading-relaxed">
                 {EDGE_AGREEMENT.cloudToEdgeCreditText}
@@ -275,7 +275,7 @@ export default function NexusEdgePage() {
               href="#contact"
               className="shrink-0 px-5 py-3 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors uppercase tracking-wider"
             >
-              Book an Edge Assessment
+              Talk to Us
             </a>
           </div>
         </div>
@@ -283,9 +283,9 @@ export default function NexusEdgePage() {
 
       {/* ── 8. ASSESSMENT CTA / FORM ────────────────────────────────────────── */}
       <ConsultationForm
-        defaultPackage="Nexus Edge — From CAD $499/month, 36-month term"
-        title="Book an Edge Assessment for your business."
-        subtitle="We will evaluate your physical location, privacy requirements, and workflow volume to determine if Nexus Edge is the right fit."
+        defaultPackage="Nexus Edge — From CAD $499/month (+ one-time setup fee)"
+        title="Talk to us about Nexus Edge."
+        subtitle="Tell us about your team, tools, and daily workload, and we will help you decide whether Nexus Cloud or Nexus Edge is the right starting point."
       />
 
       <SiteFooter />

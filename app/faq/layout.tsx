@@ -1,32 +1,32 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Nexus FAQ | Packages, AI Usage and Support",
+  title: "Nexus FAQ | Plain-English Answers for Business Owners",
   description:
-    "Find answers to frequently asked questions about Nexus packages, 30-day pilot terms, managed AI allowances, data privacy, on-site Edge appliances, and tool connections.",
+    "Plain-English answers to common questions about how Nexus works, daily usage, approval controls, Cloud, Edge, and Enterprise plans, integrations, and optional Nexus Sense devices.",
   keywords: [
     "Nexus FAQ",
     "Nexus packages FAQ",
-    "managed AI allowance FAQ",
+    "Nexus Cloud questions",
     "Nexus Edge questions",
-    "business assistant help",
+    "business AI assistant help",
   ],
   alternates: {
     canonical: "/faq",
   },
   openGraph: {
-    title: "Nexus FAQ | Packages, AI Usage and Support",
+    title: "Nexus FAQ | Plain-English Answers for Business Owners",
     description:
-      "Frequently asked questions about Nexus packages, AI usage limits, privacy rules, and onboarding.",
+      "Frequently asked questions about how Nexus works, plans and billing, tools and devices, and launching a business in Canada.",
     url: "/faq",
     siteName: "Nexus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexus FAQ | Packages, AI Usage and Support",
+    title: "Nexus FAQ | Plain-English Answers for Business Owners",
     description:
-      "Frequently asked questions about Nexus packages, AI usage limits, and support.",
+      "Plain-English answers to common questions about Nexus packages, workflow setup, and ongoing support.",
   },
 }
 

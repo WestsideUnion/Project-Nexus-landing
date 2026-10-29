@@ -18,7 +18,7 @@ export default function StartBusinessCanadaPage() {
       <MobileNav />
 
       {/* ── 1. HERO ─────────────────────────────────────────────────────────── */}
-      <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/[0.06] bg-white">
+      <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
         <div className="max-w-4xl mx-auto text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
             <Tag>FOR FOUNDERS</Tag>
@@ -43,7 +43,7 @@ export default function StartBusinessCanadaPage() {
               href="https://www.canada.ca/en/services/business/start.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/[0.03] transition-all tracking-widest uppercase"
+              className="px-6 py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/3 transition-all tracking-widest uppercase"
             >
               Canada.ca Business Guide ↗
             </a>
@@ -52,7 +52,7 @@ export default function StartBusinessCanadaPage() {
       </section>
 
       {/* ── 2. THE FOUNDER PROBLEM & DISCLAIMER ─────────────────────────────── */}
-      <section className="py-20 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/[0.06]">
+      <section className="py-20 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-3">
             <Tag>THE CHALLENGE</Tag>
@@ -80,7 +80,7 @@ export default function StartBusinessCanadaPage() {
       </section>
 
       {/* ── 3. FOUR LAUNCH PILLARS ───────────────────────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/[0.06]">
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
             <PixelIcon type="workflow" size={40} />
@@ -121,7 +121,7 @@ export default function StartBusinessCanadaPage() {
                 <div>
                   <div className="flex items-center justify-between mb-4">
                     <span className="font-mono text-xs text-black/40">{pillar.step}</span>
-                    <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded-full bg-black/[0.04] text-black/60 font-mono">
+                    <span className="text-[10px] tracking-widest uppercase px-2 py-0.5 rounded-full bg-black/4 text-black/60 font-mono">
                       {pillar.tag}
                     </span>
                   </div>
@@ -135,7 +135,7 @@ export default function StartBusinessCanadaPage() {
       </section>
 
       {/* ── 4. DETAILED CHECKLIST & TOOLKIT BREAKDOWN ─────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/[0.06]">
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-5xl mx-auto space-y-8">
           <div className="max-w-3xl space-y-3">
             <Tag>LAUNCH CHECKLIST</Tag>
@@ -171,14 +171,14 @@ export default function StartBusinessCanadaPage() {
                 desc: "After launch, keep your assistant active for CAD $99/month to organize daily reviews, reminders, and customer follow-ups.",
               },
             ].map((item, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-white border border-black/[0.06] shadow-xs space-y-2">
+              <div key={idx} className="p-6 rounded-2xl bg-white border border-black/6 shadow-xs space-y-2">
                 <h3 className="text-sm font-medium text-[#111]">{item.title}</h3>
                 <p className="text-xs text-black/60 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="p-4 rounded-xl bg-black/[0.02] border border-black/[0.04] text-[11px] text-black/50 text-center">
+          <div className="p-4 rounded-xl bg-black/2 border border-black/4 text-[11px] text-black/50 text-center">
             Official government links:{" "}
             <a href="https://www.canada.ca/en/services/business/start.html" target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
               Canada.ca Starting a Business ↗
@@ -192,7 +192,7 @@ export default function StartBusinessCanadaPage() {
       </section>
 
       {/* ── 5. FOUNDER FAQ ──────────────────────────────────────────────────── */}
-      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/[0.06]">
+      <section className="py-24 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
         <div className="max-w-3xl mx-auto space-y-8">
           <div className="text-center">
             <Tag>FOUNDER FAQ</Tag>
@@ -201,7 +201,7 @@ export default function StartBusinessCanadaPage() {
             </h2>
           </div>
 
-          <div className="divide-y divide-black/[0.06] bg-[#FAF9F5] rounded-2xl border border-black/[0.07] px-6 sm:px-8 py-2">
+          <div className="divide-y divide-black/6 bg-[#FAF9F5] rounded-2xl border border-black/7 px-6 sm:px-8 py-2">
             {founderFaqs.map((faq) => (
               <FaqAccordionItem key={faq.id} question={faq.question} answer={faq.answer} />
             ))}

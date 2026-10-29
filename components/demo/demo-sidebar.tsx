@@ -60,14 +60,14 @@ export function DemoSidebar({
       label: "Schedule",
       icon: Calendar,
       badge: "5",
-      badgeClass: "bg-black/[0.05] text-black/60 border-black/[0.08]",
+      badgeClass: "bg-black/5 text-black/60 border-black/8",
     },
     {
       id: "connections" as DemoTab,
       label: "Connections",
       icon: Cable,
       badge: "6",
-      badgeClass: "bg-black/[0.05] text-black/60 border-black/[0.08]",
+      badgeClass: "bg-black/5 text-black/60 border-black/8",
     },
     {
       id: "usage" as DemoTab,
@@ -105,7 +105,7 @@ export function DemoSidebar({
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 ${
                   isActive
                     ? "bg-[#111] text-white shadow-sm font-semibold"
-                    : "text-black/70 hover:text-black hover:bg-black/[0.04]"
+                    : "text-black/70 hover:text-black hover:bg-black/4"
                 }`}
                 aria-current={isActive ? "page" : undefined}
               >
@@ -123,7 +123,7 @@ export function DemoSidebar({
                     className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
                       isActive
                         ? "bg-white/20 text-white border-white/30"
-                        : item.badgeClass || "bg-black/[0.05] text-black/60 border-black/[0.08]"
+                        : item.badgeClass || "bg-black/5 text-black/60 border-black/8"
                     }`}
                   >
                     {item.badge}
@@ -136,17 +136,17 @@ export function DemoSidebar({
       </div>
 
       {/* Footer Area: Return to Nexus Website */}
-      <div className="pt-6 border-t border-black/[0.08] space-y-3">
+      <div className="pt-6 border-t border-black/8 space-y-3">
         <Link
           href="/"
-          className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs text-black/65 hover:text-black hover:bg-black/[0.04] rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+          className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-xs text-black/65 hover:text-black hover:bg-black/4 rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
         >
           <ArrowLeft className="w-4 h-4 text-black/45" />
           <span>Return to Nexus Website</span>
         </Link>
 
         {/* Consultation Callout in Sidebar */}
-        <div className="p-3.5 rounded-xl bg-white border border-black/[0.07] shadow-2xs space-y-2">
+        <div className="p-3.5 rounded-xl bg-white border border-black/7 shadow-2xs space-y-2">
           <div className="flex items-center gap-1.5">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span className="text-[10px] font-mono font-semibold uppercase text-black/70">
@@ -170,7 +170,7 @@ export function DemoSidebar({
   return (
     <>
       {/* Desktop Sidebar (visible lg+) */}
-      <aside className="hidden lg:block w-64 shrink-0 bg-[#FAF9F5] border-r border-black/[0.08] min-h-[calc(100vh-61px)]">
+      <aside className="hidden lg:block w-64 shrink-0 bg-[#FAF9F5] border-r border-black/8 min-h-[calc(100vh-61px)]">
         {sidebarContent}
       </aside>
 

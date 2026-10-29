@@ -63,7 +63,7 @@ export function DemoApprovalModal({
         className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-black/15 overflow-hidden z-10 animate-in zoom-in-95 duration-200"
       >
         {/* Modal Top Banner */}
-        <div className="bg-[#FAF9F5] border-b border-black/[0.08] px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#FAF9F5] border-b border-black/8 px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" />
             <div>
@@ -77,7 +77,7 @@ export function DemoApprovalModal({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-black/50 hover:text-black hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            className="p-1.5 rounded-lg text-black/50 hover:text-black hover:bg-black/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
             aria-label="Close approval modal"
           >
             <X className="w-5 h-5" />
@@ -121,7 +121,7 @@ export function DemoApprovalModal({
                 Prepared Creative Asset
               </span>
               {/* Media Switcher */}
-              <div className="flex items-center gap-1 bg-black/[0.04] p-0.5 rounded-lg border border-black/[0.06]">
+              <div className="flex items-center gap-1 bg-black/4 p-0.5 rounded-lg border border-black/6">
                 <button
                   type="button"
                   onClick={() => setActiveMediaTab("graphic")}
@@ -149,7 +149,7 @@ export function DemoApprovalModal({
 
             {/* Visual Preview Container */}
             {activeMediaTab === "graphic" ? (
-              <div className="relative rounded-xl border border-black/[0.1] bg-gradient-to-br from-[#1F1D1A] to-[#121110] text-white p-6 shadow-inner overflow-hidden">
+              <div className="relative rounded-xl border border-black/[0.1] bg-linear-to-br from-[#1F1D1A] to-[#121110] text-white p-6 shadow-inner overflow-hidden">
                 {/* Decorative background glow */}
                 <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 flex flex-col justify-between h-48">
@@ -222,15 +222,15 @@ export function DemoApprovalModal({
                 </span>
               )}
             </div>
-            <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/[0.07] text-xs text-black/80 leading-relaxed font-sans select-all">
+            <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/7 text-xs text-black/80 leading-relaxed font-sans select-all">
               {captionText}
             </div>
           </div>
 
           {/* Proposed Schedule & Channels */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <div className="p-3 rounded-xl bg-white border border-black/[0.07] flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-black/[0.04] flex items-center justify-center shrink-0">
+            <div className="p-3 rounded-xl bg-white border border-black/7 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-black/4 flex items-center justify-center shrink-0">
                 <Calendar className="w-4 h-4 text-black/70" />
               </div>
               <div>
@@ -241,15 +241,15 @@ export function DemoApprovalModal({
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-white border border-black/[0.07] flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-black/[0.04] flex items-center justify-center shrink-0">
+            <div className="p-3 rounded-xl bg-white border border-black/7 flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-black/4 flex items-center justify-center shrink-0">
                 <Instagram className="w-4 h-4 text-black/70" />
               </div>
               <div>
                 <div className="text-[10px] font-mono text-black/50 uppercase">Connected Channels</div>
                 <div className="text-xs font-semibold text-black flex items-center gap-1.5">
                   <span>Instagram &amp; Facebook</span>
-                  <span className="text-[9px] font-mono bg-black/[0.05] px-1.5 py-0.2 rounded text-black/60">
+                  <span className="text-[9px] font-mono bg-black/5 px-1.5 py-0.2 rounded text-black/60">
                     Simulated
                   </span>
                 </div>
@@ -259,7 +259,7 @@ export function DemoApprovalModal({
         </div>
 
         {/* Modal Action Buttons */}
-        <div className="bg-[#FAF9F5] border-t border-black/[0.08] px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="bg-[#FAF9F5] border-t border-black/8 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-[11px] text-black/50 font-mono text-center sm:text-left">
             No real posts will be published. This is a demonstration.
           </div>
@@ -272,7 +272,7 @@ export function DemoApprovalModal({
                 onRequestChanges()
               }}
               disabled={isRevising}
-              className="flex-1 sm:flex-initial px-4 py-2.5 border border-black/20 text-black/80 hover:text-black hover:bg-black/[0.04] rounded-xl text-xs font-medium transition-colors tracking-wider uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial px-4 py-2.5 border border-black/20 text-black/80 hover:text-black hover:bg-black/4 rounded-xl text-xs font-medium transition-colors tracking-wider uppercase focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 cursor-pointer disabled:opacity-50"
             >
               Request Changes
             </button>

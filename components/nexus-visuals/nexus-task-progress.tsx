@@ -82,7 +82,7 @@ export function NexusTaskProgress() {
               className={`rounded-2xl border p-6 flex flex-col justify-between transition-all duration-300 cursor-pointer ${
                 isSelected
                   ? "bg-white border-black/25 shadow-lg ring-1 ring-black/5"
-                  : "bg-white/70 border-black/[0.06] hover:bg-white hover:border-black/15 shadow-xs"
+                  : "bg-white/70 border-black/6 hover:bg-white hover:border-black/15 shadow-xs"
               }`}
             >
               <div>
@@ -100,9 +100,9 @@ export function NexusTaskProgress() {
                 <p className="text-xs text-black/60 leading-relaxed mb-5">{stage.description}</p>
 
                 {/* Items List */}
-                <div className="space-y-2.5 p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.04]">
+                <div className="space-y-2.5 p-3 rounded-xl bg-[#FAF9F5] border border-black/4">
                   {stage.items.map((item, idx) => (
-                    <div key={idx} className="p-2.5 rounded-lg bg-white border border-black/[0.05] shadow-2xs space-y-1">
+                    <div key={idx} className="p-2.5 rounded-lg bg-white border border-black/5 shadow-2xs space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-medium text-black flex items-center gap-1.5">
                           {item.done ? (
@@ -123,7 +123,7 @@ export function NexusTaskProgress() {
               </div>
 
               {/* Footer text */}
-              <div className="pt-4 mt-5 border-t border-black/[0.05] text-[11px] text-black/50">
+              <div className="pt-4 mt-5 border-t border-black/5 text-[11px] text-black/50">
                 {stage.footerNote}
               </div>
             </div>

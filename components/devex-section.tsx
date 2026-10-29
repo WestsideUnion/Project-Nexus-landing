@@ -143,10 +143,10 @@ export function DevExSection() {
   const step = STEPS[active]
 
   return (
-    <section id="devex" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/[0.06]">
+    <section id="devex" className="py-32 px-6 md:px-12 lg:px-20 border-t border-black/6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-16">
-          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.05] border border-black/[0.06] text-[10px] tracking-widest text-black/40 uppercase">
+          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/5 border border-black/6 text-[10px] tracking-widest text-black/40 uppercase">
             Developer Experience
           </div>
           <h2 className="mt-5 text-4xl md:text-5xl font-light tracking-tight leading-[1.05]">
@@ -196,7 +196,7 @@ export function DevExSection() {
 
           {/* Right — fixed-size code panel */}
           <div
-            className="lg:col-span-2 rounded-2xl border border-black/[0.06] p-8 flex flex-col"
+            className="lg:col-span-2 rounded-2xl border border-black/6 p-8 flex flex-col"
             style={{
               background: "rgba(255,255,255,0.7)",
               boxShadow: "0 1px 3px rgba(0,0,0,0.04)",

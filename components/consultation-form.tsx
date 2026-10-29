@@ -61,7 +61,7 @@ export function ConsultationForm({
   }
 
   return (
-    <section id="contact" className="relative py-28 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] overflow-hidden">
+    <section id="contact" className="relative py-28 px-6 md:px-12 lg:px-20 border-t border-black/6 overflow-hidden">
       {/* Background imagery */}
       <img
         src="/images/footer.png"
@@ -110,7 +110,7 @@ export function ConsultationForm({
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/[0.07] p-6 sm:p-8 space-y-5 shadow-sm">
+          <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/7 p-6 sm:p-8 space-y-5 shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="name" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
@@ -124,7 +124,7 @@ export function ConsultationForm({
                   value={form.name}
                   onChange={handleFormChange}
                   placeholder="Jane Doe"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
               <div>
@@ -139,7 +139,7 @@ export function ConsultationForm({
                   value={form.business}
                   onChange={handleFormChange}
                   placeholder="Acme Cafe"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ export function ConsultationForm({
                   value={form.email}
                   onChange={handleFormChange}
                   placeholder="jane@example.com"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
               <div>
@@ -171,7 +171,7 @@ export function ConsultationForm({
                   value={form.phone}
                   onChange={handleFormChange}
                   placeholder="(416) 555-0123"
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
             </div>
@@ -187,7 +187,7 @@ export function ConsultationForm({
                   required
                   value={form.industry}
                   onChange={handleFormChange}
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 >
                   <option value="">Select industry</option>
                   <option>Restaurant</option>
@@ -211,7 +211,7 @@ export function ConsultationForm({
                   required
                   value={form.package}
                   onChange={handleFormChange}
-                  className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 >
                   <option value="">Select package</option>
                   {CONSULTATION_PACKAGE_OPTIONS.map((pkg) => (
@@ -234,7 +234,7 @@ export function ConsultationForm({
                 value={form.problem}
                 onChange={handleFormChange}
                 placeholder="Describe the tasks, messages, reviews, or follow-ups that take time away from running your business..."
-                className="w-full bg-black/[0.02] border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all resize-none"
+                className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all resize-none"
               />
             </div>
 

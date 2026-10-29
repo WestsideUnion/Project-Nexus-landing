@@ -50,25 +50,25 @@ export function NexusMessageToOutcome() {
   ]
 
   return (
-    <div className="w-full rounded-2xl bg-white/90 backdrop-blur-md border border-black/[0.08] p-5 sm:p-7 shadow-xl">
+    <div className="w-full rounded-2xl bg-white/90 backdrop-blur-md border border-black/8 p-5 sm:p-7 shadow-xl">
       {/* Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-black/[0.06]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-black/6">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[11px] font-mono tracking-widest text-black/60 uppercase font-semibold">
-            How Everyday Work Moves with Nexus
+            Illustrative Example · How Work Moves with Nexus
           </span>
         </div>
 
         {/* Channel Selector */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/[0.03] border border-black/[0.05]">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/3 border border-black/5">
           {channels.map((ch) => (
             <button
               key={ch.id}
               onClick={() => setSelectedChannel(ch.id)}
               className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all cursor-pointer ${
                 selectedChannel === ch.id
-                  ? "bg-white text-black shadow-xs border border-black/[0.08]"
+                  ? "bg-white text-black shadow-xs border border-black/8"
                   : "text-black/50 hover:text-black"
               }`}
               aria-label={`View workflow with ${ch.name}`}
@@ -89,7 +89,7 @@ export function NexusMessageToOutcome() {
             className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
               activeStep === idx
                 ? "bg-[#FAF9F5] border-black/30 shadow-xs ring-1 ring-black/10"
-                : "bg-white/60 border-black/[0.05] hover:border-black/20"
+                : "bg-white/60 border-black/5 hover:border-black/20"
             }`}
           >
             <div className="flex items-center justify-between mb-1">
@@ -110,7 +110,7 @@ export function NexusMessageToOutcome() {
       </div>
 
       {/* Interactive Visual Stage */}
-      <div className="rounded-xl border border-black/[0.07] bg-[#FAF9F5] p-4 sm:p-6 min-h-[220px] flex flex-col justify-between">
+      <div className="rounded-xl border border-black/7 bg-[#FAF9F5] p-4 sm:p-6 min-h-[220px] flex flex-col justify-between">
         {/* Step 1: Owner Message */}
         {activeStep === 0 && (
           <div className="space-y-3 animate-fadeIn">
@@ -121,7 +121,7 @@ export function NexusMessageToOutcome() {
               </span>
               <span>11:42 PM</span>
             </div>
-            <div className="p-4 rounded-xl bg-white border border-black/[0.06] shadow-xs max-w-md">
+            <div className="p-4 rounded-xl bg-white border border-black/6 shadow-xs max-w-md">
               <p className="text-xs sm:text-sm text-black/85 leading-relaxed font-sans">
                 &ldquo;Hey Nexus, please reply to yesterday&apos;s 5-star Google review and remind Sarah about her quote tomorrow morning.&rdquo;
               </p>
@@ -146,14 +146,14 @@ export function NexusMessageToOutcome() {
               <span>2 Items Identified</span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-xl bg-white border border-black/[0.06] shadow-xs">
+              <div className="p-3.5 rounded-xl bg-white border border-black/6 shadow-xs">
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider bg-amber-50 text-amber-800 border border-amber-200/60 uppercase">
                   Task 01: Review
                 </span>
                 <p className="text-xs text-black/80 font-medium mt-1.5">Draft 5-star Google Review reply</p>
                 <p className="text-[11px] text-black/50 mt-0.5">Matched to café tone &amp; owner signature</p>
               </div>
-              <div className="p-3.5 rounded-xl bg-white border border-black/[0.06] shadow-xs">
+              <div className="p-3.5 rounded-xl bg-white border border-black/6 shadow-xs">
                 <span className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider bg-blue-50 text-blue-800 border border-blue-200/60 uppercase">
                   Task 02: Follow-up
                 </span>
@@ -182,7 +182,7 @@ export function NexusMessageToOutcome() {
                 <span className="text-xs font-semibold text-purple-900">Google Review Response (Draft)</span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] bg-purple-100 text-purple-800 font-medium">Needs Approval</span>
               </div>
-              <p className="text-xs text-black/75 italic bg-[#FAF9F5] p-2.5 rounded-lg border border-black/[0.04]">
+              <p className="text-xs text-black/75 italic bg-[#FAF9F5] p-2.5 rounded-lg border border-black/4">
                 &ldquo;Thank you Marcus! We’re thrilled you enjoyed the morning espresso. See you again soon! — Westside Team&rdquo;
               </p>
             </div>
@@ -223,7 +223,7 @@ export function NexusMessageToOutcome() {
         )}
 
         {/* Action button in footer of card */}
-        <div className="pt-3 mt-2 border-t border-black/[0.05] flex items-center justify-between text-xs">
+        <div className="pt-3 mt-2 border-t border-black/5 flex items-center justify-between text-xs">
           <span className="text-black/50 text-[11px]">Click steps to preview each stage</span>
           <button
             onClick={() => setActiveStep((prev) => (prev + 1) % 4)}

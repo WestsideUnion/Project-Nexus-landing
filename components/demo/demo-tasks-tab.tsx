@@ -27,7 +27,7 @@ export function DemoTasksTab({ tasks, onSelectTask, onOpenApproval }: DemoTasksT
   return (
     <div className="space-y-6">
       {/* Header and Filter Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/[0.08]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-black/8">
         <div>
           <h3 className="text-lg font-semibold text-black tracking-tight">
             All Business Tasks &amp; Coordination
@@ -38,7 +38,7 @@ export function DemoTasksTab({ tasks, onSelectTask, onOpenApproval }: DemoTasksT
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center flex-wrap gap-1.5 p-1 bg-black/[0.04] rounded-xl border border-black/[0.06]">
+        <div className="flex items-center flex-wrap gap-1.5 p-1 bg-black/4 rounded-xl border border-black/6">
           {[
             { id: "all" as FilterType, label: `All (${tasks.length})` },
             { id: "todo" as FilterType, label: "To Do" },
@@ -67,7 +67,7 @@ export function DemoTasksTab({ tasks, onSelectTask, onOpenApproval }: DemoTasksT
           <div
             key={task.id}
             onClick={() => onSelectTask(task)}
-            className="p-4 rounded-xl bg-white border border-black/[0.07] hover:border-black/20 hover:shadow-xs shadow-2xs transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+            className="p-4 rounded-xl bg-white border border-black/7 hover:border-black/20 hover:shadow-xs shadow-2xs transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3"
           >
             <div className="space-y-1 flex-1">
               <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export function DemoTasksTab({ tasks, onSelectTask, onOpenApproval }: DemoTasksT
               <p className="text-xs text-black/65 max-w-2xl">{task.description}</p>
             </div>
 
-            <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-black/[0.05]">
+            <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-black/5">
               <span className="text-[10px] font-mono text-black/45">{task.timeLabel}</span>
               <button
                 type="button"

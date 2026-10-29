@@ -6,11 +6,9 @@ import {
   WhatsAppIcon,
   TelegramIcon,
   SlackIcon,
-  GoogleBusinessIcon,
   SquarePosIcon,
   EmailChannelIcon,
   SmsChannelIcon,
-  BookingChannelIcon,
   NotionIcon,
   GithubIcon,
 } from "@/components/nexus-icons/nexus-icons"
@@ -26,25 +24,25 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
   ]
 
   const rightTools = [
-    { name: "CRMs & Sales (HubSpot, Salesforce)", icon: <HubSpotIcon className="w-4 h-4" />, status: "120+ Apps" },
-    { name: "Workspace & Docs (Notion, Google Docs)", icon: <NotionIcon className="w-4 h-4" />, status: "180+ Apps" },
-    { name: "POS & Commerce (Square, Shopify)", icon: <SquarePosIcon className="w-4 h-4" />, status: "90+ Apps" },
-    { name: "Accounting & Finance (QuickBooks, Stripe)", icon: <QuickBooksIcon className="w-4 h-4" />, status: "80+ Apps" },
-    { name: "Engineering & MCP (GitHub, Custom APIs)", icon: <GithubIcon className="w-4 h-4" />, status: "300+ Apps" },
+    { name: "CRMs & Sales (HubSpot, Salesforce)", icon: <HubSpotIcon className="w-4 h-4" />, status: "Supported" },
+    { name: "Workspace & Docs (Notion, Google Docs)", icon: <NotionIcon className="w-4 h-4" />, status: "Supported" },
+    { name: "POS & Commerce (Square, Shopify)", icon: <SquarePosIcon className="w-4 h-4" />, status: "Supported" },
+    { name: "Accounting & Finance (QuickBooks, Stripe)", icon: <QuickBooksIcon className="w-4 h-4" />, status: "Supported" },
+    { name: "Custom & Specialized Systems", icon: <GithubIcon className="w-4 h-4" />, status: "Configured" },
   ]
 
   return (
-    <div className={`w-full rounded-2xl bg-white border border-black/[0.08] p-6 sm:p-8 shadow-md overflow-hidden ${isCompact ? "max-w-4xl mx-auto" : ""}`}>
+    <div className={`w-full rounded-2xl bg-white border border-black/8 p-6 sm:p-8 shadow-md overflow-hidden ${isCompact ? "max-w-4xl mx-auto" : ""}`}>
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-6 border-b border-black/[0.06]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-6 border-b border-black/6">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[11px] font-mono tracking-widest text-black/60 uppercase font-semibold">
-            Unified Communication &amp; 1,500+ Business App Map
+            How Nexus Works With Your Business Tools
           </span>
         </div>
         <span className="text-xs text-black/50">
-          Westside Union manages connections &amp; approval rules
+          Compatibility and setup confirmed by Westside Union
         </span>
       </div>
 
@@ -59,10 +57,10 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
           {leftChannels.map((c, i) => (
             <div
               key={i}
-              className="p-2.5 sm:p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.06] flex items-center justify-between shadow-2xs hover:border-black/20 transition-all"
+              className="p-2.5 sm:p-3 rounded-xl bg-[#FAF9F5] border border-black/6 flex items-center justify-between shadow-2xs hover:border-black/20 transition-all"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-white border border-black/[0.06] flex items-center justify-center shadow-2xs">
+                <div className="w-7 h-7 rounded-lg bg-white border border-black/6 flex items-center justify-center shadow-2xs">
                   {c.icon}
                 </div>
                 <span className="text-xs font-medium text-black">{c.name}</span>
@@ -77,15 +75,15 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
         {/* Center Column: Nexus Core (3 cols) */}
         <div className="md:col-span-3 flex flex-col items-center justify-center p-4 my-2 md:my-0">
           {/* Central Nexus Orb */}
-          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white text-black shadow-lg border border-black/[0.08] w-full max-w-[220px]">
+          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white text-black shadow-lg border border-black/8 w-full max-w-[220px]">
             {/* Glow backing */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-emerald-500/15 via-cyan-500/15 to-purple-500/15 rounded-2xl blur-md -z-10" />
+            <div className="absolute -inset-1 bg-linear-to-r from-emerald-500/15 via-cyan-500/15 to-purple-500/15 rounded-2xl blur-md -z-10" />
 
             <Image src="/nexus-logo.png" alt="Nexus" width={48} height={48} className="object-contain mb-3" />
             <span className="font-pixel text-xs tracking-widest text-black font-bold">NEXUS</span>
             <span className="text-[10px] text-black/60 font-mono mt-1">Managed Assistant Core</span>
 
-            <div className="mt-3 pt-3 border-t border-black/[0.08] w-full space-y-1.5 text-[10px] text-black/80">
+            <div className="mt-3 pt-3 border-t border-black/8 w-full space-y-1.5 text-[10px] text-black/80">
               <div className="flex items-center justify-between">
                 <span className="text-black/50">Knowledge:</span>
                 <span className="text-emerald-600 font-semibold">Approved</span>
@@ -107,10 +105,10 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
           {rightTools.map((t, i) => (
             <div
               key={i}
-              className="p-2.5 sm:p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.06] flex items-center justify-between shadow-2xs hover:border-black/20 transition-all"
+              className="p-2.5 sm:p-3 rounded-xl bg-[#FAF9F5] border border-black/6 flex items-center justify-between shadow-2xs hover:border-black/20 transition-all"
             >
               <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-white border border-black/[0.06] flex items-center justify-center shadow-2xs">
+                <div className="w-7 h-7 rounded-lg bg-white border border-black/6 flex items-center justify-center shadow-2xs">
                   {t.icon}
                 </div>
                 <span className="text-xs font-medium text-black">{t.name}</span>
@@ -121,16 +119,16 @@ export function NexusConnectionsMap({ isCompact = false }: { isCompact?: boolean
                     ? "bg-teal-50 text-teal-800 border-teal-200/60"
                     : t.status === "Configured"
                     ? "bg-amber-50 text-amber-800 border-amber-200/60"
-                    : "bg-black/[0.03] text-black/40 border-black/[0.06]"
+                    : "bg-black/3 text-black/40 border-black/6"
                 }`}
               >
                 {t.status}
               </span>
             </div>
           ))}
-          <div className="p-2 rounded-xl bg-black/[0.03] border border-black/[0.05] text-center">
+          <div className="p-2 rounded-xl bg-black/3 border border-black/5 text-center">
             <span className="text-[10px] font-mono text-black/55 font-medium">
-              + 1,500+ integrations across all major business platforms
+              Compatibility varies by software, account permissions &amp; workflow
             </span>
           </div>
         </div>

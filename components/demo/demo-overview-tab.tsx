@@ -70,7 +70,7 @@ export function DemoOverviewTab({
         className={`p-4 rounded-xl border transition-all cursor-pointer text-left space-y-2.5 ${
           isHighlight
             ? "bg-white border-amber-400 shadow-md ring-2 ring-amber-400/20"
-            : "bg-white border-black/[0.07] hover:border-black/20 hover:shadow-xs shadow-2xs"
+            : "bg-white border-black/7 hover:border-black/20 hover:shadow-xs shadow-2xs"
         }`}
       >
         <div className="flex items-center justify-between gap-2">
@@ -108,7 +108,7 @@ export function DemoOverviewTab({
           </p>
         </div>
 
-        <div className="flex items-center justify-between pt-2 border-t border-black/[0.04] text-[10px] font-mono text-black/45">
+        <div className="flex items-center justify-between pt-2 border-t border-black/4 text-[10px] font-mono text-black/45">
           <span>{task.timeLabel}</span>
           <span className="text-black/60 font-sans font-medium flex items-center gap-1">
             {task.column === "completed" ? "View report →" : "View details →"}
@@ -126,7 +126,7 @@ export function DemoOverviewTab({
           <h3 id="metrics-heading" className="text-xs font-mono font-semibold tracking-wider uppercase text-black/50">
             Today's Operating Overview · Northstar Café
           </h3>
-          <span className="text-[10px] font-mono text-black/50 bg-black/[0.04] px-2.5 py-0.5 rounded-full border border-black/[0.06]">
+          <span className="text-[10px] font-mono text-black/50 bg-black/4 px-2.5 py-0.5 rounded-full border border-black/6">
             Illustrative demo data—not actual customer results.
           </span>
         </div>
@@ -135,7 +135,7 @@ export function DemoOverviewTab({
           {metrics.map((m) => (
             <div
               key={m.id}
-              className="p-4 rounded-2xl bg-white border border-black/[0.07] shadow-2xs flex flex-col justify-between space-y-2 hover:border-black/15 transition-all"
+              className="p-4 rounded-2xl bg-white border border-black/7 shadow-2xs flex flex-col justify-between space-y-2 hover:border-black/15 transition-all"
             >
               <div>
                 <div className="flex items-center justify-between text-[11px] text-black/60 font-medium leading-tight">
@@ -147,7 +147,7 @@ export function DemoOverviewTab({
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-black/[0.04] space-y-0.5">
+              <div className="pt-2 border-t border-black/4 space-y-0.5">
                 <div className="text-[10px] text-black/60 font-mono leading-tight">
                   {m.subtext}
                 </div>
@@ -175,7 +175,7 @@ export function DemoOverviewTab({
           </div>
 
           {/* Mobile Column Switcher (visible sm:hidden) */}
-          <div className="flex lg:hidden items-center bg-black/[0.05] p-1 rounded-xl border border-black/[0.06]">
+          <div className="flex lg:hidden items-center bg-black/5 p-1 rounded-xl border border-black/6">
             <button
               onClick={() => setMobileActiveCol("todo")}
               className={`flex-1 py-1.5 px-3 text-[11px] font-mono font-medium rounded-lg transition-all ${
@@ -213,12 +213,12 @@ export function DemoOverviewTab({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Column 1: To Do */}
           <div
-            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/[0.07] ${
+            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/7 ${
               mobileActiveCol !== "todo" ? "hidden lg:block" : "block"
             }`}
           >
             {/* Column Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-black/[0.06]">
+            <div className="flex items-center justify-between pb-2 border-b border-black/6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[10px] font-bold tracking-widest text-black/50 uppercase">
                   STAGE 01
@@ -241,12 +241,12 @@ export function DemoOverviewTab({
 
           {/* Column 2: In Progress */}
           <div
-            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/[0.07] ${
+            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/7 ${
               mobileActiveCol !== "in_progress" ? "hidden lg:block" : "block"
             }`}
           >
             {/* Column Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-black/[0.06]">
+            <div className="flex items-center justify-between pb-2 border-b border-black/6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[10px] font-bold tracking-widest text-black/50 uppercase">
                   STAGE 02
@@ -269,12 +269,12 @@ export function DemoOverviewTab({
 
           {/* Column 3: Completed */}
           <div
-            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/[0.07] ${
+            className={`space-y-3 p-4 rounded-2xl bg-[#FAF9F5] border border-black/7 ${
               mobileActiveCol !== "completed" ? "hidden lg:block" : "block"
             }`}
           >
             {/* Column Header */}
-            <div className="flex items-center justify-between pb-2 border-b border-black/[0.06]">
+            <div className="flex items-center justify-between pb-2 border-b border-black/6">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[10px] font-bold tracking-widest text-black/50 uppercase">
                   STAGE 03
@@ -299,7 +299,7 @@ export function DemoOverviewTab({
 
       {/* ── 3. Nexus Sense Preview Card ─────────────────────────────────────── */}
       <section aria-labelledby="nexus-sense-heading">
-        <div className="p-5 sm:p-6 rounded-2xl bg-white border border-black/[0.08] shadow-sm flex flex-col sm:flex-row items-start justify-between gap-5">
+        <div className="p-5 sm:p-6 rounded-2xl bg-white border border-black/8 shadow-sm flex flex-col sm:flex-row items-start justify-between gap-5">
           <div className="space-y-2 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-amber-50 text-amber-800 border border-amber-200/80">
@@ -324,7 +324,7 @@ export function DemoOverviewTab({
             </div>
           </div>
 
-          <div className="sm:self-center p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.06] text-right shrink-0">
+          <div className="sm:self-center p-3 rounded-xl bg-[#FAF9F5] border border-black/6 text-right shrink-0">
             <div className="text-[10px] font-mono text-black/40 uppercase">Hardware Integration</div>
             <div className="text-xs font-semibold text-black">Nexus Sense Preview</div>
             <div className="text-[9px] font-mono text-black/45 mt-1 max-w-[200px] text-right">

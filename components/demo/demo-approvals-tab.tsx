@@ -46,7 +46,7 @@ export function DemoApprovalsTab({ onOpenGuidedApproval }: DemoApprovalsTabProps
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="pb-4 border-b border-black/[0.08] space-y-1">
+      <div className="pb-4 border-b border-black/8 space-y-1">
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-amber-800 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
             Control &amp; Privacy Safeguards
@@ -76,10 +76,10 @@ export function DemoApprovalsTab({ onOpenGuidedApproval }: DemoApprovalsTabProps
               className={`p-5 rounded-2xl bg-white border transition-all ${
                 isPending
                   ? "border-amber-300 shadow-sm"
-                  : "border-black/[0.08] shadow-2xs opacity-90"
+                  : "border-black/8 shadow-2xs opacity-90"
               }`}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-black/[0.06]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-black/6">
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-mono uppercase text-black/50 font-semibold">
                     {appr.category}
@@ -109,19 +109,19 @@ export function DemoApprovalsTab({ onOpenGuidedApproval }: DemoApprovalsTabProps
                 </div>
 
                 {/* Preview Box */}
-                <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/[0.06] space-y-2">
+                <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/6 space-y-2">
                   <div className="flex items-center justify-between text-[10px] font-mono text-black/50 uppercase">
                     <span>Drafted Content Preview</span>
                     <span>{appr.previewContent.headline}</span>
                   </div>
 
-                  <div className="text-xs sm:text-sm text-black/80 leading-relaxed font-sans italic bg-white p-3 rounded-lg border border-black/[0.04]">
+                  <div className="text-xs sm:text-sm text-black/80 leading-relaxed font-sans italic bg-white p-3 rounded-lg border border-black/4">
                     "{appr.previewContent.bodyText}"
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[11px] font-mono">
                     {appr.previewContent.details.map((d, i) => (
-                      <div key={i} className="p-2 bg-white/70 rounded-lg border border-black/[0.04]">
+                      <div key={i} className="p-2 bg-white/70 rounded-lg border border-black/4">
                         <span className="text-black/45 block text-[9px] uppercase">{d.label}</span>
                         <span className="font-semibold text-black/80">{d.value}</span>
                       </div>
@@ -131,7 +131,7 @@ export function DemoApprovalsTab({ onOpenGuidedApproval }: DemoApprovalsTabProps
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-black/[0.06]">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-black/6">
                 <span className="text-[10px] font-mono text-black/45">
                   Safe demo action · No external message or post is sent
                 </span>
@@ -149,7 +149,7 @@ export function DemoApprovalsTab({ onOpenGuidedApproval }: DemoApprovalsTabProps
                     <>
                       <button
                         onClick={() => handleRequestChanges(appr.id)}
-                        className="px-3.5 py-1.5 border border-black/20 text-black/70 hover:text-black hover:bg-black/[0.04] rounded-lg text-xs font-medium transition-colors cursor-pointer"
+                        className="px-3.5 py-1.5 border border-black/20 text-black/70 hover:text-black hover:bg-black/4 rounded-lg text-xs font-medium transition-colors cursor-pointer"
                       >
                         Request Changes
                       </button>

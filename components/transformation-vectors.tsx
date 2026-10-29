@@ -3,7 +3,7 @@ import React from "react"
 // Vector 1: Fewer forgotten follow-ups (Automated Tracker Pipeline)
 export function FollowUpTrackerVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-emerald-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-emerald-500/30 transition-all duration-300">
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -109,7 +109,7 @@ export function FollowUpTrackerVector() {
 // Vector 2: Faster review responses (5-Star Review & Instant AI Draft)
 export function ReviewResponseVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-amber-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-amber-500/30 transition-all duration-300">
       <div className="absolute -top-10 -left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -194,7 +194,7 @@ export function ReviewResponseVector() {
 // Vector 3: More consistent communication (Omnichannel Synchronized Replies)
 export function OmnichannelSyncVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-cyan-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-cyan-500/30 transition-all duration-300">
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -279,7 +279,7 @@ export function OmnichannelSyncVector() {
 // Vector 4: Ideas turned into assigned work (Midnight Voice/Idea to Kanban Task)
 export function IdeaToTaskVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-indigo-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-indigo-500/30 transition-all duration-300">
       <div className="absolute -top-10 -left-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -386,7 +386,7 @@ export function IdeaToTaskVector() {
 // Vector 5: More visibility into completed work (Morning Executive Summary & Dashboard)
 export function MorningBriefingVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-emerald-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-emerald-500/30 transition-all duration-300">
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -479,7 +479,7 @@ export function MorningBriefingVector() {
 // Vector 6: Less administrative work at home (Reclaimed Evenings & Autopilot Shield)
 export function EveningAutopilotVector() {
   return (
-    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#181a20] to-[#101216] border border-white/[0.08] p-3 group-hover:border-violet-500/30 transition-all duration-300">
+    <div className="w-full h-44 relative flex items-center justify-center overflow-hidden rounded-xl bg-linear-to-b from-[#181a20] to-[#101216] border border-white/8 p-3 group-hover:border-violet-500/30 transition-all duration-300">
       <div className="absolute -top-10 -left-10 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl pointer-events-none" />
       <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
 

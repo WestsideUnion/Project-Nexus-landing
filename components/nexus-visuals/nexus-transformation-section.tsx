@@ -76,7 +76,7 @@ export function NexusTransformationSection() {
   ]
 
   return (
-    <section id="transformation" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#FAF9F5]">
+    <section id="transformation" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
@@ -91,7 +91,7 @@ export function NexusTransformationSection() {
 
         {/* 3 Outcome Switcher Tabs */}
         <div className="flex justify-center mb-10">
-          <div className="inline-flex flex-wrap justify-center p-1.5 rounded-2xl bg-white border border-black/[0.08] shadow-xs gap-1 max-w-full">
+          <div className="inline-flex flex-wrap justify-center p-1.5 rounded-2xl bg-white border border-black/8 shadow-xs gap-1 max-w-full">
             {outcomes.map((o) => (
               <button
                 key={o.id}
@@ -99,7 +99,7 @@ export function NexusTransformationSection() {
                 className={`px-4 sm:px-6 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer ${
                   activeTab === o.id
                     ? "bg-[#111] text-white shadow-xs"
-                    : "text-black/60 hover:text-black hover:bg-black/[0.04]"
+                    : "text-black/60 hover:text-black hover:bg-black/4"
                 }`}
                 aria-selected={activeTab === o.id}
                 role="tab"

@@ -4,13 +4,15 @@ import Image from "next/image"
 
 const FOOTER_NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Solutions", href: "/#industries" },
+  { label: "How Nexus Helps", href: "/#how-it-helps" },
+  { label: "Industries", href: "/#industries" },
+  { label: "AI Team", href: "/#ai-team" },
   { label: "Pricing", href: "/pricing" },
   { label: "Nexus Edge", href: "/nexus-edge" },
-  { label: "Connections", href: "/connections" },
+  { label: "Integrations", href: "/connections" },
   { label: "Start Your Business — Canada", href: "/start-business-canada" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Book a Demo", href: "/#contact" },
 ]
 
 const LEGAL_LINKS = [
@@ -20,7 +22,7 @@ const LEGAL_LINKS = [
 
 export function SiteFooter() {
   return (
-    <footer className="py-12 px-6 md:px-12 lg:px-20 border-t border-black/[0.06] bg-[#F5F4F0] text-[#111]">
+    <footer className="py-12 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#F5F4F0] text-[#111]">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div>
           <Link href="/" className="flex items-center gap-3 group">
@@ -61,7 +63,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/[0.04] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-black/35">
+      <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-black/35">
         <span>© 2026 Westside Union. Nexus is a Westside Union product. All rights reserved.</span>
         <span>Toronto, Ontario, Canada</span>
       </div>

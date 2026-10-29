@@ -30,61 +30,61 @@ export const PACKAGES: Record<"cloud" | "edge" | "custom", PlanData> = {
     name: "Nexus Cloud",
     monthlyCad: 99,
     annualMonthlyCad: 79,
-    onboardingFeeCad: 299,
+    onboardingFeeCad: 0,
     commitmentMonths: 1,
-    priceDisplay: "CAD $99",
+    priceDisplay: "From CAD $99",
     priceSubtext: "/month",
-    onboardingLabel: "CAD $299 initial setup",
-    tagline: "Start with one important job that keeps stealing your time.",
+    onboardingLabel: "No mandatory setup fee · Standard onboarding included",
+    tagline: "A simpler way to put Nexus to work.",
     description:
-      "Start with one important job that keeps stealing your time.",
+      "A managed starting point for businesses ready to spend less time on repetitive work. Standard onboarding is included; optional assisted setup is available by quote.",
     compactBullets: [
-      "One primary messaging channel",
-      "One starting business workflow",
-      "Task tracking and owner summaries",
-      "Monthly Nexus AI Credits included",
+      "Main Nexus business assistant",
+      "Supported everyday workflows & follow-ups",
+      "Standard guided onboarding included",
+      "Compatible integrations subject to scope",
     ],
     fullFeatures: [
-      { text: "One primary messaging channel" },
-      { text: "One starting business workflow" },
-      { text: "Business information and preferences prepared for Nexus" },
-      { text: "Task tracking and owner summaries" },
-      { text: "Monthly Nexus AI Credits included" },
-      { text: "Monitoring and managed updates" },
+      { text: "Main Nexus business assistant" },
+      { text: "Supported everyday workflows and task organization" },
+      { text: "Standard guided onboarding included (no mandatory setup fee)" },
+      { text: "Optional hands-on assisted setup available by quote" },
+      { text: "Compatible integrations subject to confirmed scope" },
+      { text: "Management and support appropriate to plan" },
     ],
-    note: "Monthly Nexus AI Credits are included with your plan. Additional credits are available when needed. Nexus alerts you before your included usage runs low.",
-    ctaText: "Start with Nexus Cloud",
+    note: "No mandatory setup fee. Standard onboarding is included; optional assisted setup is available by quote. Included usage and integrations are subject to confirmed scope.",
+    ctaText: "Get Started",
     ctaHref: "#contact",
   },
   edge: {
     id: "edge",
     name: "Nexus Edge",
     monthlyCad: 499,
-    annualMonthlyCad: 499,
+    annualMonthlyCad: 416,
     onboardingFeeCad: 1499,
-    commitmentMonths: 36,
+    commitmentMonths: 1,
     priceDisplay: "From CAD $499",
-    priceSubtext: "/month · 36-month initial term",
-    onboardingLabel: "CAD $1,499 activation and deployment · 36-month initial term",
-    tagline: "Keep more of your business knowledge and everyday work on a dedicated system at your location.",
+    priceSubtext: "/month",
+    onboardingLabel: "One-time setup fee applies: CAD $1,499",
+    tagline: "More room for the work your business depends on.",
     description:
-      "Keep more of your business knowledge and everyday work on a dedicated system at your location.",
+      "A managed service designed for businesses that need more dedicated capacity, deeper workflow setup and closer operational support — hosted and managed by Westside Union.",
     compactBullets: [
-      "Dedicated Nexus Edge appliance",
-      "Private business knowledge",
-      "Local AI processing with monthly Nexus AI Credits for supported cloud work",
-      "Hardware maintenance and replacement coverage",
+      "Dedicated managed capacity hosted by Westside Union",
+      "Tailored workflow setup and business configuration",
+      "Supported business integrations and workflows",
+      "Plan-specific operational support and management",
     ],
     fullFeatures: [
-      { text: "Dedicated Nexus Edge appliance", highlight: true },
-      { text: "Private business knowledge", highlight: true },
-      { text: "Local AI processing with monthly Nexus AI Credits for supported cloud work", highlight: true },
-      { text: "Approved cloud assistance when needed" },
-      { text: "Remote monitoring and managed updates" },
-      { text: "Hardware maintenance and replacement coverage" },
+      { text: "Dedicated managed capacity hosted and maintained by Westside Union", highlight: true },
+      { text: "Tailored setup around your business workflows", highlight: true },
+      { text: "Supported business integrations and multi-step coordination", highlight: true },
+      { text: "Plan-specific operational support and ongoing management" },
+      { text: "Proactive monitoring, updates, and infrastructure care" },
+      { text: "Clear approval boundaries and business activity summaries" },
     ],
-    note: "A 24-month option is available at CAD $599/month. The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property.",
-    ctaText: "Explore Nexus Edge",
+    note: "Nexus Edge infrastructure is hosted and managed by Westside Union. One-time setup fee applies separately from recurring monthly or annual service.",
+    ctaText: "Talk to Us",
     ctaHref: "/nexus-edge",
   },
   custom: {
@@ -94,75 +94,74 @@ export const PACKAGES: Record<"cloud" | "edge" | "custom", PlanData> = {
     annualMonthlyCad: 1499,
     onboardingFeeCad: 7500,
     commitmentMonths: 12,
-    priceDisplay: "From CAD $1,499",
-    priceSubtext: "/month",
-    onboardingLabel: "Deployment from CAD $7,500",
-    tagline: "For firms, corporations, chains, and organizations coordinating more locations, teams, and business systems.",
+    priceDisplay: "Custom quote",
+    priceSubtext: "Scoped to your organization",
+    onboardingLabel: "Mandatory one-time implementation fee, quoted separately",
+    tagline: "Built around your organization.",
     description:
-      "For firms, corporations, chains, and organizations coordinating more locations, teams, and business systems.",
+      "Custom workflows, integrations, operational needs and managed infrastructure shaped around your agreed scope.",
     compactBullets: [
-      "Multiple locations, teams, or departments",
-      "Coordinated business assistants and workflows",
-      "Custom AI capacity based on your organization’s needs",
-      "Dedicated service and support plan",
+      "Custom workflows and system integrations",
+      "Multi-team or multi-location design",
+      "Tailored managed infrastructure options",
+      "Implementation and governance options",
     ],
     fullFeatures: [
-      { text: "Multiple locations, teams, or departments" },
-      { text: "Coordinated business assistants and workflows" },
-      { text: "Custom AI capacity based on your organization’s needs" },
-      { text: "Advanced permissions and approval controls" },
-      { text: "Custom reporting and system connections" },
-      { text: "Private or customer-owned infrastructure options" },
-      { text: "Dedicated service and support plan" },
+      { text: "Custom business workflows and integrations" },
+      { text: "Multi-team or multi-location operational design" },
+      { text: "Tailored managed infrastructure scoped to your organization" },
+      { text: "Advanced permissions, governance, and approval options" },
+      { text: "Custom reporting and executive summaries" },
+      { text: "Dedicated implementation and ongoing service plan" },
     ],
-    note: "Final pricing is confirmed after operational and infrastructure assessment.",
-    ctaText: "Plan an Enterprise Solution",
+    note: "All Enterprise plans and one-time implementation fees are scoped and quoted around your organization's confirmed requirements.",
+    ctaText: "Contact Sales",
     ctaHref: "#contact",
   },
 }
 
-// ─── 30-Day Nexus Cloud Pilot Terms ──────────────────────────────────────────
+// ─── Nexus Cloud Onboarding & Trial Overview ─────────────────────────────────
 export const PILOT_TERMS = {
-  name: "30-Day Nexus Cloud Pilot",
-  onboardingFeeCad: 299,
+  name: "Guided Onboarding & Starting Path",
+  onboardingFeeCad: 0,
   includedSubscriptionValueCad: 99,
-  headline: "See what Nexus can take off your plate in 30 days.",
+  headline: "Start with one useful workflow and grow from there.",
   subheadline:
-    "Experience a managed business assistant built around your actual routines. Your first 30 days of the CAD $99 Cloud subscription and monthly Nexus AI Credits are included with onboarding.",
+    "We help you identify a practical starting point around the everyday tasks and tools that matter to your business. Nexus Cloud includes standard guided onboarding with no mandatory setup fee.",
   clarification:
-    "Your first 30 days of managed service are included. CAD $299 onboarding applies.",
+    "No mandatory setup fee for Nexus Cloud. Optional hands-on assisted setup is available by quote.",
   inclusions: [
-    { title: "One business assistant", desc: "One location, one business, and one primary owner account." },
-    { title: "One messaging channel", desc: "WhatsApp, SMS/Text, Telegram, or email." },
-    { title: "One primary workflow", desc: "Configured around your highest-priority administrative bottleneck." },
-    { title: "One standard business connection", desc: "Supported calendar, booking, or messaging connection." },
-    { title: "Monthly Nexus AI Credits", desc: "Included managed AI capacity with zero automatic overages." },
-    { title: "No automatic subscription charge", desc: "Evaluate real outcomes before committing to your ongoing plan." },
+    { title: "One main Nexus assistant", desc: "Talk to Nexus the way you'd talk to a capable assistant." },
+    { title: "Standard onboarding included", desc: "Self-guided and standard onboarding with no mandatory setup fee." },
+    { title: "Supported everyday workflows", desc: "Configured around a clear, high-priority operational routine." },
+    { title: "Compatible tool connections", desc: "Connect suitable messaging or business tools subject to scope." },
+    { title: "Clear usage boundaries", desc: "Defined plan allowances with proactive notifications and no surprise overages." },
+    { title: "Optional assisted setup", desc: "Hands-on setup or custom configuration is quoted transparently before work begins." },
   ],
   endOfPilotChoices: [
-    "Continue Nexus Cloud at CAD $99/month (or CAD $79/mo billed annually)",
-    "Connect a supported customer-owned AI provider account",
-    "Upgrade to Nexus Edge with your CAD $299 onboarding payment credited toward activation",
-    "End the pilot with no further subscription charge",
+    "Continue on Nexus Cloud with monthly or annual billing",
+    "Add optional hands-on setup or compatible tool integrations by quote",
+    "Move to Nexus Edge as your need for dedicated capacity and customization grows",
+    "Adjust or cancel according to your applicable service terms",
   ],
   disclosure:
-    "CAD $299 onboarding applies. The first 30 days of the Cloud subscription and included Nexus AI Credits are covered. Third-party services and optional add-ons are separate. The 30 days begin on the confirmed go-live date, not the signing date.",
+    "All plans and services are subject to confirmed scope, terms and applicable taxes. Some third-party software, integrations, premium usage or custom implementation may require additional costs. Your proposal will identify these before work begins.",
 }
 
-// ─── Nexus Edge Agreement Calculations ───────────────────────────────────────
+// ─── Nexus Edge Service Summary ──────────────────────────────────────────────
 export const EDGE_AGREEMENT = {
   monthlyFeeCad: 499,
   activationFeeCad: 1499,
-  termMonths: 36,
-  monthlyFee24Cad: 599,
-  term24Months: 24,
+  termMonths: 12,
+  monthlyFee24Cad: 499,
+  term24Months: 12,
   get totalCommitmentCad(): number {
-    return this.activationFeeCad + this.monthlyFeeCad * this.termMonths // 1499 + (499 * 36) = 19,463
+    return this.activationFeeCad + this.monthlyFeeCad * this.termMonths
   },
-  propertyNotice: "The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property.",
-  cloudFallbackNote: "Monthly Nexus AI Credits are included for supported cloud work, complex queries or burst operations when needed.",
+  propertyNotice: "Nexus Edge infrastructure is hosted, monitored, and maintained by Westside Union — no hardware needs to be installed or managed at your location.",
+  cloudFallbackNote: "Dedicated managed capacity hosted by Westside Union, with supported cloud models and workflows coordinated behind the scenes.",
   cloudToEdgeCreditText:
-    "Upgrade from Nexus Cloud to Nexus Edge within six months and receive the CAD $299 Cloud onboarding payment as a credit toward Edge activation, subject to an Edge assessment.",
+    "Your business changes, and Nexus can grow with it. Start with Cloud today and talk to us anytime about moving to Nexus Edge for more dedicated capacity and tailored workflow setup.",
 }
 
 // ─── Managed AI Usage & Safeguards ───────────────────────────────────────────
@@ -240,7 +239,7 @@ export interface AddOnCategory {
 export const ADD_ON_CATEGORIES: AddOnCategory[] = [
   {
     category: "Business Connections",
-    description: "Connect supported tools across our 1,500+ business application ecosystem, including booking, customer, sales, inventory, accounting, or operational tools.",
+    description: "Connect supported business tools, including booking, customer, sales, inventory, accounting, or operational software.",
     items: [
       {
         name: "Standard business connection",
@@ -2346,7 +2345,7 @@ export const CONNECTIONS_DATA: ConnectionItem[] = [
     capabilities: ["Extract receipt line items", "Match to bank transactions", "Push to QuickBooks/Xero", "Flag duplicate receipts"],
   },
   {
-    id: "chargebee",
+    id: "chargebee-billing",
     name: "Chargebee",
     category: "accounting",
     status: "available",
@@ -3334,350 +3333,675 @@ export const HOURLY_RATES: Record<string, number> = {
 
 // ─── Consultation Form Standard Package Choices ──────────────────────────────
 export const CONSULTATION_PACKAGE_OPTIONS = [
-  "Nexus Cloud — CAD $99/month",
-  "Nexus Cloud 30-Day Pilot",
-  "Nexus Edge — From CAD $499/month, 36-month term",
-  "Nexus Edge — CAD $599/month, 24-month term",
-  "Nexus Enterprise — Setup from CAD $7,500; recurring service priced by custom scope",
+  "Nexus Cloud — From CAD $99/month (No mandatory setup fee)",
+  "Nexus Edge — From CAD $499/month (Dedicated managed capacity)",
+  "Nexus Enterprise — Custom quote (Built around your organization)",
+  "Nexus Sense — Optional connected device inquiry",
   "Start Your Business — Canada",
-  "Not sure yet",
+  "Not sure yet — Help me compare",
 ] as const
 
-// ─── Full Categorized FAQ Data ───────────────────────────────────────────────
+// ─── Nexus AI Specialist Team Roles ──────────────────────────────────────────
+export interface AiTeamRole {
+  id: string
+  name: string
+  summary: string
+  examples: string[]
+  tag: string
+}
+
+export const AI_TEAM_ROLES: AiTeamRole[] = [
+  {
+    id: "executive-support",
+    name: "Executive Support",
+    summary: "Keep meetings, reminders and daily priorities organized.",
+    examples: ["Morning priority summaries", "Action-item reminders", "Schedule & follow-up organization"],
+    tag: "Daily Clarity",
+  },
+  {
+    id: "customer-care",
+    name: "Customer Care",
+    summary: "Assist with inquiries, common questions and timely follow-ups.",
+    examples: ["Approved FAQ responses", "After-hours inquiry capture", "Timely customer callbacks"],
+    tag: "Responsiveness",
+  },
+  {
+    id: "marketing",
+    name: "Marketing",
+    summary: "Help draft content, promotions and campaign ideas.",
+    examples: ["Social post & caption drafts", "Seasonal promotion ideas", "Campaign scheduling prep"],
+    tag: "Visibility",
+  },
+  {
+    id: "sales",
+    name: "Sales",
+    summary: "Support lead follow-up, opportunity information and sales tasks.",
+    examples: ["Quote & estimate follow-ups", "Lead status organization", "Inquiry qualification support"],
+    tag: "Opportunities",
+  },
+  {
+    id: "operations",
+    name: "Operations",
+    summary: "Organize checklists, recurring processes and routine coordination.",
+    examples: ["Recurring team checklists", "Cross-location task tracking", "Handoff coordination"],
+    tag: "Consistency",
+  },
+  {
+    id: "reporting-insights",
+    name: "Reporting & Insights",
+    summary: "Bring recorded business information into clearer summaries and reports.",
+    examples: ["Connected data summaries", "Weekly activity recaps", "Multi-location rollup views"],
+    tag: "Oversight",
+  },
+  {
+    id: "reputation",
+    name: "Reputation",
+    summary: "Help prepare responses to reviews and organize customer feedback.",
+    examples: ["On-brand review response drafts", "Customer feedback summaries", "1-tap owner approval flow"],
+    tag: "Trust",
+  },
+]
+
+// ─── Industry Hub & Detail Pages Data ────────────────────────────────────────
+export interface IndustryCase {
+  title: string
+  timeLabel?: string
+  problem: string
+  help: string
+  benefit: string
+  caveat?: string
+  img: string
+}
+
+export interface IndustryDetail {
+  slug: string
+  name: string
+  shortName: string
+  cardHeadline: string
+  cardOutcome: string
+  cardCta: string
+  heroH1: string
+  heroLead: string
+  coverImg: string
+  cases: IndustryCase[]
+  illustrativeExchange: {
+    owner: string
+    nexus: string
+  }
+  caveatNote?: string
+  ctaLabel: string
+  delay?: number
+}
+
+export const INDUSTRIES_DATA: IndustryDetail[] = [
+  {
+    slug: "restaurants",
+    name: "Restaurants & Hospitality",
+    shortName: "Restaurants & Cafés",
+    cardHeadline: "From customer requests to daily priorities, keep busy teams moving.",
+    cardOutcome:
+      "Nexus helps handle customer inquiries, review replies, follow-ups and approved social promotions while you focus on serving guests.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "More time for guests. Less time managing the busywork.",
+    heroLead:
+      "Restaurants move quickly. Nexus can help owners and managers organize everyday information, customer communication and tasks without making the technology another job.",
+    coverImg: "/images/industry-restaurants.png",
+    delay: 0,
+    cases: [
+      {
+        title: "Customer questions and follow-ups",
+        timeLabel: "Case 01 · Guest Communication",
+        problem: "Requests arrive across different places and get missed during busy shifts.",
+        help: "With supported communication channels configured, Nexus can assist with common replies, catering or reservation inquiries, triage and follow-up workflows.",
+        benefit: "More consistent responses and clearer ownership of next steps.",
+        img: "/images/scenario-restaurants.png",
+      },
+      {
+        title: "Daily operations across locations",
+        timeLabel: "Case 02 · Daily Oversight",
+        problem: "Managers spend time collecting updates and priorities across shifts or locations.",
+        help: "Bring together information the business already records digitally; organize daily summaries and outstanding items.",
+        benefit: "Easier daily oversight across teams and sites.",
+        caveat:
+          "Requires accurate digital source records; Nexus cannot infer profits from missing expense data or paper-only orders.",
+        img: "/images/scenario-coffee.png",
+      },
+      {
+        title: "Marketing and guest engagement",
+        timeLabel: "Case 03 · Reviews & Promotions",
+        problem: "Promotions, review responses and content slip behind daily operations.",
+        help: "Help prepare review response drafts, seasonal specials and a simple publishing or follow-up process for owner approval.",
+        benefit: "More consistent engagement with less manual planning.",
+        img: "/images/scenario-restaurants-2.png",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "Nexus, what needs attention at our locations today?",
+      nexus: "I can summarize the updates from your connected records and help highlight open follow-ups and items to review.",
+    },
+    caveatNote:
+      "Accurate summaries and reports depend on connected digital source records and data quality. Nexus does not automatically know numbers from unrecorded paper tickets or offline processes.",
+    ctaLabel: "Explore Nexus for My Restaurant",
+  },
+  {
+    slug: "automotive",
+    name: "Automotive & Dealerships",
+    shortName: "Dealerships",
+    cardHeadline: "Keep leads, customer questions and follow-ups from getting lost.",
+    cardOutcome:
+      "Nexus helps dealership teams manage inquiries, organize leads and keep service or sales follow-ups on track when connected to the right systems.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Keep every opportunity moving.",
+    heroLead:
+      "Customers ask questions at all hours. Nexus can help dealership teams manage inquiries, organize leads and keep follow-ups on track when connected to the right systems.",
+    coverImg: "/images/industry-automotive.png",
+    delay: 60,
+    cases: [
+      {
+        title: "New customer inquiries",
+        timeLabel: "Case 01 · After-Hours & Busy Hours",
+        problem: "Questions about vehicles, availability or test drives arrive outside selling hours or while staff are with buyers.",
+        help: "Assist with qualifying and organizing inquiries through approved channels and workflows.",
+        benefit: "Fewer inquiries sitting unnoticed.",
+        img: "/images/scenario-automotive.png",
+      },
+      {
+        title: "Follow-up organization",
+        timeLabel: "Case 02 · Sales & Service Quotes",
+        problem: "Interested buyers and open service quotes fall through gaps between conversations.",
+        help: "Surface follow-up tasks, organize statuses and help staff act on the right lead with prepared drafts for review.",
+        benefit: "More consistent sales and service follow-up process.",
+        img: "https://images.unsplash.com/photo-1613214149922-f1809c99b414?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        title: "Team visibility",
+        timeLabel: "Case 03 · Management Clarity",
+        problem: "Managers can't easily see where open leads and callbacks stand without chasing updates.",
+        help: "Prepare clear summaries from connected customer and lead records.",
+        benefit: "Clearer handoffs and day-to-day management visibility.",
+        img: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "Which customers are waiting for a follow-up?",
+      nexus: "I can help review the follow-up list from your connected lead records and highlight open callbacks.",
+    },
+    ctaLabel: "See Nexus for Dealerships",
+  },
+  {
+    slug: "home-services",
+    name: "Home Services & Trades",
+    shortName: "Home Services",
+    cardHeadline: "Respond to new inquiries, coordinate work and follow up more consistently.",
+    cardOutcome:
+      "For plumbers, HVAC companies and field-service teams, Nexus helps capture incoming requests, organize scheduling handoffs and keep quotes visible.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "More time on the job. Less time chasing the next one.",
+    heroLead:
+      "For plumbers, HVAC companies and field-service teams, missed calls, scattered job notes and inconsistent follow-ups can make a busy day harder than it needs to be.",
+    coverImg: "/images/industry-trades.png",
+    delay: 120,
+    cases: [
+      {
+        title: "New job requests",
+        timeLabel: "Case 01 · Inquiry Capture",
+        problem: "Inquiries arrive while the team is on site serving customers.",
+        help: "Assist with request capture, initial acknowledgement and routing in supported channels.",
+        benefit: "A clearer list of incoming work without interrupting active jobs.",
+        img: "/images/scenario-trades.png",
+      },
+      {
+        title: "Scheduling and handoffs",
+        timeLabel: "Case 02 · Field Coordination",
+        problem: "Appointment details can be scattered across messages, calls and calendars.",
+        help: "Connect supported scheduling and work-order tools to help organize next steps.",
+        benefit: "Fewer avoidable coordination headaches.",
+        img: "/images/industry-trades.png",
+      },
+      {
+        title: "Quotes and customer updates",
+        timeLabel: "Case 03 · Estimate Follow-Ups",
+        problem: "Open estimates and follow-ups are easy to forget after a full day of jobs.",
+        help: "Prepare reminders and draft customer communications for review where configured.",
+        benefit: "A more consistent customer experience and fewer forgotten quotes.",
+        img: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What job requests still need a response?",
+      nexus: "I can review requests from the channels you've connected and help organize your next steps.",
+    },
+    ctaLabel: "See Nexus for Service Businesses",
+  },
+  {
+    slug: "professional-services",
+    name: "Agencies, Firms & Professional Services",
+    shortName: "Professional Services",
+    cardHeadline: "Stay on top of requests, schedules, documents and next steps.",
+    cardOutcome:
+      "Nexus organizes inquiries, action items, meeting recaps, follow-ups and recurring summaries so client work stays focused.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Stay on top of the details your clients depend on.",
+    heroLead:
+      "Client work should not be interrupted by the administration surrounding it. Nexus helps firms and agencies organize intake, follow-ups, schedules and recurring updates across connected tools.",
+    coverImg: "/images/industry-agency.png",
+    delay: 180,
+    cases: [
+      {
+        title: "Client intake and follow-ups",
+        timeLabel: "Case 01 · Intake & Threads",
+        problem: "New inquiries and quiet client threads slip behind active billable deliverables.",
+        help: "Organize new requests, flag overdue follow-ups and prepare draft replies for review.",
+        benefit: "Timely client communication without constant inbox triage.",
+        img: "/images/scenario-agency.png",
+      },
+      {
+        title: "Scheduling and meeting action items",
+        timeLabel: "Case 02 · Coordination",
+        problem: "Meetings wrap with action items scattered across notes and team members.",
+        help: "Help coordinate routine administrative workflows, recaps and task reminders from connected notes.",
+        benefit: "Clearer accountability and smoother project handoffs.",
+        img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        title: "Recurring summaries and client updates",
+        timeLabel: "Case 03 · Reporting Prep",
+        problem: "Pulling together recurring status updates takes hours away from client work.",
+        help: "Summarize authorized digital records and draft client updates for team review.",
+        benefit: "Less manual preparation at the end of every week or month.",
+        caveat: "Regulated, confidential or legally privileged workflows require explicit privacy and compliance review.",
+        img: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What client follow-ups and action items are still open from this week?",
+      nexus: "I can summarize open tasks and follow-up drafts from the workspace tools we've connected.",
+    },
+    caveatNote: "Regulated, confidential or legally privileged workflows require explicit privacy and compliance review before configuration.",
+    ctaLabel: "Explore Nexus for My Team",
+  },
+  {
+    slug: "retail",
+    name: "Retail & Local Commerce",
+    shortName: "Retail",
+    cardHeadline: "Support customer communication, promotions and day-to-day organization.",
+    cardOutcome:
+      "Help organize customer questions, draft seasonal promotions and summarize available digital store records.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Make everyday retail work a little lighter.",
+    heroLead:
+      "Between helping shoppers in person, answering online questions and planning promotions, retail owners wear every hat. Nexus helps keep daily communication and tasks organized.",
+    coverImg: "/images/industry-coffee.png",
+    delay: 240,
+    cases: [
+      {
+        title: "Customer inquiries and product questions",
+        timeLabel: "Case 01 · Customer Care",
+        problem: "Shoppers message across social channels and email about hours, policies and availability while staff are at the counter.",
+        help: "Help organize and respond to common inquiries via supported channels using approved store information.",
+        benefit: "Helpful, timely replies without pulling staff away from the floor.",
+        img: "/images/scenario-coffee.png",
+      },
+      {
+        title: "Seasonal promotions and updates",
+        timeLabel: "Case 02 · Marketing",
+        problem: "Planning seasonal announcements, social posts and review replies gets pushed to late nights.",
+        help: "Draft seasonal messages, campaign ideas and review responses for owner approval.",
+        benefit: "Consistent store visibility with less after-hours effort.",
+        img: "/images/scenario-restaurants-2.png",
+      },
+      {
+        title: "Store visibility and daily checklists",
+        timeLabel: "Case 03 · Operations",
+        problem: "Keeping track of recurring store tasks and daily updates across shifts takes constant reminders.",
+        help: "Summarize available digital records and organize recurring opening, closing or restock checklists.",
+        benefit: "Clearer daily priorities for owners and store managers.",
+        caveat: "Inventory, POS and sales data summaries require confirmed digital integrations.",
+        img: "/images/industry-coffee.png",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What customer messages and store tasks need attention today?",
+      nexus: "I can review open customer questions from your connected channels and list today's priority tasks.",
+    },
+    caveatNote: "Inventory, POS and sales data require confirmed digital integrations and compatible account permissions.",
+    ctaLabel: "Talk About My Store",
+  },
+  {
+    slug: "barbershops-salons",
+    name: "Barbershops & Salons",
+    shortName: "Barbershops & Salons",
+    cardHeadline: "An unanswered booking question can become an empty chair.",
+    cardOutcome:
+      "Nexus helps answer booking questions, share approved information and prepare social content that keeps your services visible.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Keep your chairs full without interrupting your service.",
+    heroLead:
+      "When your hands are busy with a client, you can't stop to answer texts or DM inquiries. Nexus helps organize booking questions, reminders and review replies around your shop's schedule.",
+    coverImg: "/images/industry-barbershop.png",
+    delay: 300,
+    cases: [
+      {
+        title: "Booking and walk-in inquiries",
+        timeLabel: "Case 01 · Client Inquiries",
+        problem: "New clients message asking about availability, pricing and walk-ins while stylists or barbers are mid-service.",
+        help: "Assist with answering approved service questions and sharing your booking link through supported channels.",
+        benefit: "Fewer missed booking opportunities during busy hours.",
+        img: "/images/scenario-barbershop.png",
+      },
+      {
+        title: "Morning schedule and follow-up summaries",
+        timeLabel: "Case 02 · Daily Organization",
+        problem: "Owners start the day sorting through overnight messages, reschedules and unanswered reviews.",
+        help: "Prepare a clear morning summary of overnight inquiries, review drafts and callbacks to confirm.",
+        benefit: "A calmer, more organized start to every shift.",
+        img: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        title: "Cancellations, policies and promotions",
+        timeLabel: "Case 03 · Client Retention",
+        problem: "Last-minute policy questions and keeping social pages active take time after closing.",
+        help: "Share approved cancellation policies and help draft social posts or review responses for 1-tap approval.",
+        benefit: "Consistent client communication and shop visibility.",
+        img: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What booking questions came in while we were with clients?",
+      nexus: "I can summarize the new inquiries from your connected messaging channels and highlight callbacks to confirm.",
+    },
+    ctaLabel: "See Nexus for My Shop or Salon",
+  },
+  {
+    slug: "clinics-wellness",
+    name: "Clinics & Wellness Practices",
+    shortName: "Clinics & Wellness",
+    cardHeadline: "Patient and client questions do not stop when the front desk gets busy.",
+    cardOutcome:
+      "Nexus helps with approved administrative FAQs, appointment reminders and follow-ups while sensitive decisions remain with your staff.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Support your front desk while keeping care personal.",
+    heroLead:
+      "Front-desk teams juggle check-ins, phones and administrative follow-ups all day. Nexus helps handle routine non-clinical questions and reminders so staff can focus on patients and clients in the clinic.",
+    coverImg: "/images/industry-clinics.png",
+    delay: 360,
+    cases: [
+      {
+        title: "Routine administrative and intake FAQs",
+        timeLabel: "Case 01 · Front-Desk Support",
+        problem: "Clients message asking about clinic hours, parking, location details and standard intake steps.",
+        help: "Reply with approved administrative details and route clinical or sensitive questions directly to staff.",
+        benefit: "Less repetitive phone and inbox load on the front desk.",
+        img: "/images/industry-clinics.png",
+      },
+      {
+        title: "Rescheduling and booking handoffs",
+        timeLabel: "Case 02 · Scheduling",
+        problem: "After-hours rescheduling requests pile up for the morning rush.",
+        help: "Provide your approved rescheduling policy and booking link, organizing requests for front-desk review.",
+        benefit: "Smoother morning triage and fewer unfilled appointment slots.",
+        img: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+      },
+      {
+        title: "Appointment preparation and follow-ups",
+        timeLabel: "Case 03 · Reminders",
+        problem: "Sending preparation notes and routine administrative follow-ups takes manual coordination.",
+        help: "Coordinate scheduled appointment reminders and administrative check-ins where configured.",
+        benefit: "Better-prepared visitors and fewer avoidable no-shows.",
+        caveat: "Regulated or clinical workflows require explicit privacy and compliance review.",
+        img: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What front-desk follow-ups and rescheduling requests came in overnight?",
+      nexus: "I can list the administrative inquiries from your connected channels and flag items for your front-desk team.",
+    },
+    caveatNote:
+      "Nexus supports administrative coordination and approved FAQs. Regulated health data and clinical decisions require explicit privacy review and remain with qualified staff.",
+    ctaLabel: "Explore Nexus for My Practice",
+  },
+  {
+    slug: "creators-studios",
+    name: "Artists, Creators & Studios",
+    shortName: "Creators & Studios",
+    cardHeadline: "Creative work should not disappear beneath inquiries and administration.",
+    cardOutcome:
+      "Nexus organizes commissions, bookings and client follow-ups while helping prepare portfolio updates and promotional drafts.",
+    cardCta: "See How Nexus Helps",
+    heroH1: "Protect your creative focus from everyday admin.",
+    heroLead:
+      "For independent artists, DJs, designers and creative studios, managing booking inquiries, commission specs and release promotions can overtake the creative work itself.",
+    coverImg: "/images/industry-creators.png",
+    delay: 420,
+    cases: [
+      {
+        title: "Commission and project inquiries",
+        timeLabel: "Case 01 · Client Intake",
+        problem: "Collectors, brands or clients reach out across email and DMs asking about rates, timelines and availability.",
+        help: "Share approved commission guidelines or portfolio links and organize inquiry details for your review.",
+        benefit: "Structured project requests without constant inbox context-switching.",
+        img: "/images/scenario-visual-artist.jpg",
+      },
+      {
+        title: "Booking and event coordination",
+        timeLabel: "Case 02 · Bookings & Riders",
+        problem: "Event organizers and promoters message late at night asking for availability, fees and technical requirements.",
+        help: "Organize booking inquiries, share approved rate or rider information, and queue dates for your confirmation.",
+        benefit: "No missed opportunities while you are performing or in the studio.",
+        img: "/images/scenario-dj.jpg",
+      },
+      {
+        title: "Release and showcase promotions",
+        timeLabel: "Case 03 · Content & Announcements",
+        problem: "Preparing announcement captions, promotional graphics and follow-ups around a launch takes hours.",
+        help: "Help draft announcement copy, organize launch checklists and prepare promotional content for approval.",
+        benefit: "More consistent audience updates with less administrative drag.",
+        img: "/images/industry-creators.png",
+      },
+    ],
+    illustrativeExchange: {
+      owner: "What booking and commission inquiries need my review this week?",
+      nexus: "I can organize the incoming requests from your connected channels and highlight the ones awaiting your decision.",
+    },
+    ctaLabel: "Explore Nexus for My Studio",
+  },
+]
+
+// ─── Full Categorized FAQ Data (Business-Owner First) ────────────────────────
 export interface FaqItemData {
   id: string
   question: string
   answer: string
   category:
-    | "Getting Started"
-    | "AI Systems & Architecture"
-    | "Packages and Pricing"
-    | "AI Usage"
-    | "Privacy and Control"
-    | "Nexus Edge"
-    | "Nexus Sense & Hardware"
-    | "Connections and Add-ons"
-    | "Dashboard and Future Features"
+    | "About Nexus"
+    | "Using Nexus"
+    | "Plans & Billing"
+    | "Tools & Devices"
     | "Start Your Business — Canada"
   isHomepageTop3?: boolean
 }
 
 export const FAQ_CATEGORIES = [
-  "Getting Started",
-  "AI Systems & Architecture",
-  "Packages and Pricing",
-  "AI Usage",
-  "Privacy and Control",
-  "Nexus Edge",
-  "Nexus Sense & Hardware",
-  "Connections and Add-ons",
-  "Dashboard and Future Features",
+  "About Nexus",
+  "Using Nexus",
+  "Plans & Billing",
+  "Tools & Devices",
   "Start Your Business — Canada",
 ] as const
 
-// ─── Top 3 Homepage Preview FAQs ──────────────────────────────────────────────
+// ─── Homepage Preview FAQs (Business Owner Version) ──────────────────────────
 export const HOMEPAGE_FAQS: FaqItemData[] = [
   {
-    id: "different-from-other-agents",
-    category: "AI Systems & Architecture",
+    id: "what-is-nexus",
+    category: "About Nexus",
     isHomepageTop3: true,
-    question: "What makes Nexus different from other AI agents?",
+    question: "What is Nexus?",
     answer:
-      "Nexus is a managed business platform—not simply another AI agent. Westside Union connects it to your approved business tools, workflows and optional devices while maintaining one business identity, shared company knowledge, permissions and visible task history.",
+      "Nexus is an AI business assistant backed by specialists that can help with everyday tasks, information and workflows. Westside Union helps set it up around the way your business works.",
   },
   {
-    id: "manage-social-media",
-    category: "Connections and Add-ons",
+    id: "need-technical-knowledge",
+    category: "About Nexus",
     isHomepageTop3: true,
-    question: "Can Nexus help manage our social media?",
+    question: "Do I need to know anything about AI or technology?",
     answer:
-      "Yes. Nexus can help plan content, write captions, create graphics and short animated videos, and schedule approved posts through supported social accounts. Public content waits for your approval by default.",
+      "No technical background is needed to start the conversation. We explain the options in plain language and help you through the onboarding process appropriate to your plan.",
   },
   {
-    id: "what-are-nexus-ai-credits",
-    category: "AI Usage",
+    id: "work-with-existing-software",
+    category: "Tools & Devices",
     isHomepageTop3: true,
-    question: "What are Nexus AI Credits?",
+    question: "Can Nexus work with the software my business already uses?",
     answer:
-      "Nexus AI Credits cover the AI work performed by your assistant. You see one simple monthly balance instead of tokens, model names or individual API charges. Nexus notifies you before your included credits run low.",
+      "Often, yes. Tell us which tools you use and what you'd like to do. We'll confirm compatibility, permissions and any setup required before recommending a solution.",
+  },
+  {
+    id: "is-nexus-another-chatbot",
+    category: "About Nexus",
+    isHomepageTop3: true,
+    question: "Is Nexus another chatbot, like ChatGPT or other AI assistants?",
+    answer:
+      "Nexus is a managed business service: Westside Union works with you to configure your assistant, business workflows and supported connections. General AI assistants such as ChatGPT, Dots, Muse, Grok and Claude can also be capable products. The important question is which setup best fits your business and how much ongoing implementation support you want.",
+  },
+  {
+    id: "difference-cloud-edge-enterprise",
+    category: "Plans & Billing",
+    isHomepageTop3: true,
+    question: "What is the difference between Cloud, Edge and Enterprise?",
+    answer:
+      "Cloud is an approachable managed starting point. Edge provides more dedicated managed capacity and tailored setup. Enterprise is designed around an agreed scope for larger or more complex organizations.",
+  },
+  {
+    id: "is-there-a-setup-fee",
+    category: "Plans & Billing",
+    isHomepageTop3: true,
+    question: "Is there a setup fee?",
+    answer:
+      "Cloud has no mandatory setup fee; optional hands-on setup may cost extra. Edge and Enterprise require a one-time setup or implementation fee, shown separately from the ongoing subscription.",
   },
 ]
 
 export const ALL_FAQS: FaqItemData[] = [
-  // 1. AI Systems & Architecture (StoryBrand & Competitive Positioning)
+  // 1. About Nexus
   {
-    id: "different-from-openclaw-hermes-claude",
-    category: "AI Systems & Architecture",
+    id: "what-is-nexus",
+    category: "About Nexus",
     isHomepageTop3: true,
-    question: "What makes Nexus different from OpenClaw, Hermes Agent, Claude Cowork or other AI agent systems?",
-    answer:
-      "OpenClaw, Hermes Agent and Claude Cowork are powerful systems that can help an AI perform work. Nexus is the managed business platform that brings the pieces together around your company.\n\nWestside Union connects Nexus to your messaging channels, business software, approved workflows and optional on-site devices. Nexus maintains one consistent business identity, shared company knowledge, permissions, task history and approval process—even when different AI systems are used behind the scenes.\n\nYou do not need to choose, configure or maintain those systems yourself. You talk to one Nexus assistant, and Westside Union manages the technology supporting it.\n\nOther systems give an AI the ability to work. Nexus turns that ability into a managed system built around your business.",
-  },
-  {
-    id: "does-nexus-replace-underlying-agents",
-    category: "AI Systems & Architecture",
-    question: "Does Nexus replace OpenClaw, Hermes Agent or Claude Cowork?",
-    answer:
-      "Not necessarily. Nexus may use one appropriate system, multiple systems or a future Nexus runtime depending on your business, privacy requirements and package.\n\nThe technology behind Nexus can change without requiring you to rebuild your business assistant or start its company knowledge over again.",
-  },
-  {
-    id: "why-not-install-agent-myself",
-    category: "AI Systems & Architecture",
-    question: "Why not install an AI agent myself?",
-    answer:
-      "A self-installed AI agent gives you software. Nexus gives you a managed business service.\n\nWestside Union configures the assistant around your company, connects approved tools, controls what it may do, monitors its work, maintains the system and helps improve it over time.",
-  },
-  {
-    id: "speak-to-one-assistant",
-    category: "AI Systems & Architecture",
-    question: "Will I still speak to one assistant if Nexus uses multiple AI systems?",
-    answer:
-      "Yes. Nexus maintains one business identity and shared company knowledge across supported systems.\n\nWhether work is completed by one agent or another behind the scenes, you continue speaking to the same Nexus assistant.",
-  },
-  {
-    id: "underlying-technology-changes",
-    category: "AI Systems & Architecture",
-    question: "What happens if the AI technology behind Nexus changes?",
-    answer:
-      "Nexus is designed so that its underlying AI technology can be maintained or replaced without changing the customer-facing Nexus identity.\n\nThe goal is to preserve the business’s approved knowledge, preferences, workflows and history while Westside Union manages changes behind the scenes.",
-  },
-
-  // 2. Getting Started
-  {
-    id: "what-is-project-nexus",
-    category: "Getting Started",
     question: "What is Nexus?",
     answer:
-      "Nexus is a managed AI assistant for your business, built and operated by Westside Union. It organizes your follow-ups, reviews, customer inquiries, and routine tasks through the messaging tools you already use, keeping work moving forward with owner approval rules and clear summaries.",
+      "Nexus is an AI business assistant backed by specialists that can help with everyday tasks, information and workflows. Westside Union helps set it up around the way your business works.",
+  },
+  {
+    id: "need-technical-knowledge",
+    category: "About Nexus",
+    isHomepageTop3: true,
+    question: "Do I need to know anything about AI or technology?",
+    answer:
+      "No technical background is needed to start the conversation. We explain the options in plain language and help you through the onboarding process appropriate to your plan.",
+  },
+  {
+    id: "is-nexus-another-chatbot",
+    category: "About Nexus",
+    isHomepageTop3: true,
+    question: "Is Nexus another chatbot, like ChatGPT or other AI assistants?",
+    answer:
+      "Nexus is a managed business service: Westside Union works with you to configure your assistant, business workflows and supported connections. General AI assistants such as ChatGPT, Dots, Muse, Grok and Claude can also be capable products. The important question is which setup best fits your business and how much ongoing implementation support you want.",
+  },
+  {
+    id: "how-do-i-get-started",
+    category: "About Nexus",
+    question: "How do I get started?",
+    answer:
+      "Tell us a little about your business and the work you'd like help with. We'll recommend a suitable plan and explain the next steps.",
+  },
+
+  // 2. Using Nexus
+  {
+    id: "what-kind-of-work",
+    category: "Using Nexus",
+    question: "What kind of work can Nexus help with?",
+    answer:
+      "Depending on your plan and connected systems, Nexus can help organize information, support customer communications, prepare content and reports, coordinate follow-ups and simplify recurring tasks. We'll confirm which tasks are included in your specific setup.",
+  },
+  {
+    id: "can-nexus-help-my-business",
+    category: "Using Nexus",
+    question: "Can Nexus help my kind of business?",
+    answer:
+      "Nexus is designed for different business workflows. Explore our industry examples or tell us about your processes so we can suggest a practical starting point.",
+  },
+  {
+    id: "what-happens-to-business-information",
+    category: "Using Nexus",
+    question: "What happens to my business information?",
+    answer:
+      "How information is accessed, stored and retained depends on your chosen service and integrations. We explain data handling, permissions and export options during onboarding and in the applicable service terms.",
   },
   {
     id: "does-nexus-replace-staff",
-    category: "Getting Started",
+    category: "Using Nexus",
     question: "Does Nexus replace my staff?",
     answer:
-      "No. Nexus is designed to support you and your existing team, not replace employees. It absorbs repetitive coordination, draft preparation, reminder tracking, and after-hours triage so you and your team can focus on serving customers, doing skilled work, and running the business.",
-  },
-  {
-    id: "how-do-i-communicate-with-nexus",
-    category: "Getting Started",
-    question: "How do I communicate with Nexus?",
-    answer:
-      "You and your team communicate with Nexus through familiar messaging channels like WhatsApp, SMS/text, Telegram, or email. There is no complicated new software to train your team on—you message Nexus just like you would a trusted assistant.",
-  },
-  {
-    id: "need-technical-knowledge-full",
-    category: "Getting Started",
-    isHomepageTop3: true,
-    question: "Do I need technical knowledge to use Nexus?",
-    answer:
-      "No. You and your team communicate with Nexus through everyday messaging apps like WhatsApp, SMS, or Telegram just like messaging a team member. Westside Union handles the technical setup, integrations, security, and ongoing maintenance with you.",
-  },
-  {
-    id: "who-manages-technical-setup",
-    category: "Getting Started",
-    question: "Who manages the technical setup and updates?",
-    answer:
-      "Westside Union handles all business knowledge setup, channel configuration, connector health, security monitoring, and platform updates so you never have to deal with technical complexity.",
+      "No. Nexus is designed to support you and your team by helping with repetitive coordination, draft preparation, reminders and everyday organization so your people can focus on customers and core work.",
   },
 
-  // 3. Nexus Sense & Hardware
+  // 3. Tools & Devices
   {
-    id: "what-are-nexus-sense-addons",
-    category: "Nexus Sense & Hardware",
-    question: "What are Nexus Sense add-ons?",
-    answer:
-      "Nexus Sense add-ons are optional on-site devices that help Nexus recognize useful conditions inside your physical business—for example occupancy, temperature, water leaks, equipment status or after-hours activity.\n\nWhen something requires attention, Nexus can notify you, create a task or begin an approved workflow.",
-  },
-  {
-    id: "do-i-need-sensors-or-hardware",
-    category: "Nexus Sense & Hardware",
+    id: "work-with-existing-software",
+    category: "Tools & Devices",
     isHomepageTop3: true,
-    question: "Do I need sensors or special hardware?",
+    question: "Can Nexus work with the software my business already uses?",
     answer:
-      "No. Nexus can work with your existing messaging channels and business software without physical sensors.\n\nNexus Sense devices are optional and are recommended only when they solve a clear operational problem.",
+      "Often, yes. Tell us which tools you use and what you'd like to do. We'll confirm compatibility, permissions and any setup required before recommending a solution.",
   },
   {
-    id: "do-sensors-record-customers",
-    category: "Nexus Sense & Hardware",
-    question: "Do Nexus Sense devices record customers?",
+    id: "replace-existing-software",
+    category: "Tools & Devices",
+    question: "Do I have to replace the software I already use?",
     answer:
-      "It depends on the selected device, but Westside Union will clearly explain what every device detects, processes and stores before installation.\n\nWhenever practical, Nexus will favour minimal data collection and local processing. No device should be activated without documented business approval and any notice or consent required for the intended use.",
+      "Not necessarily. We usually start by understanding your existing tools and information. Some workflows may need an additional connection, change in process or new system, and we'll explain that before implementation.",
+  },
+  {
+    id: "physical-business-nexus-sense",
+    category: "Tools & Devices",
+    question: "Can Nexus help with what's happening in my physical business?",
+    answer:
+      "Optional connected devices such as Nexus Sense are part of our Physical AI direction. Availability and monitoring capabilities depend on the device, installation and supported use case. Ask our team what's currently offered.",
   },
 
-  // 4. Packages and Pricing
+  // 4. Plans & Billing
   {
-    id: "difference-cloud-edge",
-    category: "Packages and Pricing",
-    question: "What is the difference between Nexus Cloud and Nexus Edge?",
+    id: "difference-cloud-edge-enterprise",
+    category: "Plans & Billing",
+    isHomepageTop3: true,
+    question: "What is the difference between Cloud, Edge and Enterprise?",
     answer:
-      "Plans start at CAD $99/month for Nexus Cloud. Each plan includes a defined usage allowance, clear limits, and managed support. Nexus Edge includes a dedicated appliance with a 24- or 36-month initial term for on-site privacy and predictable local capacity.",
+      "Cloud is an approachable managed starting point. Edge provides more dedicated managed capacity and tailored setup. Enterprise is designed around an agreed scope for larger or more complex organizations.",
   },
   {
-    id: "pilot-details",
-    category: "Packages and Pricing",
-    question: "How does the 30-Day Cloud Pilot work?",
+    id: "is-there-a-setup-fee",
+    category: "Plans & Billing",
+    isHomepageTop3: true,
+    question: "Is there a setup fee?",
     answer:
-      "The pilot includes your first 30 days of the CAD $99/month Cloud subscription and monthly Nexus AI Credits. A CAD $299 onboarding fee applies for setup and configuration. The 30 days begin on your confirmed go-live date, and there is no automatic subscription charge at the end—you decide whether to continue.",
+      "Cloud has no mandatory setup fee; optional hands-on setup may cost extra. Edge and Enterprise require a one-time setup or implementation fee, shown separately from the ongoing subscription.",
+  },
+  {
+    id: "can-i-pay-annually",
+    category: "Plans & Billing",
+    question: "Can I pay annually?",
+    answer:
+      "We offer monthly and annual billing options for eligible packages. The pricing page shows the current options and any applicable annual savings. Enterprise arrangements are quoted around your scope.",
   },
   {
     id: "currency-and-taxes",
-    category: "Packages and Pricing",
+    category: "Plans & Billing",
     question: "What currency are prices in, and are taxes included?",
     answer:
-      "All prices are shown in Canadian dollars (CAD) and exclude applicable federal and provincial taxes (such as GST/HST).",
-  },
-  {
-    id: "cloud-to-edge-upgrade",
-    category: "Packages and Pricing",
-    question: "Can I upgrade from Nexus Cloud to Nexus Edge later?",
-    answer:
-      "Yes. If you upgrade from Nexus Cloud to Nexus Edge within six months, your CAD $299 Cloud onboarding payment is credited toward the CAD $1,499 Edge activation fee, subject to a routine Edge assessment.",
+      "All prices are shown in Canadian dollars (CAD) and exclude applicable taxes. Some third-party software, integrations, premium usage or custom implementation may require additional costs, which are identified in your proposal before work begins.",
   },
 
-  // 5. AI Usage
-  {
-    id: "what-are-nexus-ai-credits-full",
-    category: "AI Usage",
-    question: "What are Nexus AI Credits?",
-    answer:
-      "Nexus AI Credits cover the AI work performed by your Nexus assistant, including conversations, summaries, content drafts and other supported tasks.\n\nCustomers see one simple monthly balance instead of tokens or individual model charges. Nexus provides a notification before the included credits run low.",
-  },
-  {
-    id: "unexpected-ai-bill",
-    category: "AI Usage",
-    question: "Will I receive an unexpected AI bill?",
-    answer:
-      "No. Nexus monitors your included monthly usage and alerts you before additional credits are required.\n\nAdditional usage is handled according to the billing rules agreed for your account.",
-  },
-  {
-    id: "need-separate-ai-account",
-    category: "AI Usage",
-    question: "Do I need a separate AI provider account to begin?",
-    answer:
-      "No. Monthly Nexus AI Credits are included with your Nexus subscription, so you do not need to create a separate AI-provider account to begin. If you prefer direct provider billing and control, you may optionally connect a supported provider business account.",
-  },
-  {
-    id: "consumer-chatgpt-gemini-grok",
-    category: "AI Usage",
-    question: "Does a regular ChatGPT, Google AI, or Grok subscription work?",
-    answer:
-      "A regular ChatGPT, Google AI, or Grok consumer subscription normally does not provide the business API access Nexus requires. If you prefer a customer-owned provider connection, Westside Union will help you create the appropriate supported provider business account during onboarding.",
-  },
-  {
-    id: "usage-packs-overage",
-    category: "AI Usage",
-    question: "What happens when my monthly AI allowance is reached?",
-    answer:
-      "If you reach 100% of your monthly allowance, new AI-powered tasks pause safely. Non-AI functions, task records, and summaries remain active. You can wait for your allowance to reset monthly or add an optional prepaid Nexus AI Credit Pack. Additional credits are available when needed, and Nexus alerts you before your included usage runs low.",
-  },
-
-  // 6. Privacy and Control
-  {
-    id: "publish-without-approval",
-    category: "Privacy and Control",
-    question: "Will Nexus publish content without our approval?",
-    answer:
-      "Not by default. Nexus normally prepares public content for review.\n\nBusinesses may optionally enable approved autopilot for specific content types, campaigns, accounts and schedules. Anything outside those approved rules can be held for review.",
-  },
-  {
-    id: "is-business-information-private",
-    category: "Privacy and Control",
-    question: "Is my business information private?",
-    answer:
-      "Your business information belongs to you. Nexus does not use it to train public models. Connected service providers process information according to the provider accounts, privacy settings, and terms selected for your deployment.",
-  },
-  {
-    id: "send-messages-automatically",
-    category: "Privacy and Control",
-    question: "Can Nexus send customer messages automatically?",
-    answer:
-      "For routine, approved FAQs and acknowledgements, Nexus can reply according to your pre-approved rules. For sensitive, promotional, high-impact, or public communications (such as review replies or special offers), Nexus prepares drafts that pause for your approval before anything is sent.",
-  },
-  {
-    id: "data-ownership",
-    category: "Privacy and Control",
-    question: "Who owns the business data, activity logs, and configurations?",
-    answer:
-      "You own your business data, customer conversations, configurations, and activity logs. You can request a data export at any time.",
-  },
-
-  // 7. Nexus Edge
-  {
-    id: "own-edge-appliance",
-    category: "Nexus Edge",
-    question: "Do I own the Nexus Edge appliance?",
-    answer:
-      "No. The Nexus Edge appliance is provided and maintained by Westside Union and remains Westside Union property. This allows us to monitor, secure, maintain, replace, and refresh the equipment consistently.",
-  },
-  {
-    id: "edge-24-month-agreement",
-    category: "Nexus Edge",
-    question: "Why does Nexus Edge require a commitment term?",
-    answer:
-      "Westside Union purchases, configures, and ships dedicated equipment for your business, including monitoring, maintenance, backups, priority support, and covered hardware replacement. The agreement allows those infrastructure costs to be provided through a predictable monthly service rather than a large upfront hardware purchase.",
-  },
-  {
-    id: "edge-term-ends",
-    category: "Nexus Edge",
-    question: "What happens when the Nexus Edge term ends?",
-    answer:
-      "You may renew Nexus Edge, discuss an equipment refresh, transition to Nexus Cloud, or return the appliance and end the service according to your agreement. Westside Union securely wipes customer data prior to equipment decommissioning.",
-  },
-
-  // 8. Connections and Add-ons
-  {
-    id: "can-nexus-manage-social-media",
-    category: "Connections and Add-ons",
-    question: "Can Nexus manage our social media?",
-    answer:
-      "Yes. Nexus can help plan your content calendar, write captions, create graphics and short animated promotional videos, adapt content for supported platforms and schedule approved posts.\n\nPublishing availability depends on the social platform, account permissions, selected package and enabled Nexus add-ons.",
-  },
-  {
-    id: "can-nexus-create-videos",
-    category: "Connections and Add-ons",
-    question: "Can Nexus create videos?",
-    answer:
-      "Nexus can create short animated promotional videos and other supported visual content for announcements, offers, events and social campaigns.\n\nAvailable formats, volume and generation services depend on the selected package and enabled add-ons.",
-  },
-  {
-    id: "can-nexus-post-to-every-social-platform",
-    category: "Connections and Add-ons",
-    question: "Can Nexus post to every social platform?",
-    answer:
-      "Nexus can publish through supported platforms and approved account connections across our 1,500+ application ecosystem. Availability depends on each provider’s API access, account eligibility, and permissions.\n\nWestside Union confirms supported publishing channels during consultation.",
-  },
-  {
-    id: "tools-already-used",
-    category: "Connections and Add-ons",
-    question: "Can Nexus connect to tools my business already uses?",
-    answer:
-      "Yes. Nexus natively connects to over 1,500+ business applications, operational systems, and communication channels. Whether your team relies on messaging channels (WhatsApp, Slack, Telegram, Email, Teams), workspace suites (Google Workspace, Microsoft 365, Notion, Airtable, Linear), CRMs (Salesforce, HubSpot, Pipedrive), accounting systems (QuickBooks, Xero), commerce & POS platforms (Square, Clover, Shopify, Toast), or engineering tools (GitHub, Supabase), Nexus connects directly with managed authentication, secure OAuth token lifecycles, and owner approval rules. Westside Union handles the configuration, authorization, testing, and continuous maintenance.",
-  },
-  {
-    id: "what-if-app-not-listed",
-    category: "Connections and Add-ons",
-    question: "What if the specific software or tool my business uses isn't listed?",
-    answer:
-      "In addition to our 1,500+ pre-built application integrations, Nexus supports any tool that exposes an API, webhook, or Model Context Protocol (MCP) server. If your business uses proprietary, legacy, or niche industry software, Westside Union configures a custom connection during onboarding.",
-  },
-  {
-    id: "add-ons-structure",
-    category: "Connections and Add-ons",
-    question: "How do add-on fees and connection setup work?",
-    answer:
-      "Connection setup includes secure authorization, permission verification, testing, and approval triggers across our 1,500+ app ecosystem. Monthly fees cover proactive connector monitoring, token refreshes, updates, and maintenance. Variable usage from telecom or third-party providers is separate.",
-  },
-
-  // 9. Dashboard and Future Features
-  {
-    id: "dashboard-role",
-    category: "Dashboard and Future Features",
-    question: "Do I have to use a dashboard every day?",
-    answer:
-      "No. Daily operation is messaging-first. The web dashboard is an optional control center (currently labelled Preview / In Development for pilot customers) for reviewing broad activity history, adjusting preferences, or inspecting tasks.",
-  },
-
-  // 10. Start Your Business — Canada
+  // 5. Start Your Business — Canada
   {
     id: "founder-program-scope",
     category: "Start Your Business — Canada",

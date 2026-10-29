@@ -1,12 +1,14 @@
 import { MetadataRoute } from "next"
+import { INDUSTRIES_DATA } from "@/lib/site-data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nexus.westside-union.com"
   const lastModified = new Date()
 
-  const routes = [
+  const staticRoutes = [
     { path: "", changeFrequency: "weekly" as const, priority: 1.0 },
     { path: "/pricing", changeFrequency: "weekly" as const, priority: 0.9 },
+    { path: "/industries", changeFrequency: "weekly" as const, priority: 0.9 },
     { path: "/nexus-edge", changeFrequency: "monthly" as const, priority: 0.8 },
     { path: "/start-business-canada", changeFrequency: "monthly" as const, priority: 0.8 },
     { path: "/connections", changeFrequency: "monthly" as const, priority: 0.7 },
@@ -15,7 +17,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms", changeFrequency: "yearly" as const, priority: 0.3 },
   ]
 
-  return routes.map((r) => ({
+  const industryRoutes = INDUSTRIES_DATA.map((ind) => ({
+    path: `/industries/${ind.slug}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }))
+
+  return [...staticRoutes, ...industryRoutes].map((r) => ({
     url: `${baseUrl}${r.path}`,
     lastModified,
     changeFrequency: r.changeFrequency,

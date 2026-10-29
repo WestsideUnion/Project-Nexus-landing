@@ -5,11 +5,11 @@ import Link from "next/link"
 import Image from "next/image"
 
 const NAV_LINKS = [
-  { label: "Solutions", href: "/#industries" },
-  { label: "How It Works", href: "/#workflow" },
-  { label: "Connections", href: "/connections" },
-  { label: "Demo", href: "/demo" },
+  { label: "How Nexus Helps", href: "/#how-it-helps" },
+  { label: "Industries", href: "/#industries" },
+  { label: "AI Team", href: "/#ai-team" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Integrations", href: "/connections" },
   { label: "For Founders", href: "/start-business-canada" },
 ]
 
@@ -30,7 +30,7 @@ export function MobileNav() {
       <div className="pointer-events-auto w-full max-w-5xl">
         {/* Main bar */}
         <nav
-          className="flex items-center justify-between px-6 py-3.5 rounded-2xl border border-black/[0.07]"
+          className="flex items-center justify-between px-6 py-3.5 rounded-2xl border border-black/7"
           style={NAV_STYLE}
           aria-label="Main Navigation"
         >
@@ -62,13 +62,13 @@ export function MobileNav() {
               className="text-xs px-4 py-2 rounded-xl bg-[#111] text-white hover:bg-black/80 hover:shadow-sm active:scale-[0.98] transition-all duration-200 tracking-wider whitespace-nowrap hidden md:block uppercase font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
               style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
-              Book a free consultation
+              Book a Demo
             </Link>
 
             {/* Burger — mobile only */}
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-xl hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+              className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-xl hover:bg-black/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
             >
@@ -104,7 +104,7 @@ export function MobileNav() {
           style={{ maxHeight: open ? "360px" : "0px", opacity: open ? 1 : 0 }}
         >
           <div
-            className="rounded-2xl border border-black/[0.07] px-3 py-3 flex flex-col gap-1 shadow-lg"
+            className="rounded-2xl border border-black/7 px-3 py-3 flex flex-col gap-1 shadow-lg"
             style={NAV_STYLE}
           >
             {NAV_LINKS.map((l) => (
@@ -112,20 +112,20 @@ export function MobileNav() {
                 key={l.label}
                 href={l.href}
                 onClick={close}
-                className="px-4 py-2.5 text-sm text-black/70 hover:text-black hover:bg-black/[0.04] rounded-xl transition-colors tracking-wide"
+                className="px-4 py-2.5 text-sm text-black/70 hover:text-black hover:bg-black/4 rounded-xl transition-colors tracking-wide"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
                 {l.label}
               </Link>
             ))}
-            <div className="mt-2 pt-2 border-t border-black/[0.06]">
+            <div className="mt-2 pt-2 border-t border-black/6">
               <Link
                 href="/#contact"
                 onClick={close}
                 className="block w-full text-center text-xs px-4 py-3 rounded-xl bg-[#111] text-white hover:bg-black/80 active:scale-[0.98] transition-all duration-200 tracking-wider uppercase font-medium shadow-xs"
                 style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
-                Book a free consultation
+                Book a Demo
               </Link>
             </div>
           </div>

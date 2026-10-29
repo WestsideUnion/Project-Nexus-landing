@@ -48,7 +48,7 @@ export function BentoCard({
   return (
     <div
       ref={ref}
-      className={`group relative rounded-2xl border border-black/[0.07] bg-white overflow-hidden transition-all duration-500 hover:border-black/[0.15] hover:bg-[#fafaf8] ${className}`}
+      className={`group relative rounded-2xl border border-black/7 bg-white overflow-hidden transition-all duration-500 hover:border-black/15 hover:bg-[#fafaf8] ${className}`}
       style={{
         opacity: inView ? 1 : 0.85,
         transform: inView ? "translateY(0)" : "translateY(12px)",
@@ -71,7 +71,7 @@ export function BentoCard({
 // ─── Pill Tag ─────────────────────────────────────────────────────────────────
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/[0.04] uppercase font-medium">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/4 uppercase font-medium">
       {children}
     </span>
   )
@@ -87,7 +87,7 @@ export function StatusPill({ status }: { status: ConnectionStatus | string }) {
     "confirmed during consultation": "bg-amber-50 text-amber-700 border-amber-200/60",
     custom: "bg-purple-50 text-purple-700 border-purple-200/60",
     "custom deployment": "bg-purple-50 text-purple-700 border-purple-200/60",
-    planned: "bg-black/[0.03] text-black/35 border-black/[0.06]",
+    planned: "bg-black/3 text-black/35 border-black/6",
     preview: "bg-blue-50 text-blue-700 border-blue-200/60",
   }
 
@@ -116,7 +116,7 @@ export function StatusPill({ status }: { status: ConnectionStatus | string }) {
   }
 
   const key = status.toLowerCase()
-  const style = styles[key] || "bg-black/[0.03] text-black/40 border-black/[0.06]"
+  const style = styles[key] || "bg-black/3 text-black/40 border-black/6"
   const dot = dotColors[key] || "bg-black/20"
   const label = labels[key] || status
 
@@ -141,7 +141,7 @@ export function FaqAccordionItem({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="py-5 border-b border-black/[0.06] last:border-b-0">
+    <div className="py-5 border-b border-black/6 last:border-b-0">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex items-center justify-between w-full text-left gap-4 group cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded-lg p-1"

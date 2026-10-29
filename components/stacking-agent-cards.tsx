@@ -40,7 +40,7 @@ const OFFSET_STEP  = 8    // px pushed down per card stacked on top
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/[0.04]">
+    <span className="inline-flex items-center px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/4">
       {children}
     </span>
   )
@@ -96,7 +96,7 @@ export function StackingAgentCards() {
                 willChange:     "transform",
               }}
             >
-              <div className="group relative bg-[#faf9f7] rounded-2xl border border-black/[0.07] overflow-hidden cursor-pointer">
+              <div className="group relative bg-[#faf9f7] rounded-2xl border border-black/7 overflow-hidden cursor-pointer">
 
                 {/* ── MOBILE: image top, fades out at bottom ── */}
                 {agent.img && (
@@ -143,7 +143,7 @@ export function StackingAgentCards() {
                     <h3 className="text-xl font-light mb-3">{agent.title}</h3>
                     <p className="text-sm text-black/45 leading-relaxed mb-8">{agent.desc}</p>
                   </div>
-                  <div className="flex gap-8 pt-6 border-t border-black/[0.06]">
+                  <div className="flex gap-8 pt-6 border-t border-black/6">
                     {agent.stats.map(s => (
                       <div key={s.l}>
                         <div className="text-2xl font-light">{s.v}</div>

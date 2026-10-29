@@ -57,9 +57,9 @@ export function DemoGuidedTour({
   const currentStep = getStepNumber()
 
   return (
-    <div className="w-full bg-white rounded-2xl border border-black/[0.08] shadow-sm p-4 sm:p-6 mb-6 transition-all">
+    <div className="w-full bg-white rounded-2xl border border-black/8 shadow-sm p-4 sm:p-6 mb-6 transition-all">
       {/* Header bar of Guided Tour */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-black/[0.06]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-black/6">
         <div className="flex items-center gap-2.5">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
           <div>
@@ -93,7 +93,7 @@ export function DemoGuidedTour({
             <div className="flex items-center gap-2">
               <button
                 onClick={onResetDemo}
-                className="flex items-center gap-1.5 px-3 py-1.5 border border-black/15 hover:bg-black/[0.04] text-black text-xs font-medium rounded-lg transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-3 py-1.5 border border-black/15 hover:bg-black/4 text-black text-xs font-medium rounded-lg transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-3 h-3 text-black/60" />
                 <span>Reset Demo</span>
@@ -111,7 +111,7 @@ export function DemoGuidedTour({
             <div className="flex items-center gap-2">
               <button
                 onClick={onResetDemo}
-                className="p-2 text-black/50 hover:text-black hover:bg-black/[0.05] rounded-lg transition-colors"
+                className="p-2 text-black/50 hover:text-black hover:bg-black/5 rounded-lg transition-colors"
                 title="Reset scenario"
                 aria-label="Reset demo"
               >
@@ -164,7 +164,7 @@ export function DemoGuidedTour({
                         ? "bg-emerald-500"
                         : isCurrent
                         ? "bg-amber-500 animate-pulse"
-                        : "bg-black/[0.08]"
+                        : "bg-black/8"
                     }`}
                   />
                   <div className="text-[9px] font-mono text-black/50 truncate hidden sm:block">
@@ -176,7 +176,7 @@ export function DemoGuidedTour({
           </div>
 
           {/* Interactive State Display Card */}
-          <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/[0.07] mt-3">
+          <div className="p-4 rounded-xl bg-[#FAF9F5] border border-black/7 mt-3">
             {/* Step 1: Owner Request Received via WhatsApp */}
             {demoState === "request_received" && (
               <div className="space-y-3 animate-in fade-in">
@@ -267,7 +267,7 @@ export function DemoGuidedTour({
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                  <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] text-xs space-y-1">
+                  <div className="p-2.5 rounded-lg bg-white border border-black/6 text-xs space-y-1">
                     <div className="font-semibold text-black flex items-center gap-1 text-[11px]">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                       <span>Social Caption</span>
@@ -277,7 +277,7 @@ export function DemoGuidedTour({
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] text-xs space-y-1">
+                  <div className="p-2.5 rounded-lg bg-white border border-black/6 text-xs space-y-1">
                     <div className="font-semibold text-black flex items-center gap-1 text-[11px]">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                       <span>Graphic Preview</span>
@@ -287,7 +287,7 @@ export function DemoGuidedTour({
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] text-xs space-y-1">
+                  <div className="p-2.5 rounded-lg bg-white border border-black/6 text-xs space-y-1">
                     <div className="font-semibold text-black flex items-center gap-1 text-[11px]">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                       <span>Video Reel Preview</span>
@@ -297,7 +297,7 @@ export function DemoGuidedTour({
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-lg bg-white border border-black/[0.06] text-xs space-y-1">
+                  <div className="p-2.5 rounded-lg bg-white border border-black/6 text-xs space-y-1">
                     <div className="font-semibold text-black flex items-center gap-1 text-[11px]">
                       <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                       <span>Target Schedule</span>
@@ -372,19 +372,19 @@ export function DemoGuidedTour({
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1 text-[11px]">
-                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/[0.05]">
+                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/5">
                       <div className="font-semibold text-black/80">Content Prepared</div>
                       <div className="text-black/60 text-[10px]">Caption, graphic card &amp; video preview</div>
                     </div>
-                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/[0.05]">
+                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/5">
                       <div className="font-semibold text-black/80">Owner Approval</div>
                       <div className="text-black/60 text-[10px]">Received with 1 tap</div>
                     </div>
-                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/[0.05]">
+                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/5">
                       <div className="font-semibold text-black/80">Schedule Created</div>
                       <div className="text-black/60 text-[10px]">Queued for Friday 11:30 AM (Demo)</div>
                     </div>
-                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/[0.05]">
+                    <div className="p-2.5 bg-[#FAF9F5] rounded-lg border border-black/5">
                       <div className="font-semibold text-black/80">Activity Logged</div>
                       <div className="text-black/60 text-[10px]">Logged to audit report</div>
                     </div>
@@ -392,7 +392,7 @@ export function DemoGuidedTour({
                 </div>
 
                 {/* Step 8: Commercial Result and Consultation CTA */}
-                <div className="p-4 rounded-xl bg-gradient-to-r from-[#1A1918] to-[#111] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-4 rounded-xl bg-linear-to-r from-[#1A1918] to-[#111] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <div className="text-xs sm:text-sm font-medium text-white/95">
                       This was a sample café workflow. Westside Union configures Nexus around the work your business needs handled.

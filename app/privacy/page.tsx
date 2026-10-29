@@ -38,7 +38,7 @@ export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── Header ──────────────────────────────────────────────────────────── */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-black/[0.06]">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-black/6">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
             <img
@@ -192,7 +192,7 @@ export default function PrivacyPage() {
                   </tr>
                 </thead>
                 <tbody className="text-black/55">
-                  <tr className="border-b border-black/[0.04]">
+                  <tr className="border-b border-black/4">
                     <td className="py-2.5 pr-4 text-black/70 font-medium">
                       Vercel
                     </td>
@@ -201,7 +201,7 @@ export default function PrivacyPage() {
                       Anonymized usage data, web vitals
                     </td>
                   </tr>
-                  <tr className="border-b border-black/[0.04]">
+                  <tr className="border-b border-black/4">
                     <td className="py-2.5 pr-4 text-black/70 font-medium">
                       Resend
                     </td>
@@ -322,7 +322,7 @@ export default function PrivacyPage() {
               If you have questions or concerns about this Privacy Policy or
               your personal information, contact us at:
             </p>
-            <div className="bg-black/[0.02] border border-black/[0.06] rounded-xl px-5 py-4 space-y-1 text-xs text-black/60">
+            <div className="bg-black/2 border border-black/6 rounded-xl px-5 py-4 space-y-1 text-xs text-black/60">
               <p className="text-black/80 font-medium">
                 Westside Union — Nexus
               </p>
@@ -342,7 +342,7 @@ export default function PrivacyPage() {
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────────────────── */}
-      <footer className="py-10 px-6 border-t border-black/[0.06]">
+      <footer className="py-10 px-6 border-t border-black/6">
         <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <span className="text-xs text-black/20">
             © 2026 Westside Union. All rights reserved.

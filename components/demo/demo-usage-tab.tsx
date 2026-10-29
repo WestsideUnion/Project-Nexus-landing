@@ -12,9 +12,9 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="pb-4 border-b border-black/[0.08] space-y-1">
+      <div className="pb-4 border-b border-black/8 space-y-1">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50 bg-black/[0.05] px-2 py-0.5 rounded-full border border-black/[0.06]">
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50 bg-black/5 px-2 py-0.5 rounded-full border border-black/6">
             Resource Management
           </span>
           <span className="text-[10px] font-mono text-black/50">
@@ -30,7 +30,7 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
       </div>
 
       {/* Main Credit Balance Card */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/[0.08] shadow-sm space-y-6">
+      <div className="p-6 sm:p-8 rounded-2xl bg-white border border-black/8 shadow-sm space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <span className="text-[10px] font-mono uppercase tracking-widest text-black/50 font-semibold">
@@ -46,7 +46,7 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
             </div>
           </div>
 
-          <div className="p-3 bg-[#FAF9F5] rounded-xl border border-black/[0.06] text-right shrink-0">
+          <div className="p-3 bg-[#FAF9F5] rounded-xl border border-black/6 text-right shrink-0">
             <div className="text-[10px] font-mono uppercase text-black/45">Cycle Reset</div>
             <div className="text-xs font-semibold text-black flex items-center justify-end gap-1.5 mt-0.5">
               <Calendar className="w-3.5 h-3.5 text-black/50" />
@@ -57,9 +57,9 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
 
         {/* Visual Progress Meter Bar */}
         <div className="space-y-2">
-          <div className="w-full h-3 bg-black/[0.06] rounded-full overflow-hidden p-0.5">
+          <div className="w-full h-3 bg-black/6 rounded-full overflow-hidden p-0.5">
             <div
-              className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 shadow-xs"
+              className="h-full bg-linear-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 shadow-xs"
               style={{ width: `${creditPercentage}%` }}
             />
           </div>
@@ -71,7 +71,7 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
         </div>
 
         {/* Required Disclaimer Note */}
-        <div className="p-3.5 rounded-xl bg-black/[0.03] border border-black/[0.06] flex items-center gap-2.5 text-xs text-black/65">
+        <div className="p-3.5 rounded-xl bg-black/3 border border-black/6 flex items-center gap-2.5 text-xs text-black/65">
           <Info className="w-4 h-4 text-black/50 shrink-0" />
           <span className="font-mono text-[11px]">
             This demonstration uses sample credit information.
@@ -89,7 +89,7 @@ export function DemoUsageTab({ creditPercentage }: DemoUsageTabProps) {
           {DEMO_CREDIT_BREAKDOWN.map((cat, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-xl bg-white border border-black/[0.06] shadow-2xs space-y-2"
+              className="p-4 rounded-xl bg-white border border-black/6 shadow-2xs space-y-2"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-black">{cat.name}</span>

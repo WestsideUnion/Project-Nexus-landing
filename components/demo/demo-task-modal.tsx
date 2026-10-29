@@ -46,7 +46,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
         className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-black/15 overflow-hidden z-10 animate-in zoom-in-95 duration-200"
       >
         {/* Header */}
-        <div className="bg-[#FAF9F5] border-b border-black/[0.08] px-6 py-4 flex items-center justify-between">
+        <div className="bg-[#FAF9F5] border-b border-black/8 px-6 py-4 flex items-center justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-mono uppercase tracking-widest font-semibold text-black/50">
@@ -71,7 +71,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-black/50 hover:text-black hover:bg-black/[0.05] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            className="p-1.5 rounded-lg text-black/50 hover:text-black hover:bg-black/5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
             aria-label="Close task details"
           >
             <X className="w-5 h-5" />
@@ -83,7 +83,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
           {report ? (
             <div className="space-y-4">
               {/* 1. What Nexus was asked to do */}
-              <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/[0.06] space-y-1.5">
+              <div className="p-3.5 rounded-xl bg-[#FAF9F5] border border-black/6 space-y-1.5">
                 <div className="flex items-center gap-2 text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50">
                   <FileText className="w-3.5 h-3.5 text-black/60" />
                   <span>1. What Nexus was asked to do</span>
@@ -94,7 +94,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
               </div>
 
               {/* 2. What Nexus prepared */}
-              <div className="p-3.5 rounded-xl bg-white border border-black/[0.08] space-y-1.5 shadow-2xs">
+              <div className="p-3.5 rounded-xl bg-white border border-black/8 space-y-1.5 shadow-2xs">
                 <div className="flex items-center gap-2 text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50">
                   <Clock className="w-3.5 h-3.5 text-blue-600" />
                   <span>2. What Nexus prepared</span>
@@ -105,7 +105,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
               </div>
 
               {/* 3. Whether approval was required */}
-              <div className="p-3.5 rounded-xl bg-white border border-black/[0.08] space-y-1.5 shadow-2xs">
+              <div className="p-3.5 rounded-xl bg-white border border-black/8 space-y-1.5 shadow-2xs">
                 <div className="flex items-center gap-2 text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50">
                   <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
                   <span>3. Whether approval was required</span>
@@ -140,7 +140,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
 
               {/* 5 & 6. When and Where delivered */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div className="p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.06]">
+                <div className="p-3 rounded-xl bg-[#FAF9F5] border border-black/6">
                   <div className="text-[10px] font-mono uppercase text-black/45 mb-1">
                     5. When completed
                   </div>
@@ -150,7 +150,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-[#FAF9F5] border border-black/[0.06]">
+                <div className="p-3 rounded-xl bg-[#FAF9F5] border border-black/6">
                   <div className="text-[10px] font-mono uppercase text-black/45 mb-1">
                     6. Delivery destination
                   </div>
@@ -167,7 +167,7 @@ export function DemoTaskModal({ task, isOpen, onClose }: DemoTaskModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="bg-[#FAF9F5] border-t border-black/[0.08] px-6 py-3 flex items-center justify-between">
+        <div className="bg-[#FAF9F5] border-t border-black/8 px-6 py-3 flex items-center justify-between">
           <span className="text-[10px] font-mono text-black/40">
             Northstar Café · Fictional Demonstration Record
           </span>

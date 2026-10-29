@@ -1,33 +1,32 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Nexus Edge | Managed Local AI for Your Business",
+  title: "Nexus Edge | Dedicated Managed AI Capacity for Growing Businesses",
   description:
-    "Nexus Edge adds a dedicated managed appliance at your business—keeping more approved business knowledge on-site, reducing cloud AI dependence, and providing predictable service from CAD $499/mo.",
+    "Nexus Edge gives growing businesses dedicated managed AI capacity, deeper workflow configuration, and priority support — hosted, monitored, and maintained by Westside Union.",
   keywords: [
     "Nexus Edge",
-    "Local AI appliance",
-    "on-premise AI assistant",
-    "private business AI",
+    "dedicated business AI capacity",
+    "managed AI assistant",
     "Westside Union Edge",
-    "managed on-site AI",
+    "business workflow automation",
   ],
   alternates: {
     canonical: "/nexus-edge",
   },
   openGraph: {
-    title: "Nexus Edge | Managed Local AI for Your Business",
+    title: "Nexus Edge | Dedicated Managed AI Capacity for Growing Businesses",
     description:
-      "Keep more business knowledge on-site. Dedicated managed appliance, remote monitoring, backups, and predictable monthly pricing with zero IT hassle.",
+      "More room for the work your business depends on. Dedicated managed AI capacity, tailored workflow mapping, and priority support hosted by Westside Union.",
     url: "/nexus-edge",
     siteName: "Nexus",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nexus Edge | Managed Local AI for Your Business",
+    title: "Nexus Edge | Dedicated Managed AI Capacity for Growing Businesses",
     description:
-      "Keep more business knowledge on-site with a dedicated managed local AI appliance from Westside Union.",
+      "More room for the work your business depends on with dedicated managed AI capacity from Westside Union.",
   },
 }
 

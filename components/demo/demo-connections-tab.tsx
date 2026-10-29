@@ -15,16 +15,16 @@ export function DemoConnectionsTab() {
       case "Confirmed during consultation":
         return "bg-amber-50 text-amber-800 border-amber-200"
       default:
-        return "bg-black/[0.05] text-black/60 border-black/[0.08]"
+        return "bg-black/5 text-black/60 border-black/8"
     }
   }
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="pb-4 border-b border-black/[0.08] space-y-1">
+      <div className="pb-4 border-b border-black/8 space-y-1">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50 bg-black/[0.05] px-2 py-0.5 rounded-full border border-black/[0.06]">
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-black/50 bg-black/5 px-2 py-0.5 rounded-full border border-black/6">
             Integrations &amp; Channels
           </span>
           <span className="text-[10px] font-mono text-black/50">
@@ -55,12 +55,12 @@ export function DemoConnectionsTab() {
         {DEMO_CONNECTIONS.map((conn) => (
           <div
             key={conn.id}
-            className="p-5 rounded-2xl bg-white border border-black/[0.07] hover:border-black/15 transition-all shadow-2xs flex flex-col justify-between space-y-3"
+            className="p-5 rounded-2xl bg-white border border-black/7 hover:border-black/15 transition-all shadow-2xs flex flex-col justify-between space-y-3"
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-white border border-black/[0.08] flex items-center justify-center shrink-0 shadow-2xs overflow-hidden p-1.5">
+                  <div className="w-9 h-9 rounded-xl bg-white border border-black/8 flex items-center justify-center shrink-0 shadow-2xs overflow-hidden p-1.5">
                     <AppLogo id={conn.id} name={conn.name} iconType={conn.iconType} className="w-5 h-5" />
                   </div>
                   <div>
@@ -83,7 +83,7 @@ export function DemoConnectionsTab() {
               <p className="text-xs text-black/65 leading-relaxed">{conn.description}</p>
             </div>
 
-            <div className="pt-3 border-t border-black/[0.05] flex items-center justify-between text-[10px] font-mono text-black/45">
+            <div className="pt-3 border-t border-black/5 flex items-center justify-between text-[10px] font-mono text-black/45">
               <span>Security: Sandbox isolated</span>
               <span className="text-emerald-700 font-semibold">Simulated active</span>
             </div>
