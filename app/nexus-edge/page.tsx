@@ -55,7 +55,8 @@ export default function NexusEdgePage() {
       <section className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-5xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
-            <Tag>WHEN TO STEP UP</Tag>
+            <PixelIcon type="platform" size={40} />
+            <div className="pt-2"><Tag>WHEN TO STEP UP</Tag></div>
             <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
               When daily operations depend on consistent workflows, you need dedicated capacity.
             </h2>

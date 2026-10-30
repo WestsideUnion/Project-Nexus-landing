@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
 import { PixelIcon } from "@/components/pixel-icon"
 import { RevealText } from "@/components/reveal-text"
@@ -8,7 +8,7 @@ import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, FaqAccordionItem, BackToTop } from "@/components/shared-ui"
-import { PACKAGES, HOMEPAGE_FAQS, AI_TEAM_ROLES, INDUSTRIES_DATA, IndustryDetail } from "@/lib/site-data"
+import { PACKAGES, HOMEPAGE_FAQS, INDUSTRIES_DATA, IndustryDetail } from "@/lib/site-data"
 
 // Visual Components
 import { NexusMessageToOutcome } from "@/components/nexus-visuals/nexus-message-to-outcome"
@@ -16,23 +16,12 @@ import { NexusTaskProgress } from "@/components/nexus-visuals/nexus-task-progres
 import { NexusConnectionsAndSense } from "@/components/nexus-visuals/nexus-sense-panel"
 import { NexusCloudEmblem, NexusEdgeEmblem, NexusEnterpriseEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
 import { ClientLogosSection } from "@/components/client-logos-section"
+import { NexusTeamInfographic } from "@/components/nexus-visuals/nexus-team-infographic"
+import { NexusWorkflowInfographic, NexusMultiLocationInfographic } from "@/components/nexus-visuals/nexus-workflow-infographic"
+import { IndustryQuickPreviewModal } from "@/components/industry-quick-preview"
 
 export default function HomePage() {
   const [previewIndustry, setPreviewIndustry] = useState<IndustryDetail | null>(null)
-
-  useEffect(() => {
-    if (!previewIndustry) return
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setPreviewIndustry(null)
-    }
-    const originalOverflow = document.body.style.overflow
-    document.body.style.overflow = "hidden"
-    window.addEventListener("keydown", handleKeyDown)
-    return () => {
-      document.body.style.overflow = originalOverflow
-      window.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [previewIndustry])
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget
@@ -164,8 +153,9 @@ export default function HomePage() {
       {/* ── 2. PROBLEMS & OUTCOMES ──────────────────────────────────────────── */}
       <section id="how-it-helps" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <Tag>HOW NEXUS HELPS</Tag>
+          <div className="text-center mb-14 flex flex-col items-center">
+            <PixelIcon type="platform" size={40} />
+            <div className="mt-4"><Tag>HOW NEXUS HELPS</Tag></div>
             <h2
               className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light text-[#111] tracking-tight leading-[1.1]"
               style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
@@ -280,7 +270,7 @@ export default function HomePage() {
 
       {/* ── 3. WHAT NEXUS IS & AI SPECIALIST TEAM ───────────────────────────── */}
       <section id="ai-team" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-white">
-        <div className="max-w-6xl mx-auto space-y-14">
+        <div className="max-w-6xl mx-auto space-y-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl">
               <PixelIcon type="agents" size={40} />
@@ -288,174 +278,47 @@ export default function HomePage() {
               <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
                 {"One assistant to talk to. A team ready to help."}
               </RevealText>
-              <p className="mt-4 text-xs sm:text-sm text-black/65 leading-relaxed">
-                Talk to Nexus the way you&apos;d talk to a capable assistant. Depending on your plan and configuration, Nexus can coordinate specialist workflows for customer care, marketing, sales, reporting, reputation and operations — without asking you to manage a collection of separate AI products.
+              <p className="mt-3 text-xs sm:text-sm text-black/65 leading-relaxed max-w-xl">
+                Talk to one main Nexus assistant. Behind the scenes, Nexus coordinates specialist workflows configured around your plan and permissions.
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-black/6 max-w-xs text-xs text-black/60 leading-relaxed">
-              <strong className="text-[#111] block mb-1">One main assistant identity</strong>
-              Specialists are configured around the workflows and permissions included in your setup.
-            </div>
+            <a
+              href="#contact"
+              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#111] text-white text-xs font-medium tracking-widest uppercase hover:bg-[#333] transition-colors shrink-0 self-start md:self-auto shadow-2xs"
+            >
+              Talk to Westside Union →
+            </a>
           </div>
 
-          {/* 7 Specialist Role Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5" onMouseMove={handleMouse}>
-            {AI_TEAM_ROLES.map((role, idx) => (
-              <BentoCard key={role.id} className="p-6 flex flex-col justify-between bg-[#FAF9F5]" delay={idx * 40}>
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600" />
-                    <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white border border-black/6 text-black/55">
-                      {role.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-medium text-[#111] mb-2">{role.name}</h3>
-                  <p className="text-xs text-black/70 leading-relaxed mb-4">{role.summary}</p>
-                </div>
-
-                <div className="pt-3 border-t border-black/5 space-y-1.5">
-                  {role.examples.map((ex, i) => (
-                    <div key={i} className="flex items-center gap-2 text-[11px] text-black/55">
-                      <span className="text-emerald-600">•</span>
-                      <span>{ex}</span>
-                    </div>
-                  ))}
-                </div>
-              </BentoCard>
-            ))}
-
-            {/* 8th Card: Custom / Guided Setup Card */}
-            <BentoCard className="p-6 flex flex-col justify-between bg-[#111] text-white border-black" delay={280}>
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/10 text-white/80 inline-block mb-3">
-                  Configured For You
-                </span>
-                <h3 className="text-base font-medium text-white mb-2">
-                  Shaped around the work you need help with.
-                </h3>
-                <p className="text-xs text-white/70 leading-relaxed mb-4">
-                  You don&apos;t have to figure out prompts or wire up tools yourself. Westside Union configures the workflows that fit your business.
-                </p>
-              </div>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center w-full py-2.5 px-4 rounded-xl bg-white text-[#111] text-xs font-medium tracking-wider uppercase hover:bg-white/90 transition-colors"
-              >
-                Talk to Westside Union →
-              </a>
-            </BentoCard>
-          </div>
-
-          {/* Illustrative Customer Story Exchange */}
-          <div className="p-6 sm:p-8 rounded-2xl bg-[#FAF9F5] border border-black/7 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-5 space-y-2">
-              <div className="flex items-center gap-2">
-                <Tag>A CLEARER START TO YOUR DAY</Tag>
-                <span className="text-[10px] font-mono text-black/45 uppercase">Illustrative</span>
-              </div>
-              <h3 className="text-xl sm:text-2xl font-light text-[#111]">
-                Less time searching for the next task. More time working on the right one.
-              </h3>
-              <p className="text-xs text-black/60 leading-relaxed">
-                Illustrative interaction, not a claim of live system access. Actual responses depend on your connected tools and configured workflows.
-              </p>
-            </div>
-
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-white border border-black/6 shadow-2xs space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-black/45 block">
-                  Owner
-                </span>
-                <p className="text-xs sm:text-sm text-[#111] font-medium leading-relaxed">
-                  &ldquo;Nexus, what needs my attention this morning?&rdquo;
-                </p>
-              </div>
-              <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/70 shadow-2xs space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-800 font-semibold block">
-                  Nexus
-                </span>
-                <p className="text-xs sm:text-sm text-black/80 leading-relaxed">
-                  &ldquo;Let&apos;s look at your outstanding customer follow-ups, today&apos;s priorities and the updates available from the tools we&apos;ve connected.&rdquo;
-                </p>
-              </div>
-            </div>
-          </div>
+          {/* Interactive Architecture Infographic + Editorial Showcase */}
+          <NexusTeamInfographic />
         </div>
       </section>
 
-      {/* ── 4. HOW IT WORKS (3 STEPS + SCENARIOS + TASK PROGRESS) ───────────── */}
+      {/* ── 4. HOW IT WORKS (VISUAL 3-STEP INFOGRAPHIC + TASK PROGRESS + MULTI-LOCATION) ─ */}
       <section id="workflow" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
-        <div className="max-w-6xl mx-auto space-y-14">
+        <div className="max-w-6xl mx-auto space-y-12">
           <div className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
+            <div className="flex flex-col items-center md:items-start">
               <PixelIcon type="workflow" size={40} />
               <div className="mt-4"><Tag>HOW IT WORKS</Tag></div>
               <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
                 {"Simple to start. Built around your workflow."}
               </RevealText>
             </div>
-            <p className="text-xs sm:text-sm text-black/65 leading-relaxed max-w-md">
-              Westside Union helps set up and manage Nexus around the systems and workflows your business actually uses.
+            <p className="text-xs sm:text-sm text-black/65 leading-relaxed max-w-sm mx-auto md:mx-0">
+              Westside Union sets up and manages Nexus around the tools and workflows your business actually uses.
             </p>
           </div>
 
-          {/* 3 Simple Steps */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                num: "01",
-                title: "Tell us how your business works.",
-                desc: "We learn the everyday tasks, tools and challenges that matter to you.",
-              },
-              {
-                num: "02",
-                title: "We help set up Nexus.",
-                desc: "Westside Union connects appropriate tools and configures the workflows included in your plan.",
-              },
-              {
-                num: "03",
-                title: "Work with Nexus.",
-                desc: "Ask questions, organize tasks and get help with the work you've set it up to do.",
-              },
-            ].map((step) => (
-              <div key={step.num} className="p-7 rounded-2xl bg-white border border-black/7 shadow-2xs space-y-3">
-                <span className="font-mono text-xs tracking-widest uppercase text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200/60 inline-block">
-                  Step {step.num}
-                </span>
-                <h3 className="text-lg font-medium text-[#111]">{step.title}</h3>
-                <p className="text-xs sm:text-sm text-black/65 leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
+          {/* Visual 3-Step Pipeline Infographic */}
+          <NexusWorkflowInfographic />
 
           {/* Interactive Task Progress Flow (To Do / In Progress / Completed) */}
           <NexusTaskProgress />
 
-          {/* Scenario 2: Multi-Location / Growing Complexity Callout */}
-          <div className="p-6 sm:p-8 rounded-2xl border border-black/7 bg-white grid grid-cols-1 lg:grid-cols-12 gap-6 items-center shadow-2xs">
-            <div className="lg:col-span-8 space-y-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-black/45 block">
-                SCENARIO · MULTIPLE LOCATIONS &amp; GROWING TEAMS
-              </span>
-              <h3 className="text-xl sm:text-2xl font-light text-[#111]">
-                One business can be hard enough to follow. What about eight?
-              </h3>
-              <p className="text-xs sm:text-sm text-black/65 leading-relaxed">
-                When information is spread across locations and paperwork, getting a clear answer can take time. Nexus can help organize the information your business captures digitally and make it easier to review what&apos;s happening — once the necessary records and systems are connected.
-              </p>
-              <p className="text-[11px] text-black/45 italic pt-1">
-                Note: Accurate reports and summaries depend on digital source records and data quality.
-              </p>
-            </div>
-            <div className="lg:col-span-4 flex lg:justify-end">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center px-6 py-3.5 rounded-xl bg-[#111] text-white text-xs font-medium tracking-widest uppercase hover:bg-[#333] transition-colors shadow-xs"
-              >
-                Discuss Your Operations →
-              </a>
-            </div>
-          </div>
+          {/* Multi-Location Visual Infographic Showcase */}
+          <NexusMultiLocationInfographic />
         </div>
       </section>
 
@@ -471,7 +334,7 @@ export default function HomePage() {
               </RevealText>
             </div>
             <p className="text-xs sm:text-sm text-black/60 leading-relaxed max-w-sm">
-              Every industry has its own challenges, but the goal is familiar: less time on repetitive work, clearer information, and better service. Explore examples relevant to your industry.
+              Every industry has its own challenges, but the goal is familiar: less time on repetitive work, clearer information, and better service. Preview use cases or explore full industry guides.
             </p>
           </div>
 
@@ -479,8 +342,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" onMouseMove={handleMouse}>
             {INDUSTRIES_DATA.map((item) => (
               <BentoCard key={item.slug} className="flex flex-col overflow-hidden bg-[#FAF9F5]" delay={item.delay ?? 0}>
-                {/* Photo links to dedicated industry page */}
-                <Link href={`/industries/${item.slug}`} className="relative h-48 shrink-0 overflow-hidden bg-black/2 block">
+                {/* Photo opens Quick Preview modal on click, with hover badge */}
+                <button
+                  type="button"
+                  onClick={() => setPreviewIndustry(item)}
+                  className="relative h-48 shrink-0 overflow-hidden bg-black/2 block w-full text-left cursor-pointer group/img focus:outline-none"
+                  aria-label={`Quick preview ${item.name} use cases`}
+                >
                   <img
                     src={item.coverImg}
                     alt={item.name}
@@ -492,10 +360,13 @@ export default function HomePage() {
                       background: "linear-gradient(to bottom, transparent 40%, rgba(250,249,245,0.75) 82%, rgb(250,249,245) 100%)",
                     }}
                   />
-                </Link>
+                  <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-white/90 backdrop-blur-xs text-[#111] border border-black/10 opacity-90 group-hover/img:opacity-100 transition-opacity shadow-2xs">
+                    Quick Preview
+                  </span>
+                </button>
 
                 {/* Body */}
-                <div className="p-6 pt-3 flex flex-col flex-1 justify-between">
+                <div className="relative z-10 p-6 pt-3 flex flex-col flex-1 justify-between">
                   <div>
                     <Link href={`/industries/${item.slug}`} className="hover:underline underline-offset-4">
                       <h3 className="text-lg font-medium text-[#111] mb-2">{item.name}</h3>
@@ -509,19 +380,19 @@ export default function HomePage() {
                   </div>
 
                   <div className="pt-4 border-t border-black/6 flex items-center justify-between gap-2">
-                    <Link
-                      href={`/industries/${item.slug}`}
-                      className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] tracking-widest font-sans text-white bg-[#111] hover:bg-black/80 transition-colors uppercase font-medium"
-                    >
-                      {item.cardCta} →
-                    </Link>
                     <button
                       type="button"
                       onClick={() => setPreviewIndustry(item)}
-                      className="text-xs text-black/50 hover:text-black transition-colors underline underline-offset-2 cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] tracking-wider font-sans text-white bg-[#111] hover:bg-black/80 transition-colors uppercase font-medium cursor-pointer shrink-0"
                     >
-                      Quick preview
+                      Quick Preview →
                     </button>
+                    <Link
+                      href={`/industries/${item.slug}`}
+                      className="text-xs text-black/60 hover:text-black transition-colors underline underline-offset-2 font-medium shrink-0"
+                    >
+                      Full Page →
+                    </Link>
                   </div>
                 </div>
               </BentoCard>
@@ -551,111 +422,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── OPTIONAL QUICK PREVIEW LIGHTBOX MODAL (WITH FULL PAGE LINK) ─────── */}
-      {previewIndustry && (
-        <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6"
-          style={{
-            background: "rgba(0,0,0,0.6)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-          }}
-          onClick={() => setPreviewIndustry(null)}
-        >
-          <div
-            className="relative w-full sm:max-w-3xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[#F5F4F0] shadow-2xl animate-in fade-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="modal-industry-title"
-          >
-            {/* Cover image header */}
-            <div className="relative h-48 overflow-hidden rounded-t-3xl sm:rounded-t-2xl">
-              <img src={previewIndustry.coverImg} alt={previewIndustry.name} className="w-full h-full object-cover" />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to top, rgba(245,244,240,1) 0%, rgba(245,244,240,0.3) 60%, transparent 100%)",
-                }}
-              />
-              <div className="absolute bottom-4 left-6 right-12">
-                <Tag>INDUSTRY EXAMPLES</Tag>
-                <h2 id="modal-industry-title" className="mt-2 text-2xl font-light tracking-tight text-[#111]">
-                  {previewIndustry.name}
-                </h2>
-              </div>
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={() => setPreviewIndustry(null)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm border border-black/8 text-black/50 hover:text-black transition-colors z-10 cursor-pointer shadow-xs"
-              aria-label="Close modal"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              >
-                <path d="M2 2l10 10M12 2L2 12" />
-              </svg>
-            </button>
-
-            {/* Scenario cards (Challenge -> Help -> Benefit) */}
-            <div className="p-6 space-y-4">
-              {previewIndustry.cases.map((c, i) => (
-                <div
-                  key={i}
-                  className="rounded-xl border border-black/7 bg-white p-5 space-y-2.5 shadow-2xs"
-                >
-                  <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-black/45">
-                    <span>{c.timeLabel || `Case 0${i + 1}`}</span>
-                    <span>Example Workflow</span>
-                  </div>
-                  <h3 className="text-base font-medium text-[#111]">{c.title}</h3>
-                  <p className="text-xs text-black/70 leading-relaxed">
-                    <strong>Challenge:</strong> {c.problem}
-                  </p>
-                  <p className="text-xs text-black/70 leading-relaxed">
-                    <strong>How Nexus helps:</strong> {c.help}
-                  </p>
-                  <p className="text-xs text-emerald-800 font-medium leading-relaxed">
-                    <strong>Outcome:</strong> {c.benefit}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Modal CTAs */}
-            <div className="px-6 pb-8 pt-2 flex flex-col sm:flex-row gap-3">
-              <Link
-                href={`/industries/${previewIndustry.slug}`}
-                onClick={() => setPreviewIndustry(null)}
-                className="flex-1 py-3.5 bg-[#111] text-white text-[11px] font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest text-center uppercase shadow-sm cursor-pointer"
-              >
-                Open Full {previewIndustry.shortName} Page →
-              </Link>
-              <a
-                href="#contact"
-                onClick={() => setPreviewIndustry(null)}
-                className="py-3.5 px-6 border border-black/20 text-black/80 text-[11px] font-medium rounded-xl hover:border-black/40 hover:text-black transition-colors tracking-widest text-center uppercase cursor-pointer"
-              >
-                Book a Demo
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ── QUICK PREVIEW LIGHTBOX MODAL (WITH SCENARIO PHOTOS & FULL PAGE LINK) ─ */}
+      <IndustryQuickPreviewModal
+        industry={previewIndustry}
+        onClose={() => setPreviewIndustry(null)}
+      />
 
       {/* ── 6. WORKS WITH THE TOOLS YOU ALREADY USE & PHYSICAL AI ──────────── */}
       <section id="connections" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
+          <div className="text-center mb-14 flex flex-col items-center">
             <PixelIcon type="integrations" size={40} />
             <div className="mt-4"><Tag>TOOLS &amp; CONNECTED DEVICES</Tag></div>
             <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
@@ -841,8 +617,9 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto space-y-16">
           {/* Trust Principles */}
           <div>
-            <div className="text-center mb-10">
-              <Tag>TRUST &amp; SUPPORT</Tag>
+            <div className="text-center mb-10 flex flex-col items-center">
+              <PixelIcon type="platform" size={40} />
+              <div className="mt-4"><Tag>TRUST &amp; SUPPORT</Tag></div>
               <h2
                 className="mt-4 text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
                 style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
@@ -899,8 +676,9 @@ export default function HomePage() {
 
           {/* Business-Owner FAQ Preview */}
           <div id="faq">
-            <div className="text-center mb-8">
-              <Tag>QUESTIONS &amp; ANSWERS</Tag>
+            <div className="text-center mb-8 flex flex-col items-center">
+              <PixelIcon type="workflow" size={40} />
+              <div className="mt-4"><Tag>QUESTIONS &amp; ANSWERS</Tag></div>
               <h3 className="mt-3 text-2xl sm:text-3xl font-light text-[#111] tracking-tight">
                 Frequently asked questions.
               </h3>

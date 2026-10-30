@@ -6,6 +6,7 @@ import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
 import { BentoCard, Tag, BackToTop } from "@/components/shared-ui"
+import { PixelIcon } from "@/components/pixel-icon"
 import { INDUSTRIES_DATA } from "@/lib/site-data"
 
 export function generateStaticParams() {
@@ -133,7 +134,8 @@ export default async function IndustryDetailPage({
       <section id="cases" className="py-24 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
         <div className="max-w-6xl mx-auto space-y-12">
           <div className="max-w-3xl space-y-3">
-            <Tag>REAL-WORLD WORKFLOWS</Tag>
+            <PixelIcon type="workflow" size={40} />
+            <div className="pt-2"><Tag>REAL-WORLD WORKFLOWS</Tag></div>
             <h2
               className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight leading-[1.1]"
               style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}

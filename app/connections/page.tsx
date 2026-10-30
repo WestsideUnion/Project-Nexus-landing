@@ -76,7 +76,8 @@ export default function ConnectionsPage() {
 
       {/* ── 1. HERO SECTION ─────────────────────────────────────────────────── */}
       <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
-        <div className="max-w-5xl mx-auto text-center space-y-6">
+        <div className="max-w-5xl mx-auto text-center space-y-6 flex flex-col items-center">
+          <PixelIcon type="integrations" size={40} />
           <Tag>INTEGRATIONS &amp; WORKFLOW FIT</Tag>
 
           <RevealText className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#111] leading-[1.08]">
@@ -199,11 +200,10 @@ export default function ConnectionsPage() {
             <div className="flex items-center gap-2.5">
               <button
                 onClick={() => setShowOnlyPopular(!showOnlyPopular)}
-                className={`text-xs px-3.5 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-medium ${
-                  showOnlyPopular
-                    ? "bg-[#111] text-white border-[#111]"
-                    : "bg-white text-black/70 border-black/15 hover:border-black/30"
-                }`}
+                className={`text-xs px-3.5 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-medium ${showOnlyPopular
+                  ? "bg-[#111] text-white border-[#111]"
+                  : "bg-white text-black/70 border-black/15 hover:border-black/30"
+                  }`}
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 Featured Only
@@ -258,19 +258,17 @@ export default function ConnectionsPage() {
                     <button
                       key={st.id}
                       onClick={() => setSelectedStatus(st.id)}
-                      className={`text-[11px] px-3 py-1.5 rounded-lg border font-mono capitalize transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
-                        isSelected
-                          ? "bg-[#111] text-white border-black shadow-2xs"
-                          : count > 0
+                      className={`text-[11px] px-3 py-1.5 rounded-lg border font-mono capitalize transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isSelected
+                        ? "bg-[#111] text-white border-black shadow-2xs"
+                        : count > 0
                           ? "bg-white text-black/70 border-black/8 hover:border-black/25"
                           : "bg-white/60 text-black/35 border-black/4 hover:border-black/15"
-                      }`}
+                        }`}
                     >
                       <span>{st.label}</span>
                       <span
-                        className={`text-[9px] px-1.5 py-0.2 rounded-full ${
-                          isSelected ? "bg-white/20 text-white" : "bg-black/5 text-black/50"
-                        }`}
+                        className={`text-[9px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-black/5 text-black/50"
+                          }`}
                       >
                         {count}
                       </span>
@@ -307,19 +305,17 @@ export default function ConnectionsPage() {
                         }
                       }
                     }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
-                      isSelected
-                        ? "bg-black text-white shadow-2xs"
-                        : "bg-white/80 text-black/65 hover:text-black hover:bg-white border border-black/6"
-                    }`}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${isSelected
+                      ? "bg-black text-white shadow-2xs"
+                      : "bg-white/80 text-black/65 hover:text-black hover:bg-white border border-black/6"
+                      }`}
                   >
                     <span>{cat.label}</span>
                     <span
-                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
-                        isSelected
-                          ? "bg-white/20 text-white font-semibold"
-                          : "bg-black/6 text-black/60 font-medium"
-                      }`}
+                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${isSelected
+                        ? "bg-white/20 text-white font-semibold"
+                        : "bg-black/6 text-black/60 font-medium"
+                        }`}
                     >
                       {count}
                     </span>
@@ -373,11 +369,10 @@ export default function ConnectionsPage() {
                   <div
                     key={item.id || item.name}
                     onClick={() => setSelectedConnection(isSelected ? null : item)}
-                    className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-4 ${
-                      isSelected
-                        ? "bg-[#FAF9F5] border-black/50 ring-2 ring-black/10 shadow-sm"
-                        : "bg-white border-black/8 hover:border-black/25 hover:shadow-2xs"
-                    }`}
+                    className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-4 ${isSelected
+                      ? "bg-[#FAF9F5] border-black/50 ring-2 ring-black/10 shadow-sm"
+                      : "bg-white border-black/8 hover:border-black/25 hover:shadow-2xs"
+                      }`}
                   >
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-2.5">
@@ -536,8 +531,8 @@ export default function ConnectionsPage() {
                         <span>{cap}</span>
                       </li>
                     )) || (
-                      <li className="text-black/50">Information lookup and routine task assistance</li>
-                    )}
+                        <li className="text-black/50">Information lookup and routine task assistance</li>
+                      )}
                   </ul>
                 </div>
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
+import { PixelIcon } from "@/components/pixel-icon"
 import { RevealText } from "@/components/reveal-text"
 import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
@@ -25,7 +26,8 @@ export default function FaqPage() {
 
       {/* ── HERO ────────────────────────────────────────────────────────────── */}
       <section className="pt-36 pb-16 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
+        <div className="max-w-4xl mx-auto text-center space-y-4 flex flex-col items-center">
+          <PixelIcon type="workflow" size={40} />
           <Tag>HELP &amp; FAQ</Tag>
           <RevealText className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#111] leading-[1.08]">
             {"Plain-English answers for busy owners."}
