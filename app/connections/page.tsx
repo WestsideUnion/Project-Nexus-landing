@@ -1,29 +1,56 @@
 "use client"
 
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useEffect, useCallback } from "react"
 import {
   Search,
   ShieldCheck,
   X,
-  Lock,
   ArrowRight,
   Sparkles,
   Check,
+  Plus,
+  Wrench,
 } from "lucide-react"
-import { PixelIcon } from "@/components/pixel-icon"
-import { RevealText } from "@/components/reveal-text"
 import { MobileNav } from "@/components/mobile-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { ConsultationForm } from "@/components/consultation-form"
-import { Tag, StatusPill, BackToTop } from "@/components/shared-ui"
+import { BackToTop } from "@/components/shared-ui"
 import {
   CONNECTIONS_DATA,
   CONNECTION_CATEGORIES,
   ConnectionItem,
   ConnectionCategory,
+  ConnectionStatus,
 } from "@/lib/site-data"
+import {
+  STATUS_META,
+  FILTERABLE_STATUSES,
+  QUICK_PICKS,
+  rankConnection,
+  StackItem,
+  stackItemFromConnection,
+  customStackItem,
+  STACK_STORAGE_KEY,
+} from "@/lib/connections"
 import { NexusConnectionsMap } from "@/components/nexus-visuals/nexus-connections-map"
 import { AppLogo } from "@/components/nexus-icons/app-logo"
+import { ConnectionCard, FOCUS_RING } from "@/components/connections/connection-card"
+import { ConnectionDetailSheet } from "@/components/connections/connection-detail-sheet"
+import { StackBar } from "@/components/connections/stack-bar"
+
+const PAGE_SIZE = 24
+
+const matchesQuery = (item: ConnectionItem, rawQuery: string) => {
+  const query = rawQuery.toLowerCase().trim()
+  if (!query) return true
+  const matchesName = item.name.toLowerCase().includes(query)
+  const matchesDesc = item.desc.toLowerCase().includes(query)
+  const matchesCategory = item.category.toLowerCase().includes(query)
+  const matchesCapabilities = item.capabilities?.some((cap) =>
+    cap.toLowerCase().includes(query)
+  )
+  return Boolean(matchesName || matchesDesc || matchesCategory || matchesCapabilities)
+}
 
 export default function ConnectionsPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -31,243 +58,352 @@ export default function ConnectionsPage() {
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
   const [selectedConnection, setSelectedConnection] = useState<ConnectionItem | null>(null)
   const [showOnlyPopular, setShowOnlyPopular] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const [stack, setStack] = useState<StackItem[]>([])
 
-  // Filter logic
-  const filteredConnections = useMemo(() => {
+  // Restore saved stack from sessionStorage so mobile interruptions or refreshes never lose selections.
+  useEffect(() => {
+    try {
+      const saved = window.sessionStorage.getItem(STACK_STORAGE_KEY)
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed)) setStack(parsed)
+      }
+    } catch {
+      // Ignore storage access errors in private browsing modes.
+    }
+  }, [])
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(STACK_STORAGE_KEY, JSON.stringify(stack))
+    } catch {
+      // Ignore storage access errors.
+    }
+  }, [stack])
+
+  // Reset pagination whenever filters change.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE)
+  }, [searchQuery, selectedCategory, selectedStatus, showOnlyPopular])
+
+  const stackKeys = useMemo(() => new Set(stack.map((s) => s.key)), [stack])
+
+  const toggleStackItem = useCallback((item: ConnectionItem) => {
+    const entry = stackItemFromConnection(item)
+    setStack((prev) =>
+      prev.some((s) => s.key === entry.key)
+        ? prev.filter((s) => s.key !== entry.key)
+        : [...prev, entry]
+    )
+  }, [])
+
+  const ensureInStack = useCallback((item: ConnectionItem) => {
+    const entry = stackItemFromConnection(item)
+    setStack((prev) => (prev.some((s) => s.key === entry.key) ? prev : [...prev, entry]))
+  }, [])
+
+  const addCustomToolToStack = useCallback((rawName: string) => {
+    const trimmed = rawName.trim()
+    if (!trimmed) return
+    const entry = customStackItem(trimmed)
+    setStack((prev) => (prev.some((s) => s.key === entry.key) ? prev : [...prev, entry]))
+  }, [])
+
+  const removeStackByKey = useCallback((key: string) => {
+    setStack((prev) => prev.filter((s) => s.key !== key))
+  }, [])
+
+  const removeStackByName = useCallback((name: string) => {
+    setStack((prev) => prev.filter((s) => s.name !== name))
+  }, [])
+
+  const clearStack = useCallback(() => {
+    setStack([])
+  }, [])
+
+  const quickPickItems = useMemo(() => {
+    return QUICK_PICKS.map((pick) => {
+      const found = CONNECTIONS_DATA.find((c) => c.id === pick.id)
+      return found ? { item: found, label: pick.label } : null
+    }).filter((x): x is { item: ConnectionItem; label: string } => x !== null)
+  }, [])
+
+  // Items matching search + popular toggle (used to compute accurate category & status counts).
+  const queryAndPopularPool = useMemo(() => {
     return CONNECTIONS_DATA.filter((item) => {
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase().trim()
-        const matchesName = item.name.toLowerCase().includes(query)
-        const matchesDesc = item.desc.toLowerCase().includes(query)
-        const matchesCategory = item.category.toLowerCase().includes(query)
-        const matchesCapabilities = item.capabilities?.some((cap) =>
-          cap.toLowerCase().includes(query)
-        )
-        if (!matchesName && !matchesDesc && !matchesCategory && !matchesCapabilities) {
-          return false
-        }
-      }
+      if (!matchesQuery(item, searchQuery)) return false
+      if (showOnlyPopular && !item.popular) return false
+      return true
+    })
+  }, [searchQuery, showOnlyPopular])
 
-      if (selectedCategory !== "all") {
-        if (selectedCategory === "messaging" && item.category !== "messaging") return false
-        if (selectedCategory !== "messaging" && item.category !== selectedCategory) return false
+  // Dynamic category counts that respect active search, status, and popular filters.
+  const categoryCounts = useMemo(() => {
+    const pool =
+      selectedStatus === "all"
+        ? queryAndPopularPool
+        : queryAndPopularPool.filter((i) => i.status === selectedStatus)
+    const map: Record<string, number> = { all: pool.length }
+    for (const cat of CONNECTION_CATEGORIES) {
+      if (cat.id !== "all") {
+        map[cat.id] = pool.filter((i) => i.category === cat.id).length
       }
+    }
+    return map
+  }, [queryAndPopularPool, selectedStatus])
 
+  // Dynamic status counts that respect active search, category, and popular filters.
+  const statusCounts = useMemo(() => {
+    const pool =
+      selectedCategory === "all"
+        ? queryAndPopularPool
+        : queryAndPopularPool.filter((i) => i.category === selectedCategory)
+    const map: Record<string, number> = { all: pool.length }
+    for (const st of FILTERABLE_STATUSES) {
+      map[st] = pool.filter((i) => i.status === st).length
+    }
+    return map
+  }, [queryAndPopularPool, selectedCategory])
+
+  // Filtered and curated list of connections.
+  const filteredConnections = useMemo(() => {
+    const matches = queryAndPopularPool.filter((item) => {
+      if (selectedCategory !== "all" && item.category !== selectedCategory) {
+        return false
+      }
       if (selectedStatus !== "all" && item.status !== selectedStatus) {
         return false
       }
-
-      if (showOnlyPopular && !item.popular) {
-        return false
-      }
-
       return true
     })
-  }, [searchQuery, selectedCategory, selectedStatus, showOnlyPopular])
 
-  const getCategoryLabel = (categoryKey: ConnectionCategory) => {
+    // When browsing "All Integrations" without a search query, surface everyday SMB tools first.
+    if (selectedCategory === "all" && !searchQuery.trim()) {
+      return [...matches].sort((a, b) => rankConnection(a) - rankConnection(b))
+    }
+
+    return matches
+  }, [queryAndPopularPool, selectedCategory, selectedStatus, searchQuery])
+
+  const visibleConnections = useMemo(
+    () => filteredConnections.slice(0, visibleCount),
+    [filteredConnections, visibleCount]
+  )
+
+  const remainingCount = Math.max(0, filteredConnections.length - visibleConnections.length)
+
+  const hasActiveFilters =
+    selectedCategory !== "all" ||
+    selectedStatus !== "all" ||
+    showOnlyPopular ||
+    searchQuery.trim().length > 0
+
+  const resetAllFilters = useCallback(() => {
+    setSearchQuery("")
+    setSelectedCategory("all")
+    setSelectedStatus("all")
+    setShowOnlyPopular(false)
+  }, [])
+
+  const getCategoryLabel = useCallback((categoryKey: ConnectionCategory | string) => {
     const found = CONNECTION_CATEGORIES.find((c) => c.id === categoryKey)
     return found ? found.label : categoryKey.replace("_", " ")
-  }
+  }, [])
+
+  const showEngineerCallout =
+    selectedCategory === "engineering" ||
+    selectedCategory === "custom" ||
+    selectedStatus === "custom"
+
+  const activeStatusDescription =
+    selectedStatus !== "all" && STATUS_META[selectedStatus as ConnectionStatus]
+      ? STATUS_META[selectedStatus as ConnectionStatus].description
+      : "Every integration is set up and tested with you during onboarding — from 1-click sign-ins to custom engineer-built connectors."
 
   return (
     <div className="bg-[#F5F4F0] text-[#111] min-h-screen font-sans antialiased selection:bg-black selection:text-white">
       <MobileNav />
 
-      {/* ── 1. HERO SECTION ─────────────────────────────────────────────────── */}
-      <section className="pt-36 pb-20 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
-        <div className="max-w-5xl mx-auto text-center space-y-6 flex flex-col items-center">
-          <PixelIcon type="integrations" size={40} />
-          <Tag>INTEGRATIONS &amp; WORKFLOW FIT</Tag>
+      {/* ── 1. HERO + IMMEDIATE SEARCH & STACK PICKER ─────────────────────── */}
+      <section className="pt-32 sm:pt-36 pb-14 px-6 md:px-12 lg:px-20 border-b border-black/6 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-4">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#111] leading-[1.08] text-balance">
+              Works with the tools you already use.
+            </h1>
 
-          <RevealText className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-[#111] leading-[1.08]">
-            {"Works with the tools\nyou already use."}
-          </RevealText>
-
-          <p className="text-sm sm:text-base text-black/70 max-w-3xl mx-auto leading-relaxed font-light">
-            Your business shouldn&apos;t have to start over to work smarter. Tell us the apps and systems your team relies on, and we&apos;ll help identify ways to bring the right information and workflows together.
-          </p>
-
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#directory"
-              className="px-6 py-3.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase shadow-sm"
-            >
-              Check My Tools
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3.5 border border-black/20 text-black/80 text-xs font-medium rounded-xl hover:border-black/40 hover:text-black hover:bg-black/3 transition-all tracking-widest uppercase"
-            >
-              Discuss Your Stack with Us
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 2. VALUE FRAMING SECTION ────────────────────────────────────────── */}
-      <section className="py-20 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="max-w-3xl space-y-3">
-            <Tag>WORKFLOW CONTINUITY</Tag>
-            <h2 className="text-3xl sm:text-4xl font-light text-[#111] tracking-tight">
-              Less switching. Less re-entering. More getting things done.
-            </h2>
-            <p className="text-xs sm:text-sm text-black/65 leading-relaxed font-light">
-              Many small businesses already use a mix of email, calendars, spreadsheets, booking systems, point-of-sale tools, and messaging apps. The challenge usually isn&apos;t lack of software — it&apos;s that the information lives in too many places and someone on your team still has to tie it all together.
+            <p className="text-sm sm:text-base text-black/70 max-w-2xl mx-auto leading-relaxed font-light">
+              Check the apps, point-of-sale systems, calendars, and messaging channels your business runs on today. We set up everyday tools during onboarding — and if you need a custom connector, a DevOps engineer from the team behind Nexus handles the technical work for you.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Keep what works",
-                desc: "You do not need to replace the tools your staff already knows how to use.",
-              },
-              {
-                title: "Make information easier to use",
-                desc: "Bring key questions, updates, and follow-ups into a simpler daily workflow.",
-              },
-              {
-                title: "Build around your workflow",
-                desc: "We look at what your team actually does every day and recommend the most practical starting point.",
-              },
-            ].map((card, i) => (
-              <div key={i} className="p-6 rounded-2xl bg-white border border-black/7 shadow-2xs space-y-2.5">
-                <div className="w-2 h-2 rounded-full bg-emerald-600" />
-                <h3 className="text-base font-medium text-[#111]">{card.title}</h3>
-                <p className="text-xs text-black/65 leading-relaxed">{card.desc}</p>
-              </div>
-            ))}
+          {/* Immediate Search Box */}
+          <div className="mt-8 max-w-2xl mx-auto">
+            <label htmlFor="connection-search" className="sr-only">
+              Search supported apps, POS systems, and custom connectors
+            </label>
+            <div className="relative flex items-center">
+              <Search
+                className="w-5 h-5 text-black/55 absolute left-4 pointer-events-none"
+                aria-hidden="true"
+              />
+              <input
+                id="connection-search"
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search 276+ tools (e.g. Square, QuickBooks, WhatsApp, Gmail, Fresha)…"
+                className="w-full pl-12 pr-28 py-4 bg-[#FAF9F5] border border-black/15 rounded-2xl text-sm sm:text-base text-[#111] placeholder:text-black/55 focus:bg-white focus:outline-none focus:border-[#111] focus:ring-2 focus:ring-black/10 shadow-[0_2px_12px_rgba(0,0,0,0.04)] transition-all"
+              />
+              {searchQuery ? (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  aria-label="Clear search"
+                  className={`absolute right-3 inline-flex items-center gap-1 min-h-9 px-3 rounded-xl bg-black/6 hover:bg-black/10 text-xs font-medium text-[#111] cursor-pointer ${FOCUS_RING}`}
+                >
+                  <X className="w-3.5 h-3.5" aria-hidden="true" />
+                  Clear
+                </button>
+              ) : (
+                <a
+                  href="#directory"
+                  className={`hidden sm:inline-flex items-center gap-1 absolute right-3 min-h-9 px-3.5 rounded-xl bg-[#111] text-white text-xs font-medium hover:bg-[#333] transition-colors ${FOCUS_RING}`}
+                >
+                  Browse all
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </a>
+              )}
+            </div>
+
+            {/* One-tap quick stack picks */}
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+              <span className="text-xs text-black/65 mr-1">
+                Common business tools — tap to add to your stack:
+              </span>
+              {quickPickItems.map(({ item, label }) => {
+                const key = item.id || item.name
+                const inStack = stackKeys.has(key)
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => toggleStackItem(item)}
+                    aria-pressed={inStack}
+                    className={`inline-flex items-center gap-1.5 min-h-9 px-3 py-1.5 rounded-xl text-xs font-medium border transition-colors cursor-pointer ${FOCUS_RING} ${inStack
+                        ? "bg-[#111] text-white border-[#111]"
+                        : "bg-[#FAF9F5] text-[#111] border-black/10 hover:border-black/30 hover:bg-white"
+                      }`}
+                  >
+                    <span className="w-4 h-4 rounded-xs flex items-center justify-center overflow-hidden shrink-0">
+                      <AppLogo id={item.id} name={item.name} iconType={item.iconType} className="w-3.5 h-3.5" />
+                    </span>
+                    <span>{label}</span>
+                    {inStack ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
+                    ) : (
+                      <Plus className="w-3.5 h-3.5 text-black/55" aria-hidden="true" />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
-          {/* Common Tool Categories Overview */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
-            {[
-              {
-                cat: "Email, Calendar & Daily Productivity",
-                desc: "Stay on top of incoming messages, appointments, reminders, and daily priorities.",
-              },
-              {
-                cat: "Spreadsheets, Documents & Notes",
-                desc: "Turn scattered trackers, checklists, and internal documents into information your team can actually use.",
-              },
-              {
-                cat: "Booking, Scheduling & Customer Communication",
-                desc: "Keep inquiries, confirmations, and follow-ups moving across the channels your customers use.",
-              },
-              {
-                cat: "Point-of-Sale, Orders & E-Commerce",
-                desc: "Bring clearer visibility to daily sales activity, order questions, and operational recaps.",
-              },
-              {
-                cat: "Customer Lists & Lead Tracking",
-                desc: "Keep track of leads, repeat customers, quotes, and next steps without letting opportunities go cold.",
-              },
-              {
-                cat: "Accounting & Back-Office Workflows",
-                desc: "Reduce repetitive admin around bills, reminders, and routine financial organization.",
-              },
-            ].map((c, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-white/80 border border-black/5 space-y-1.5">
-                <h4 className="text-xs font-semibold text-[#111]">{c.cat}</h4>
-                <p className="text-xs text-black/60 leading-relaxed">{c.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <NexusConnectionsMap />
+          {/* Compact 3-pillar editorial strip (replaces the old 9 pre-directory cards) */}
+          <dl className="mt-12 pt-8 border-t border-black/8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="space-y-1">
+              <dt className="text-sm font-medium text-[#111] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" aria-hidden="true" />
+                Keep what already works
+              </dt>
+              <dd className="text-xs text-black/65 leading-relaxed pl-3.5">
+                No rip-and-replace. Nexus works alongside the software, calendars, and spreadsheets your staff already knows.
+              </dd>
+            </div>
+            <div className="space-y-1">
+              <dt className="text-sm font-medium text-[#111] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" aria-hidden="true" />
+                Custom connectors built by our engineers
+              </dt>
+              <dd className="text-xs text-black/65 leading-relaxed pl-3.5">
+                Need a specialized POS, database, or webhook bridge? A Westside Union DevOps engineer builds and maintains it for you.
+              </dd>
+            </div>
+            <div className="space-y-1">
+              <dt className="text-sm font-medium text-[#111] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" aria-hidden="true" />
+                Owner approval rules
+              </dt>
+              <dd className="text-xs text-black/65 leading-relaxed pl-3.5">
+                Customer replies, schedule changes, and external updates can always require your confirmation first.
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      {/* ── 3. INTERACTIVE DIRECTORY & SEARCH ENGINE ─────────────────────────── */}
-      <section id="directory" className="py-20 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
-        <div className="max-w-6xl mx-auto space-y-8">
-          {/* Header */}
+      {/* ── 2. INTERACTIVE DIRECTORY & STACK BUILDER ──────────────────────── */}
+      <section id="directory" className="py-16 px-6 md:px-12 lg:px-20 bg-[#F5F4F0] border-b border-black/6">
+        <div className="max-w-6xl mx-auto space-y-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Tag>INTEGRATION DIRECTORY</Tag>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-light text-[#111]">
-                Explore Common Tools &amp; Channels
+              <h2 className="text-2xl sm:text-3xl font-light text-[#111] tracking-tight">
+                Supported apps, channels &amp; custom connectors
               </h2>
-              <p className="text-xs sm:text-sm text-black/60 font-light mt-1 max-w-2xl">
-                We support a range of integrations and can evaluate others as part of your setup. Compatibility and availability vary by software, account, and requested workflow.
+              <p className="text-xs sm:text-sm text-black/65 mt-1 max-w-2xl">
+                Click any card to see example workflows, or tap <strong>&ldquo;I use this&rdquo;</strong> to build your stack for our team to review.
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 self-start md:self-auto">
               <button
-                onClick={() => setShowOnlyPopular(!showOnlyPopular)}
-                className={`text-xs px-3.5 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-medium ${showOnlyPopular
-                  ? "bg-[#111] text-white border-[#111]"
-                  : "bg-white text-black/70 border-black/15 hover:border-black/30"
+                type="button"
+                onClick={() => setShowOnlyPopular((v) => !v)}
+                aria-pressed={showOnlyPopular}
+                className={`min-h-10 text-xs px-3.5 py-2 rounded-xl border transition-all flex items-center gap-1.5 cursor-pointer font-medium ${FOCUS_RING} ${showOnlyPopular
+                    ? "bg-[#111] text-white border-[#111]"
+                    : "bg-white text-black/75 border-black/15 hover:border-black/35"
                   }`}
               >
-                <Sparkles className="w-3.5 h-3.5" />
-                Featured Only
+                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
+                Popular business tools only
               </button>
             </div>
           </div>
 
-          {/* Search Bar & Status Filters */}
-          <div className="p-4 rounded-2xl bg-[#FAF9F5] border border-black/7 space-y-4">
-            <div className="flex flex-col sm:flex-row items-stretch gap-3">
-              {/* Search input */}
-              <div className="relative flex-1">
-                <Search className="w-4 h-4 text-black/40 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search tools (e.g. Gmail, Google Calendar, Shopify, QuickBooks, Square, Slack)..."
-                  className="w-full pl-10 pr-9 py-2.5 bg-white border border-black/15 rounded-xl text-xs sm:text-sm text-black placeholder:text-black/40 focus:outline-none focus:border-black/50 shadow-2xs transition-colors"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-black/40 hover:text-black"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
-
-              {/* Status Selector */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-                <span className="text-[10px] font-mono uppercase text-black/40 px-1 hidden lg:inline">Status:</span>
-                {[
-                  { id: "all", label: "All Statuses" },
-                  { id: "available", label: "Available" },
-                  { id: "supported", label: "Supported" },
-                  { id: "configured", label: "Configured" },
-                  { id: "custom", label: "Custom" },
-                ].map((st) => {
-                  const baseItems =
-                    selectedCategory === "all"
-                      ? CONNECTIONS_DATA
-                      : CONNECTIONS_DATA.filter((item) => item.category === selectedCategory)
-                  const count =
-                    st.id === "all"
-                      ? baseItems.length
-                      : baseItems.filter((item) => item.status === st.id).length
-                  const isSelected = selectedStatus === st.id
+          {/* Filter Panel */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-black/8 space-y-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
+            {/* Category Tabs with right-edge scroll fade affordance */}
+            <div className="relative">
+              <div
+                role="group"
+                aria-label="Filter by tool category"
+                className="flex items-center gap-1.5 overflow-x-auto pb-1 pr-8 [scrollbar-width:none]"
+              >
+                {CONNECTION_CATEGORIES.map((cat) => {
+                  const count = categoryCounts[cat.id] ?? 0
+                  const isSelected = selectedCategory === cat.id
 
                   return (
                     <button
-                      key={st.id}
-                      onClick={() => setSelectedStatus(st.id)}
-                      className={`text-[11px] px-3 py-1.5 rounded-lg border font-mono capitalize transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${isSelected
-                        ? "bg-[#111] text-white border-black shadow-2xs"
-                        : count > 0
-                          ? "bg-white text-black/70 border-black/8 hover:border-black/25"
-                          : "bg-white/60 text-black/35 border-black/4 hover:border-black/15"
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setSelectedCategory(cat.id)}
+                      aria-pressed={isSelected}
+                      className={`min-h-10 px-3.5 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer shrink-0 ${FOCUS_RING} ${isSelected
+                          ? "bg-[#111] text-white shadow-2xs"
+                          : count > 0
+                            ? "bg-[#FAF9F5] text-black/75 hover:text-black hover:bg-black/6 border border-black/8"
+                            : "bg-[#FAF9F5]/60 text-black/55 hover:text-black border border-black/6"
                         }`}
                     >
-                      <span>{st.label}</span>
+                      <span>{cat.label}</span>
                       <span
-                        className={`text-[9px] px-1.5 py-0.2 rounded-full ${isSelected ? "bg-white/20 text-white" : "bg-black/5 text-black/50"
+                        className={`text-[11px] font-mono px-1.5 py-0.5 rounded-full leading-none ${isSelected
+                            ? "bg-white/20 text-white font-semibold"
+                            : "bg-black/6 text-black/65 font-medium"
                           }`}
                       >
                         {count}
@@ -276,375 +412,342 @@ export default function ConnectionsPage() {
                   )
                 })}
               </div>
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-linear-to-l from-white to-transparent sm:hidden"
+              />
             </div>
 
-            {/* Category Filter Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none pt-1 border-t border-black/5">
-              {CONNECTION_CATEGORIES.map((cat) => {
-                const count =
-                  cat.id === "all"
-                    ? CONNECTIONS_DATA.length
-                    : CONNECTIONS_DATA.filter((i) => i.category === cat.id).length
-                const isSelected = selectedCategory === cat.id
+            {/* Setup Type (Status) Row + Plain-English Explanation */}
+            <div className="pt-3 border-t border-black/6 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+              <div
+                role="group"
+                aria-label="Filter by setup type"
+                className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 [scrollbar-width:none]"
+              >
+                <span className="text-xs font-medium text-black/65 pr-1 shrink-0">
+                  Setup type:
+                </span>
+                {[
+                  { id: "all", label: "All setup types" },
+                  ...FILTERABLE_STATUSES.map((st) => ({
+                    id: st,
+                    label: STATUS_META[st].label,
+                  })),
+                ].map((st) => {
+                  const count = statusCounts[st.id] ?? 0
+                  const isSelected = selectedStatus === st.id
 
-                return (
-                  <button
-                    key={cat.id}
-                    onClick={() => {
-                      setSelectedCategory(cat.id)
-                      if (selectedStatus !== "all") {
-                        const baseForCat =
-                          cat.id === "all"
-                            ? CONNECTIONS_DATA
-                            : CONNECTIONS_DATA.filter((i) => i.category === cat.id)
-                        const countWithStatus = baseForCat.filter(
-                          (i) => i.status === selectedStatus
-                        ).length
-                        if (countWithStatus === 0) {
-                          setSelectedStatus("all")
-                        }
-                      }
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${isSelected
-                      ? "bg-black text-white shadow-2xs"
-                      : "bg-white/80 text-black/65 hover:text-black hover:bg-white border border-black/6"
-                      }`}
-                  >
-                    <span>{cat.label}</span>
-                    <span
-                      className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${isSelected
-                        ? "bg-white/20 text-white font-semibold"
-                        : "bg-black/6 text-black/60 font-medium"
+                  return (
+                    <button
+                      key={st.id}
+                      type="button"
+                      onClick={() => setSelectedStatus(st.id)}
+                      aria-pressed={isSelected}
+                      className={`min-h-9 text-xs px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 shrink-0 ${FOCUS_RING} ${isSelected
+                          ? "bg-[#111] text-white border-[#111] shadow-2xs"
+                          : count > 0
+                            ? "bg-[#FAF9F5] text-black/75 border-black/10 hover:border-black/30"
+                            : "bg-[#FAF9F5]/60 text-black/55 border-black/6 hover:border-black/20"
                         }`}
                     >
-                      {count}
-                    </span>
-                  </button>
-                )
-              })}
+                      <span>{st.label}</span>
+                      <span
+                        className={`text-[11px] font-mono px-1.5 py-0.5 rounded-full leading-none ${isSelected ? "bg-white/20 text-white" : "bg-black/6 text-black/65"
+                          }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+
+              <p className="text-xs text-black/65 lg:text-right">
+                {activeStatusDescription}
+              </p>
             </div>
           </div>
 
+          {/* Engineer-Managed Context Callout when viewing Dev/Engineering or Custom APIs */}
+          {showEngineerCallout && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-white border border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-xl bg-[#FAF9F5] border border-black/8 flex items-center justify-center shrink-0 mt-0.5">
+                  <Wrench className="w-4 h-4 text-[#111]" aria-hidden="true" />
+                </div>
+                <div className="space-y-0.5">
+                  <h3 className="text-sm font-medium text-[#111]">
+                    Handled by Westside Union&apos;s DevOps engineers — no technical work for you
+                  </h3>
+                  <p className="text-xs text-black/65 leading-relaxed max-w-3xl">
+                    These technical connectors, databases, and custom APIs are listed so you know what is possible. If your business needs a custom integration or legacy bridge, our engineering team builds, secures, and maintains it end-to-end.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="#contact"
+                className={`shrink-0 inline-flex items-center justify-center min-h-10 px-4 rounded-xl bg-[#111] text-white text-xs font-medium hover:bg-[#333] transition-colors ${FOCUS_RING}`}
+              >
+                Ask an engineer
+              </a>
+            </div>
+          )}
+
           {/* Results Summary Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-black/60 px-1 gap-2">
-            <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-black/65 px-1 gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <span>
-                Showing <strong>{filteredConnections.length}</strong>
-                {showOnlyPopular ? " featured" : ""}
-                {selectedStatus !== "all"
-                  ? ` "${selectedStatus === "supported" ? "Supported Setup" : selectedStatus}"`
+                Showing <strong>{visibleConnections.length}</strong> of{" "}
+                <strong>{filteredConnections.length}</strong>
+                {showOnlyPopular ? " popular" : ""}
+                {selectedStatus !== "all" && STATUS_META[selectedStatus as ConnectionStatus]
+                  ? ` "${STATUS_META[selectedStatus as ConnectionStatus].label}"`
                   : ""}{" "}
                 tools
                 {selectedCategory !== "all" && (
-                  <> in <strong>{getCategoryLabel(selectedCategory as ConnectionCategory)}</strong></>
+                  <>
+                    {" "}
+                    in <strong>{getCategoryLabel(selectedCategory)}</strong>
+                  </>
                 )}
-                {searchQuery && ` matching "${searchQuery}"`}
+                {searchQuery.trim() && ` matching "${searchQuery.trim()}"`}
               </span>
 
-              {(selectedStatus !== "all" || showOnlyPopular || searchQuery) && (
+              {hasActiveFilters && (
                 <button
-                  onClick={() => {
-                    setSelectedStatus("all")
-                    setShowOnlyPopular(false)
-                    setSearchQuery("")
-                  }}
-                  className="ml-1 inline-flex items-center gap-1 text-[11px] font-mono text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md hover:bg-emerald-100 hover:text-emerald-900 transition-colors cursor-pointer"
+                  type="button"
+                  onClick={resetAllFilters}
+                  className={`inline-flex items-center gap-1 min-h-8 text-xs font-medium text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-lg hover:bg-emerald-100 transition-colors cursor-pointer ${FOCUS_RING}`}
                 >
-                  <X className="w-3 h-3" />
-                  Clear filters
+                  <X className="w-3.5 h-3.5" aria-hidden="true" />
+                  Clear all filters
                 </button>
               )}
             </div>
-            <span className="font-mono text-[11px] text-black/45 shrink-0">
-              Evaluated &amp; configured during onboarding
+            <span className="text-xs text-black/65 shrink-0">
+              {stack.length > 0
+                ? `${stack.length} ${stack.length === 1 ? "tool" : "tools"} in your stack`
+                : "Tap “I use this” on any card to build your stack"}
             </span>
           </div>
 
           {/* Connection Cards Grid */}
           {filteredConnections.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredConnections.map((item) => {
-                const isSelected = selectedConnection?.name === item.name
-                return (
-                  <div
-                    key={item.id || item.name}
-                    onClick={() => setSelectedConnection(isSelected ? null : item)}
-                    className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-4 ${isSelected
-                      ? "bg-[#FAF9F5] border-black/50 ring-2 ring-black/10 shadow-sm"
-                      : "bg-white border-black/8 hover:border-black/25 hover:shadow-2xs"
-                      }`}
-                  >
-                    <div>
-                      <div className="flex items-start justify-between gap-3 mb-2.5">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-white border border-black/8 flex items-center justify-center shrink-0 shadow-2xs overflow-hidden p-2">
-                            <AppLogo
-                              id={item.id}
-                              name={item.name}
-                              iconType={item.iconType}
-                              className="w-5 h-5"
-                            />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <h3 className="text-sm font-semibold text-[#111] leading-tight">
-                                {item.name}
-                              </h3>
-                              {item.popular && (
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" title="Popular Integration" />
-                              )}
-                            </div>
-                            <span className="text-[10px] font-mono text-black/45 capitalize">
-                              {getCategoryLabel(item.category)}
-                            </span>
-                          </div>
-                        </div>
-
-                        <StatusPill status={item.status} />
-                      </div>
-
-                      <p className="text-xs text-black/70 leading-relaxed mb-3 line-clamp-2">
-                        {item.desc}
-                      </p>
-
-                      {item.capabilities && item.capabilities.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {item.capabilities.slice(0, 3).map((cap, i) => (
-                            <span
-                              key={i}
-                              className="text-[10px] bg-[#FAF9F5] text-black/60 px-2 py-0.5 rounded-md border border-black/5"
-                            >
-                              {cap}
-                            </span>
-                          ))}
-                          {item.capabilities.length > 3 && (
-                            <span className="text-[10px] font-mono text-black/40 px-1 py-0.5">
-                              +{item.capabilities.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="pt-3 border-t border-black/5 flex items-center justify-between text-[11px]">
-                      <span className="font-mono text-black/45 text-[10px] flex items-center gap-1">
-                        <Lock className="w-2.5 h-2.5 text-black/40" />
-                        Guided Setup
-                      </span>
-                      <span className="text-black/70 hover:text-black font-medium flex items-center gap-0.5 group">
-                        {isSelected ? "Close details" : "View workflow examples"}
-                        <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                      </span>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          ) : (
-            <div className="p-10 rounded-2xl bg-[#FAF9F5] border border-black/8 text-center space-y-4 max-w-2xl mx-auto">
-              <div className="w-12 h-12 rounded-2xl bg-white border border-black/8 flex items-center justify-center mx-auto shadow-2xs">
-                <Sparkles className="w-6 h-6 text-emerald-600" />
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {visibleConnections.map((item) => {
+                  const key = item.id || item.name
+                  return (
+                    <ConnectionCard
+                      key={key}
+                      item={item}
+                      categoryLabel={getCategoryLabel(item.category)}
+                      inStack={stackKeys.has(key)}
+                      onToggleStack={toggleStackItem}
+                      onOpenDetails={setSelectedConnection}
+                    />
+                  )
+                })}
               </div>
-              <div>
-                <h3 className="text-lg font-medium text-black">
-                  Don&apos;t see {searchQuery ? `"${searchQuery}"` : "your tool"} listed?
+
+              {/* Pagination Controls */}
+              {remainingCount > 0 && (
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                    className={`min-h-11 px-6 py-2.5 rounded-xl bg-[#111] text-white text-xs font-medium hover:bg-[#333] transition-colors cursor-pointer ${FOCUS_RING}`}
+                  >
+                    Show {Math.min(PAGE_SIZE, remainingCount)} more tools ({remainingCount} remaining)
+                  </button>
+                  {remainingCount > PAGE_SIZE && (
+                    <button
+                      type="button"
+                      onClick={() => setVisibleCount(filteredConnections.length)}
+                      className={`min-h-11 px-5 py-2.5 rounded-xl bg-white border border-black/15 text-xs font-medium text-[#111] hover:border-black/40 transition-colors cursor-pointer ${FOCUS_RING}`}
+                    >
+                      Show all {filteredConnections.length} tools
+                    </button>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="p-8 sm:p-10 rounded-2xl bg-white border border-black/8 text-center space-y-4 max-w-2xl mx-auto">
+              <div className="w-12 h-12 rounded-2xl bg-[#FAF9F5] border border-black/8 flex items-center justify-center mx-auto">
+                <Wrench className="w-5 h-5 text-[#111]" aria-hidden="true" />
+              </div>
+              <div className="space-y-1.5">
+                <h3 className="text-lg font-medium text-[#111]">
+                  {searchQuery.trim()
+                    ? `Don’t see "${searchQuery.trim()}" in the list?`
+                    : "No tools match that exact filter combination."}
                 </h3>
-                <p className="text-xs text-black/65 max-w-md mx-auto mt-1 leading-relaxed">
-                  Tell us what your team uses today — even if it is an industry-specific platform, a shared spreadsheet, or a manual process. During your consultation, we&apos;ll walk through what can be connected now and what options make the most sense.
+                <p className="text-xs sm:text-sm text-black/65 max-w-md mx-auto leading-relaxed">
+                  {searchQuery.trim()
+                    ? "Add it to your stack anyway — whether it’s an industry-specific platform, legacy system, or shared spreadsheet, a Westside Union DevOps engineer will evaluate and connect it for you."
+                    : "Try viewing all setup types in this category, or clear your filters to browse the full catalog."}
                 </p>
               </div>
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <button
-                  onClick={() => {
-                    setSearchQuery("")
-                    setSelectedCategory("all")
-                    setSelectedStatus("all")
-                    setShowOnlyPopular(false)
-                  }}
-                  className="px-4 py-2 bg-white border border-black/15 text-xs rounded-xl hover:bg-black/2"
-                >
-                  Clear search filters
-                </button>
-                <a
-                  href="#contact"
-                  className="px-4 py-2 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors"
-                >
-                  Ask About {searchQuery ? `"${searchQuery}"` : "Your Tools"} →
-                </a>
+                {searchQuery.trim() ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        addCustomToolToStack(searchQuery)
+                        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+                      }}
+                      className={`min-h-11 px-5 py-2.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors cursor-pointer inline-flex items-center gap-1.5 ${FOCUS_RING}`}
+                    >
+                      <Plus className="w-4 h-4" aria-hidden="true" />
+                      Add &ldquo;{searchQuery.trim()}&rdquo; to my stack &amp; ask our team
+                    </button>
+                    <button
+                      type="button"
+                      onClick={resetAllFilters}
+                      className={`min-h-11 px-4 py-2.5 bg-[#FAF9F5] border border-black/15 text-xs font-medium text-[#111] rounded-xl hover:border-black/35 cursor-pointer ${FOCUS_RING}`}
+                    >
+                      Clear search &amp; filters
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {selectedStatus !== "all" && selectedCategory !== "all" && (
+                      <button
+                        type="button"
+                        onClick={() => setSelectedStatus("all")}
+                        className={`min-h-11 px-5 py-2.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors cursor-pointer ${FOCUS_RING}`}
+                      >
+                        Show all setup types in {getCategoryLabel(selectedCategory)}
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={resetAllFilters}
+                      className={`min-h-11 px-4 py-2.5 bg-[#FAF9F5] border border-black/15 text-xs font-medium text-[#111] rounded-xl hover:border-black/35 cursor-pointer ${FOCUS_RING}`}
+                    >
+                      Reset all filters
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           )}
 
-          {/* ── EXPANDABLE DETAIL DRAWER / MODAL ─────────────────────────────── */}
-          {selectedConnection && (
-            <div className="p-7 rounded-3xl bg-[#FAF9F5] border border-black/20 shadow-md space-y-6 animate-fadeIn">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-white border border-black/8 flex items-center justify-center shadow-xs overflow-hidden p-2.5">
-                    <AppLogo
-                      id={selectedConnection.id}
-                      name={selectedConnection.name}
-                      iconType={selectedConnection.iconType}
-                      className="w-8 h-8"
-                    />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-xl font-medium text-black">{selectedConnection.name}</h3>
-                      <StatusPill status={selectedConnection.status} />
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs font-mono text-black/50">
-                        Category: {getCategoryLabel(selectedConnection.category)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setSelectedConnection(null)}
-                  className="w-8 h-8 rounded-full bg-white border border-black/10 text-black/60 hover:text-black flex items-center justify-center text-sm cursor-pointer shadow-2xs"
-                  aria-label="Close details"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-xl bg-white border border-black/6 space-y-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-black/45 font-semibold block">
-                    Workflow Overview
-                  </span>
-                  <p className="text-xs text-black/75 leading-relaxed">
-                    {selectedConnection.desc}
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-xl bg-white border border-black/6 space-y-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-black/45 font-semibold block">
-                    Example Workflows
-                  </span>
-                  <ul className="space-y-1.5 text-xs text-black/75">
-                    {selectedConnection.capabilities?.map((cap, i) => (
-                      <li key={i} className="flex items-center gap-1.5">
-                        <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span>{cap}</span>
-                      </li>
-                    )) || (
-                        <li className="text-black/50">Information lookup and routine task assistance</li>
-                      )}
-                  </ul>
-                </div>
-
-                <div className="p-4 rounded-xl bg-white border border-black/6 space-y-2">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-black/45 font-semibold block">
-                    Owner Control &amp; Permissions
-                  </span>
-                  <p className="text-xs text-black/70 leading-relaxed">
-                    Protected by your approval rules. Customer replies, schedule changes, or external updates can require your confirmation before anything is sent.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-2 border-t border-black/6">
-                <div className="text-xs text-black/60">
-                  Want to discuss how <strong>{selectedConnection.name}</strong> fits your workflow?
-                </div>
-                <a
-                  href="#contact"
-                  className="px-5 py-2.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors"
-                >
-                  Discuss {selectedConnection.name} in Consultation →
-                </a>
-              </div>
-            </div>
-          )}
-
-          {/* Availability disclosure */}
-          <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-black/5 text-xs text-black/65 leading-relaxed flex items-start gap-3">
-            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-            <div>
-              <strong>Compatibility &amp; Availability Note:</strong> We support a range of integrations and can evaluate others as part of your setup. Compatibility and availability vary by software, account, and requested workflow.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. HOW WESTSIDE UNION SETS UP CONNECTIONS ────────────────────────── */}
-      <section className="py-20 px-6 md:px-12 lg:px-20 bg-[#FAF9F5] border-b border-black/6">
-        <div className="max-w-5xl mx-auto space-y-10">
-          <div className="max-w-3xl space-y-3 text-center md:text-left">
-            <PixelIcon type="platform" size={40} />
-            <Tag>MANAGED ONBOARDING</Tag>
-            <h2 className="text-3xl font-light text-[#111]">
-              Zero technical lift for your team.
-            </h2>
-            <p className="text-xs sm:text-sm text-black/60 leading-relaxed">
-              Westside Union helps evaluate and configure your workflow connections so your team does not have to wrestle with setup on their own.
+          {/* Single compatibility disclosure */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-black/6 text-xs text-black/65 leading-relaxed flex items-start gap-3">
+            <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" aria-hidden="true" />
+            <p>
+              <strong>Compatibility &amp; custom connectors:</strong> Everyday integrations are switched on during onboarding. If your business relies on a custom database, industry-specific software, or private API, a Westside Union DevOps engineer scopes and builds the connector with you.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              {
-                step: "01",
-                title: "Workflow Review",
-                desc: "We look at the tools, calendars, spreadsheets, and channels your team relies on today.",
-              },
-              {
-                step: "02",
-                title: "Practical Starting Point",
-                desc: "We identify what can be connected now and what routine work should be simplified first.",
-              },
-              {
-                step: "03",
-                title: "Approval Rules",
-                desc: "We configure clear permissions and owner approval boundaries around sensitive actions.",
-              },
-              {
-                step: "04",
-                title: "Ongoing Support",
-                desc: "Westside Union monitors your setup and helps adjust workflows as your business evolves.",
-              },
-            ].map((s) => (
-              <div key={s.step} className="p-5 rounded-2xl bg-white border border-black/6 shadow-2xs space-y-2">
-                <span className="font-mono text-xs text-black/40">{s.step}</span>
-                <h3 className="text-sm font-medium text-[#111]">{s.title}</h3>
-                <p className="text-xs text-black/55 leading-relaxed">{s.desc}</p>
+      {/* ── 3. ARCHITECTURE TOPOLOGY & MANAGED ONBOARDING ─────────────────── */}
+      <section className="py-20 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
+        <div className="max-w-6xl mx-auto space-y-16">
+          <div className="space-y-6">
+            <div className="max-w-3xl space-y-2">
+              <h2 className="text-2xl sm:text-3xl font-light text-[#111] tracking-tight">
+                Less switching. Less re-entering. One managed workflow.
+              </h2>
+              <p className="text-xs sm:text-sm text-black/65 leading-relaxed">
+                {stack.length > 0
+                  ? "Here is how Nexus sits between your messaging channels and the tools you selected above — keeping approvals in your hands."
+                  : "Nexus connects the channels where you and your customers already talk to the business software where your records live."}
+              </p>
+            </div>
+
+            <NexusConnectionsMap stack={stack} />
+          </div>
+
+          {/* 4-Step Onboarding Sequence */}
+          <div className="pt-8 border-t border-black/8 space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div className="max-w-2xl space-y-2">
+                <h2 className="text-2xl sm:text-3xl font-light text-[#111] tracking-tight">
+                  Zero technical lift for your team.
+                </h2>
+                <p className="text-xs sm:text-sm text-black/65 leading-relaxed">
+                  Whether you use standard off-the-shelf apps or need a custom connector built by our DevOps engineers, Westside Union handles the setup from start to finish.
+                </p>
               </div>
-            ))}
+              <a
+                href="#contact"
+                className={`self-start md:self-auto shrink-0 inline-flex items-center gap-1.5 min-h-11 px-5 py-2.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors ${FOCUS_RING}`}
+              >
+                Request a custom workflow review
+                <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </a>
+            </div>
+
+            <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                {
+                  step: "01",
+                  title: "Stack & Workflow Review",
+                  desc: "We look at the tools, calendars, spreadsheets, and channels your team relies on today.",
+                },
+                {
+                  step: "02",
+                  title: "Practical Starting Point",
+                  desc: "We connect your everyday apps first and have our DevOps engineers scope any custom connectors.",
+                },
+                {
+                  step: "03",
+                  title: "Owner Approval Rules",
+                  desc: "We configure clear permissions and confirmation boundaries around customer replies and records.",
+                },
+                {
+                  step: "04",
+                  title: "Managed Maintenance",
+                  desc: "Westside Union monitors your connections and updates workflows as your business evolves.",
+                },
+              ].map((s) => (
+                <li key={s.step} className="pt-4 border-t border-black/15 space-y-2">
+                  <span className="font-mono text-xs text-black/65 font-medium">{s.step}</span>
+                  <h3 className="text-sm font-medium text-[#111]">{s.title}</h3>
+                  <p className="text-xs text-black/65 leading-relaxed">{s.desc}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
-      {/* ── 5. "DON'T SEE YOUR TOOL LISTED?" BANNER ──────────────────────────── */}
-      <section className="py-16 px-6 md:px-12 lg:px-20 bg-white border-b border-black/6">
-        <div className="max-w-5xl mx-auto rounded-3xl border border-black/8 bg-[#FAF9F5] p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
-          <div className="space-y-2 text-center md:text-left">
-            <span className="text-[10px] font-mono tracking-widest text-black/50 uppercase font-semibold">
-              CUSTOM &amp; INDUSTRY-SPECIFIC WORKFLOWS
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-light text-black">
-              Don&apos;t see your tool listed?
-            </h3>
-            <p className="text-xs sm:text-sm text-black/65 max-w-xl leading-relaxed">
-              Tell us what your team uses today — even if it is an industry-specific platform, a shared spreadsheet, or a manual process. During your consultation, we&apos;ll walk through what can be connected now, what can be simplified first, and what options make the most sense for your business.
-            </p>
-          </div>
-          <a
-            href="#contact"
-            className="shrink-0 px-6 py-3.5 bg-[#111] text-white text-xs font-medium rounded-xl hover:bg-[#333] transition-colors tracking-widest uppercase shadow-sm whitespace-nowrap"
-          >
-            Check My Tools →
-          </a>
-        </div>
-      </section>
-
-      {/* ── 6. CONSULTATION FORM ────────────────────────────────────────────── */}
+      {/* ── 4. CONSULTATION FORM (WITH STACK HAND-OFF) ────────────────────── */}
       <ConsultationForm
+        defaultPackage="Not sure yet — Help me compare"
         title="Discuss the tools your business uses."
-        subtitle="Tell us what software, spreadsheets, or messaging channels your team relies on today, and we'll walk through the most practical starting point."
+        subtitle="Any tools you added to your stack above are included below. Tell us how your team works today, and we’ll walk through the most practical starting point."
+        tools={stack.map((s) => s.name)}
+        onRemoveTool={removeStackByName}
       />
+
+      {/* Accessible Detail Sheet (Modal Drawer) */}
+      <ConnectionDetailSheet
+        item={selectedConnection}
+        categoryLabel={selectedConnection ? getCategoryLabel(selectedConnection.category) : ""}
+        inStack={
+          selectedConnection
+            ? stackKeys.has(selectedConnection.id || selectedConnection.name)
+            : false
+        }
+        onOpenChange={(open) => {
+          if (!open) setSelectedConnection(null)
+        }}
+        onToggleStack={toggleStackItem}
+        onDiscuss={(item) => {
+          ensureInStack(item)
+          setSelectedConnection(null)
+        }}
+      />
+
+      {/* Sticky "My Stack" Bar */}
+      <StackBar stack={stack} onRemove={removeStackByKey} onClear={clearStack} />
 
       <SiteFooter />
       <BackToTop />

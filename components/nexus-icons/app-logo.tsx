@@ -122,7 +122,6 @@ export const APP_SIMPLE_ICONS: Record<string, string> = {
   "shopify-pos": "shopify",
   woocommerce: "woocommerce",
   bigcommerce: "bigcommerce",
-  magento: "adobe",
   "amazon-seller": "amazon",
   ebay: "ebay",
   etsy: "etsy",

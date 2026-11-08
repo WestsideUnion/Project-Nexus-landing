@@ -31,7 +31,7 @@ export function SiteFooter() {
               NEXUS
             </span>
           </Link>
-          <p className="text-[10px] text-black/35 tracking-widest mt-1.5 pl-12 font-mono">
+          <p className="text-[11px] text-black/65 tracking-widest mt-1.5 pl-12 font-mono">
             A Westside Union product
           </p>
         </div>
@@ -42,7 +42,7 @@ export function SiteFooter() {
             <Link
               key={l.label}
               href={l.href}
-              className="text-xs text-black/50 hover:text-black transition-colors tracking-wide"
+              className="text-xs text-black/65 hover:text-black transition-colors tracking-wide"
             >
               {l.label}
             </Link>
@@ -55,7 +55,7 @@ export function SiteFooter() {
             <Link
               key={l.label}
               href={l.href}
-              className="text-xs text-black/35 hover:text-black/70 transition-colors tracking-widest uppercase font-mono"
+              className="text-xs text-black/65 hover:text-black transition-colors tracking-widest uppercase font-mono"
             >
               {l.label}
             </Link>
@@ -63,7 +63,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-black/35">
+      <div className="max-w-6xl mx-auto mt-8 pt-6 border-t border-black/6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-black/65">
         <span>© 2026 Westside Union. Nexus is a Westside Union product. All rights reserved.</span>
         <span>Toronto, Ontario, Canada</span>
       </div>

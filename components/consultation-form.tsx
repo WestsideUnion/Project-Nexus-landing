@@ -7,13 +7,19 @@ export function ConsultationForm({
   defaultPackage = "",
   title = "Show us the work that keeps following you home.",
   subtitle = "We will identify the first few tasks Nexus can take off your plate and recommend a practical starting point. If the numbers or workflow do not support Nexus, we will say so.",
+  tools,
+  onRemoveTool,
 }: {
   defaultPackage?: string
   title?: string
   subtitle?: string
+  /** When provided, the form shows a "Tools to discuss" field and submits these names. */
+  tools?: string[]
+  onRemoveTool?: (name: string) => void
 }) {
   const [formState, setFormState] = useState<"idle" | "loading" | "submitted" | "error">("idle")
   const [formError, setFormError] = useState<string | null>(null)
+  const [toolsNote, setToolsNote] = useState("")
   const [form, setForm] = useState({
     name: "",
     business: "",
@@ -37,15 +43,21 @@ export function ConsultationForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.consent || !form.email || !form.name || !form.business) return
+    if (!form.consent || !form.email || !form.name || !form.business) {
+      setFormError("Please add your name, business name, and email, and tick the consent box so we can reply.")
+      setFormState("error")
+      return
+    }
     setFormState("loading")
     setFormError(null)
+
+    const toolList = [...(tools ?? []), toolsNote.trim()].filter(Boolean).join(", ")
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(tools ? { ...form, tools: toolList } : form),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -89,13 +101,10 @@ export function ConsultationForm({
 
       <div className="relative z-10 max-w-2xl mx-auto">
         <div className="text-center mb-12">
-          <h2
-            className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08] mb-4 text-[#111]"
-            style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08] mb-4 text-[#111]">
             {title}
           </h2>
-          <p className="text-xs sm:text-sm text-black/60 max-w-lg mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-black/65 max-w-lg mx-auto leading-relaxed">
             {subtitle}
           </p>
         </div>
@@ -113,7 +122,7 @@ export function ConsultationForm({
           <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-black/7 p-6 sm:p-8 space-y-5 shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="name" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="name" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   YOUR NAME *
                 </label>
                 <input
@@ -124,11 +133,11 @@ export function ConsultationForm({
                   value={form.name}
                   onChange={handleFormChange}
                   placeholder="Jane Doe"
-                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
               <div>
-                <label htmlFor="business" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="business" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   BUSINESS NAME *
                 </label>
                 <input
@@ -139,14 +148,14 @@ export function ConsultationForm({
                   value={form.business}
                   onChange={handleFormChange}
                   placeholder="Acme Cafe"
-                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="email" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="email" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   EMAIL *
                 </label>
                 <input
@@ -157,11 +166,11 @@ export function ConsultationForm({
                   value={form.email}
                   onChange={handleFormChange}
                   placeholder="jane@example.com"
-                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="phone" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   PHONE (OPTIONAL)
                 </label>
                 <input
@@ -171,14 +180,14 @@ export function ConsultationForm({
                   value={form.phone}
                   onChange={handleFormChange}
                   placeholder="(416) 555-0123"
-                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="industry" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   INDUSTRY *
                 </label>
                 <select
@@ -202,7 +211,7 @@ export function ConsultationForm({
                 </select>
               </div>
               <div>
-                <label htmlFor="package" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+                <label htmlFor="package" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                   PACKAGE *
                 </label>
                 <select
@@ -223,8 +232,50 @@ export function ConsultationForm({
               </div>
             </div>
 
+            {tools && (
+              <div>
+                <label htmlFor="tools-note" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
+                  TOOLS TO DISCUSS
+                </label>
+                {tools.length > 0 ? (
+                  <ul className="flex flex-wrap gap-1.5 mb-2.5" aria-label="Tools from your stack">
+                    {tools.map((t) => (
+                      <li key={t}>
+                        <span className="inline-flex items-center gap-1 h-8 pl-3 pr-1 rounded-lg bg-[#F5F4F0] border border-black/8 text-xs text-[#111]">
+                          {t}
+                          {onRemoveTool && (
+                            <button
+                              type="button"
+                              onClick={() => onRemoveTool(t)}
+                              aria-label={`Remove ${t}`}
+                              className="w-6 h-6 rounded-md flex items-center justify-center text-black/60 hover:text-black hover:bg-black/5 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#111]"
+                            >
+                              <span aria-hidden="true" className="text-sm leading-none">×</span>
+                            </button>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-xs text-black/60 mb-2.5">
+                    Tap &ldquo;I use this&rdquo; on any tool above and it will appear here.
+                  </p>
+                )}
+                <input
+                  id="tools-note"
+                  name="tools-note"
+                  type="text"
+                  value={toolsNote}
+                  onChange={(e) => setToolsNote(e.target.value)}
+                  placeholder="Anything else? An industry platform, a spreadsheet, an in-house system…"
+                  className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all"
+                />
+              </div>
+            )}
+
             <div>
-              <label htmlFor="problem" className="block text-[11px] tracking-widest text-black/50 mb-2 font-medium">
+              <label htmlFor="problem" className="block text-[11px] tracking-widest text-black/65 mb-2 font-medium">
                 WHAT WORK KEEPS FOLLOWING YOU HOME?
               </label>
               <textarea
@@ -234,7 +285,7 @@ export function ConsultationForm({
                 value={form.problem}
                 onChange={handleFormChange}
                 placeholder="Describe the tasks, messages, reviews, or follow-ups that take time away from running your business..."
-                className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/30 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all resize-none"
+                className="w-full bg-black/2 border border-black/10 rounded-xl px-4 py-3 text-sm text-[#111] placeholder:text-black/55 focus:outline-none focus:border-black/30 focus:ring-1 focus:ring-black/20 transition-all resize-none"
               />
             </div>
 
@@ -248,7 +299,7 @@ export function ConsultationForm({
                 onChange={handleFormChange}
                 className="mt-0.5 w-4 h-4 rounded border-black/20 accent-black focus:ring-2 focus:ring-black/20"
               />
-              <label htmlFor="consent" className="text-xs text-black/55 leading-relaxed">
+              <label htmlFor="consent" className="text-xs text-black/65 leading-relaxed">
                 I agree to be contacted by Westside Union regarding Nexus. My information will not be shared with third parties. *
               </label>
             </div>

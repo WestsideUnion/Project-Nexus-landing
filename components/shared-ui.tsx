@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react"
 import { ConnectionStatus } from "@/lib/site-data"
+import { STATUS_META } from "@/lib/connections"
 
 // ─── Intersection Observer hook ──────────────────────────────────────────────
 export function useInView(threshold = 0.05) {
@@ -71,7 +72,7 @@ export function BentoCard({
 // ─── Pill Tag ─────────────────────────────────────────────────────────────────
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/40 bg-black/4 uppercase font-medium">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] tracking-widest font-sans text-black/65 bg-black/4 uppercase font-medium">
       {children}
     </span>
   )
@@ -87,7 +88,7 @@ export function StatusPill({ status }: { status: ConnectionStatus | string }) {
     "confirmed during consultation": "bg-amber-50 text-amber-700 border-amber-200/60",
     custom: "bg-purple-50 text-purple-700 border-purple-200/60",
     "custom deployment": "bg-purple-50 text-purple-700 border-purple-200/60",
-    planned: "bg-black/3 text-black/35 border-black/6",
+    planned: "bg-black/3 text-black/65 border-black/6",
     preview: "bg-blue-50 text-blue-700 border-blue-200/60",
   }
 
@@ -99,30 +100,32 @@ export function StatusPill({ status }: { status: ConnectionStatus | string }) {
     "confirmed during consultation": "bg-amber-500",
     custom: "bg-purple-500",
     "custom deployment": "bg-purple-500",
-    planned: "bg-black/20",
+    planned: "bg-black/30",
     preview: "bg-blue-500",
   }
 
+  // Labels come from the shared setup-type vocabulary so the filter, summary,
+  // pill, and detail sheet always use the same words.
   const labels: Record<string, string> = {
-    available: "Available",
-    supported: "Available with supported setup",
-    "available with supported setup": "Available with supported setup",
-    configured: "Confirmed during consultation",
-    "confirmed during consultation": "Confirmed during consultation",
-    custom: "Custom deployment",
-    "custom deployment": "Custom deployment",
-    planned: "Planned",
-    preview: "Preview / In development",
+    available: STATUS_META.available.label,
+    supported: STATUS_META.supported.label,
+    "available with supported setup": STATUS_META.supported.label,
+    configured: STATUS_META.configured.label,
+    "confirmed during consultation": STATUS_META.configured.label,
+    custom: STATUS_META.custom.label,
+    "custom deployment": STATUS_META.custom.label,
+    planned: STATUS_META.planned.label,
+    preview: STATUS_META.preview.label,
   }
 
   const key = status.toLowerCase()
-  const style = styles[key] || "bg-black/3 text-black/40 border-black/6"
-  const dot = dotColors[key] || "bg-black/20"
+  const style = styles[key] || "bg-black/3 text-black/65 border-black/6"
+  const dot = dotColors[key] || "bg-black/30"
   const label = labels[key] || status
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] tracking-widest border font-sans ${style}`}>
-      <span className={`w-1 h-1 rounded-full ${dot}`} />
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] leading-none tracking-wide border font-sans whitespace-nowrap ${style}`}>
+      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dot}`} aria-hidden="true" />
       {label}
     </span>
   )

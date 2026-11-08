@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 
 const NAV_LINKS = [
   { label: "How Nexus Helps", href: "/#how-it-helps" },
@@ -22,8 +23,10 @@ const NAV_STYLE = {
 
 export function MobileNav() {
   const [open, setOpen] = useState(false)
+  const pathname = usePathname()
 
   const close = () => setOpen(false)
+  const contactHref = pathname === "/connections" || pathname === "/" ? "#contact" : "/#contact"
 
   return (
     <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 pointer-events-none">
@@ -37,30 +40,37 @@ export function MobileNav() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded-lg p-1">
             <Image src="/nexus-logo.png" alt="Nexus logo" width={36} height={36} className="object-contain" />
-            <span className="font-pixel text-xs tracking-[0.25em] text-black/70 group-hover:text-black transition-colors">
+            <span className="font-pixel text-xs tracking-[0.25em] text-black/75 group-hover:text-black transition-colors">
               NEXUS
             </span>
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-6" style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}>
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                className="text-xs sm:text-sm text-black/60 hover:text-black transition-colors duration-200 tracking-wide whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded px-1.5 py-0.5"
-              >
-                {l.label}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-5">
+            {NAV_LINKS.map((l) => {
+              const isActive = pathname === l.href
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`text-xs sm:text-sm transition-colors duration-200 tracking-wide whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30 rounded-lg px-2 py-1 ${
+                    isActive
+                      ? "text-[#111] font-medium bg-black/6"
+                      : "text-black/65 hover:text-black"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              )
+            })}
           </div>
 
           {/* Consultation CTA & Mobile Burger */}
           <div className="flex items-center gap-3">
             <Link
-              href="/#contact"
+              href={contactHref}
               className="text-xs px-4 py-2 rounded-xl bg-[#111] text-white hover:bg-black/80 hover:shadow-sm active:scale-[0.98] transition-all duration-200 tracking-wider whitespace-nowrap hidden md:block uppercase font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40"
-              style={{ fontFamily: "system-ui, -apple-system, sans-serif", letterSpacing: "0.05em" }}
             >
               Book a Demo
             </Link>
@@ -107,23 +117,29 @@ export function MobileNav() {
             className="rounded-2xl border border-black/7 px-3 py-3 flex flex-col gap-1 shadow-lg"
             style={NAV_STYLE}
           >
-            {NAV_LINKS.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                onClick={close}
-                className="px-4 py-2.5 text-sm text-black/70 hover:text-black hover:bg-black/4 rounded-xl transition-colors tracking-wide"
-                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((l) => {
+              const isActive = pathname === l.href
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  onClick={close}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`px-4 py-2.5 text-sm rounded-xl transition-colors tracking-wide ${
+                    isActive
+                      ? "text-[#111] font-medium bg-black/6"
+                      : "text-black/70 hover:text-black hover:bg-black/4"
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              )
+            })}
             <div className="mt-2 pt-2 border-t border-black/6">
               <Link
-                href="/#contact"
+                href={contactHref}
                 onClick={close}
                 className="block w-full text-center text-xs px-4 py-3 rounded-xl bg-[#111] text-white hover:bg-black/80 active:scale-[0.98] transition-all duration-200 tracking-wider uppercase font-medium shadow-xs"
-                style={{ fontFamily: "system-ui, -apple-system, sans-serif" }}
               >
                 Book a Demo
               </Link>
