@@ -455,9 +455,9 @@ export function NexusTeamInfographic() {
             </div>
           </div>
 
-          {/* 3. Included Capabilities + Editorial Context Strip */}
-          <div className="pt-4 border-t border-black/8 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
-            <div className="flex flex-col items-start gap-2">
+          {/* 3. Included Capabilities + Large Editorial Showcase Photo */}
+          <div className="pt-4 border-t border-black/8 space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
               {activeRole.examples.map((ex) => (
                 <span
                   key={ex}
@@ -469,20 +469,30 @@ export function NexusTeamInfographic() {
               ))}
             </div>
 
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#FAF9F5] ring-1 ring-black/12 shadow-sm shrink-0 bg-black/5">
-                <img
-                  src="/images/nexus-team-showcase.jpg"
-                  alt="Owner reviewing daily summary"
-                  width={224}
-                  height={224}
-                  loading="lazy"
-                  className="w-full h-full object-cover object-[52%_22%] scale-150"
-                />
+            <div className="relative rounded-2xl overflow-hidden border border-black/10 bg-black/5 aspect-[16/9] max-h-[260px] w-full">
+              <img
+                src="/images/nexus-team-showcase.jpg"
+                alt="Business owner reviewing daily Nexus summary on a tablet"
+                width={960}
+                height={540}
+                loading="lazy"
+                className="w-full h-full object-cover object-[center_20%]"
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.22) 48%, transparent 100%)",
+                }}
+              />
+              <div className="absolute inset-x-5 bottom-4 flex flex-wrap items-end justify-between gap-3 text-white">
+                <p className="text-sm sm:text-base font-light tracking-tight">
+                  One calm briefing instead of six separate tabs.
+                </p>
+                <span className="font-mono text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-xs text-emerald-300 border border-white/15">
+                  Owner View
+                </span>
               </div>
-              <span className="text-xs sm:text-sm text-black/70 leading-snug max-w-[180px]">
-                One calm briefing instead of six separate tabs.
-              </span>
             </div>
           </div>
         </div>
