@@ -12,6 +12,7 @@ import { PACKAGES, HOMEPAGE_FAQS, INDUSTRIES_DATA, IndustryDetail } from "@/lib/
 
 // Visual Components
 import { NexusMessageToOutcome } from "@/components/nexus-visuals/nexus-message-to-outcome"
+import { NexusHowItHelps } from "@/components/nexus-visuals/nexus-how-it-helps"
 import { NexusTaskProgress } from "@/components/nexus-visuals/nexus-task-progress"
 import { NexusConnectionsAndSense } from "@/components/nexus-visuals/nexus-sense-panel"
 import { NexusCloudEmblem, NexusEdgeEmblem, NexusEnterpriseEmblem } from "@/components/nexus-visuals/nexus-package-emblems"
@@ -150,174 +151,84 @@ export default function HomePage() {
       {/* ── CLIENT LOGOS TRUST BAR ──────────────────────────────────────────── */}
       <ClientLogosSection />
 
-      {/* ── 2. PROBLEMS & OUTCOMES ──────────────────────────────────────────── */}
-      <section id="how-it-helps" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14 flex flex-col items-center">
-            <PixelIcon type="platform" size={40} />
-            <div className="mt-4"><Tag>HOW NEXUS HELPS</Tag></div>
-            <h2
-              className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light text-[#111] tracking-tight leading-[1.1]"
-              style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}
-            >
-              Less time chasing information. More time running your business.
-            </h2>
-            <p className="mt-4 text-xs sm:text-sm text-black/65 max-w-2xl mx-auto leading-relaxed">
-              See what needs your attention, without digging through everything yourself.
+      {/* ── 2. PROBLEMS & OUTCOMES (HOW NEXUS HELPS) ────────────────────────── */}
+      <section id="how-it-helps" className="py-24 sm:py-28 px-6 md:px-12 lg:px-20 border-t border-black/8 bg-[#FAF9F5]">
+        <div className="max-w-6xl mx-auto space-y-10">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-3">
+                <PixelIcon type="platform" size={36} />
+                <Tag>HOW NEXUS HELPS</Tag>
+              </div>
+              <RevealText className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.06] text-[#111]">
+                {"Less time chasing information. More time running your business."}
+              </RevealText>
+            </div>
+            <p className="text-sm sm:text-base text-black/68 leading-relaxed max-w-sm lg:text-right">
+              See what needs your attention without digging through six different apps yourself.
             </p>
           </div>
 
-          {/* 3 Visual Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" onMouseMove={handleMouse}>
-            {/* Card 1 */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={0}>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center mb-5 text-amber-800">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase text-black/40 font-semibold block mb-1">
-                  EVERYDAY WORKLOAD
-                </span>
-                <h3 className="text-xl font-medium text-[#111] mb-2">Too much to do, not enough time?</h3>
-                <p className="text-xs sm:text-sm text-black/65 leading-relaxed mb-6">
-                  Help with repetitive tasks, follow-ups and everyday admin work so your team can focus on customers.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-white border border-black/6 shadow-2xs space-y-2">
-                <div className="flex items-center justify-between text-[10px] font-mono text-black/45">
-                  <span>Illustrative Example</span>
-                  <span className="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-sans">Follow-up Ready</span>
-                </div>
-                <div className="text-xs text-black/80 font-medium">
-                  &ldquo;3 customer inquiries and 2 open quotes organized for your review.&rdquo;
-                </div>
-                <div className="text-[11px] text-emerald-700 flex items-center gap-1.5 pt-1 border-t border-black/4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                  <span>Prepared according to your configured workflow</span>
-                </div>
-              </div>
-            </BentoCard>
-
-            {/* Card 2 */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={80}>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center mb-5 text-blue-800">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                  </svg>
-                </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase text-black/40 font-semibold block mb-1">
-                  SCATTERED TOOLS
-                </span>
-                <h3 className="text-xl font-medium text-[#111] mb-2">Information all over the place?</h3>
-                <p className="text-xs sm:text-sm text-black/65 leading-relaxed mb-6">
-                  Bring useful business information together so it&apos;s easier to find answers and understand priorities.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-white border border-black/6 shadow-2xs space-y-2">
-                <div className="flex items-center justify-between text-[10px] font-mono text-black/45">
-                  <span>Illustrative Example</span>
-                  <span className="text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded font-sans">Daily Summary</span>
-                </div>
-                <div className="text-xs text-black/80 font-medium">
-                  &ldquo;Nexus, what needs my attention today?&rdquo;
-                </div>
-                <div className="text-[11px] text-blue-700 flex items-center justify-between pt-1 border-t border-black/4">
-                  <span>Pulls open items from connected tools</span>
-                </div>
-              </div>
-            </BentoCard>
-
-            {/* Card 3 */}
-            <BentoCard className="p-7 flex flex-col justify-between" delay={160}>
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-200/60 flex items-center justify-center mb-5 text-purple-800">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                </div>
-                <span className="font-mono text-[10px] tracking-widest uppercase text-black/40 font-semibold block mb-1">
-                  SCALING OPERATIONS
-                </span>
-                <h3 className="text-xl font-medium text-[#111] mb-2">Growing faster than your processes?</h3>
-                <p className="text-xs sm:text-sm text-black/65 leading-relaxed mb-6">
-                  Give managers a clearer view of tasks, activity and issues needing attention as the business expands.
-                </p>
-              </div>
-
-              <div className="p-3.5 rounded-xl bg-white border border-black/6 shadow-2xs space-y-2">
-                <div className="flex items-center justify-between text-[10px] font-mono text-black/45">
-                  <span>Illustrative Example</span>
-                  <span className="text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded font-sans">Multi-Team View</span>
-                </div>
-                <div className="text-xs text-black/80 font-medium">
-                  Checklists, handoffs &amp; recurring updates organized
-                </div>
-                <div className="text-[11px] text-purple-700 flex items-center gap-1.5 pt-1 border-t border-black/4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-                  <span>Clear visibility across connected records</span>
-                </div>
-              </div>
-            </BentoCard>
-          </div>
+          <NexusHowItHelps />
         </div>
       </section>
 
       {/* ── 3. WHAT NEXUS IS & AI SPECIALIST TEAM ───────────────────────────── */}
-      <section id="ai-team" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-white">
-        <div className="max-w-6xl mx-auto space-y-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <section id="ai-team" className="py-24 sm:py-28 px-6 md:px-12 lg:px-20 border-t border-black/8 bg-white">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-2">
             <div className="max-w-2xl">
-              <PixelIcon type="agents" size={40} />
-              <div className="mt-4"><Tag>ONE NEXUS. A TEAM BEHIND IT.</Tag></div>
-              <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
-                {"One assistant to talk to. A team ready to help."}
+              <div className="flex items-center gap-3">
+                <PixelIcon type="agents" size={36} />
+                <Tag>ONE NEXUS. A TEAM BEHIND IT.</Tag>
+              </div>
+              <RevealText className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.06] text-[#111]">
+                {"One assistant to talk to. Specialist workflows behind it."}
               </RevealText>
-              <p className="mt-3 text-xs sm:text-sm text-black/65 leading-relaxed max-w-xl">
-                Talk to one main Nexus assistant. Behind the scenes, Nexus coordinates specialist workflows configured around your plan and permissions.
+              <p className="mt-4 text-sm sm:text-base text-black/68 leading-relaxed max-w-xl">
+                You message a single Nexus assistant in WhatsApp, SMS, or Slack. Behind the scenes, Nexus routes each request to specialist workflows configured around your tools, plan, and approval rules.
               </p>
             </div>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#111] text-white text-xs font-medium tracking-widest uppercase hover:bg-[#333] transition-colors shrink-0 self-start md:self-auto shadow-2xs"
-            >
-              Talk to Westside Union →
-            </a>
+            <div className="flex flex-wrap items-center gap-3 shrink-0 self-start lg:self-auto">
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#111] text-white text-xs font-mono uppercase tracking-[0.14em] hover:bg-black/85 transition-colors"
+              >
+                Talk to Westside Union →
+              </a>
+            </div>
           </div>
 
-          {/* Interactive Architecture Infographic + Editorial Showcase */}
+          {/* Interactive Specialist Console & Deliverable Ledger */}
           <NexusTeamInfographic />
         </div>
       </section>
 
       {/* ── 4. HOW IT WORKS (VISUAL 3-STEP INFOGRAPHIC + TASK PROGRESS + MULTI-LOCATION) ─ */}
-      <section id="workflow" className="py-24 px-6 md:px-12 lg:px-20 border-t border-black/6 bg-[#FAF9F5]">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div className="flex flex-col items-center md:items-start">
-              <PixelIcon type="workflow" size={40} />
-              <div className="mt-4"><Tag>HOW IT WORKS</Tag></div>
-              <RevealText className="mt-4 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.08]">
-                {"Simple to start. Built around your workflow."}
+      <section id="workflow" className="py-24 sm:py-28 px-6 md:px-12 lg:px-20 border-t border-black/8 bg-[#FAF9F5]">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3">
+                <PixelIcon type="workflow" size={36} />
+                <Tag>HOW IT WORKS</Tag>
+              </div>
+              <RevealText className="mt-5 text-3xl sm:text-4xl md:text-5xl font-light tracking-tight leading-[1.06] text-[#111]">
+                {"Up and running in three simple steps."}
               </RevealText>
             </div>
-            <p className="text-xs sm:text-sm text-black/65 leading-relaxed max-w-sm mx-auto md:mx-0">
-              Westside Union sets up and manages Nexus around the tools and workflows your business actually uses.
+            <p className="text-sm sm:text-base text-black/68 leading-relaxed max-w-sm lg:text-right">
+              We handle all the setup and connections—you just message Nexus like a teammate.
             </p>
           </div>
 
-          {/* Visual 3-Step Pipeline Infographic */}
+          {/* 01-03 Onboarding Steps */}
           <NexusWorkflowInfographic />
 
-          {/* Interactive Task Progress Flow (To Do / In Progress / Completed) */}
+          {/* Single-Task Live Flow Strip */}
           <NexusTaskProgress />
 
-          {/* Multi-Location Visual Infographic Showcase */}
+          {/* Multi-Location Summary */}
           <NexusMultiLocationInfographic />
         </div>
       </section>

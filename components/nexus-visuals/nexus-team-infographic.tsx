@@ -1,40 +1,44 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
+import Image from "next/image"
+import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react"
 import { AI_TEAM_ROLES } from "@/lib/site-data"
 
 interface SpecialistVisual {
   id: string
-  shortLabel: string
-  color: string
-  bgTint: string
-  borderTint: string
+  index: string
+  channel: string
+  promptTime: string
   ownerPrompt: string
   nexusReply: string
   artifactTitle: string
+  artifactSubtitle: string
   artifactBadge: string
-  artifactMetrics: { label: string; value: string; status: string }[]
+  approvalNote: string
+  artifactMetrics: { label: string; detail: string; value: string; status: string; tone: "emerald" | "amber" | "ink" }[]
   icon: React.ReactNode
 }
 
 const SPECIALIST_VISUALS: Record<string, SpecialistVisual> = {
   "executive-support": {
     id: "executive-support",
-    shortLabel: "Executive",
-    color: "text-emerald-700",
-    bgTint: "bg-emerald-50",
-    borderTint: "border-emerald-200/70",
+    index: "01",
+    channel: "WhatsApp · 7:55 AM",
+    promptTime: "8:00 AM",
     ownerPrompt: "Nexus, what needs my attention this morning?",
-    nexusReply: "3 priority items queued from your connected calendar, inbox and team checklists.",
+    nexusReply: "3 priority items pulled from your connected calendar, inbox, and opening checklists.",
     artifactTitle: "Morning Owner Briefing",
-    artifactBadge: "8:00 AM Summary",
+    artifactSubtitle: "Compiled from Google Calendar, Gmail & Shift Checklists",
+    artifactBadge: "Daily 8:00 AM",
+    approvalNote: "Calendar changes and outbound replies wait for your confirmation.",
     artifactMetrics: [
-      { label: "Supplier delivery confirmation", value: "9:30 AM", status: "Ready" },
-      { label: "2 customer callbacks queued", value: "High Priority", status: "Pending" },
-      { label: "Weekly staff schedule recap", value: "Completed", status: "Done" },
+      { label: "Supplier delivery confirmation", detail: "Invoice #2048 matched to PO", value: "9:30 AM", status: "Ready", tone: "emerald" },
+      { label: "2 priority customer callbacks", detail: "Flagged from yesterday’s voicemails", value: "High Priority", status: "Queued", tone: "amber" },
+      { label: "Weekly staff schedule recap", detail: "All shifts confirmed across team", value: "6 / 6 Staff", status: "Synced", tone: "ink" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
         <line x1="16" y1="2" x2="16" y2="6" />
         <line x1="8" y1="2" x2="8" y2="6" />
@@ -44,63 +48,66 @@ const SPECIALIST_VISUALS: Record<string, SpecialistVisual> = {
   },
   "customer-care": {
     id: "customer-care",
-    shortLabel: "Customer Care",
-    color: "text-sky-700",
-    bgTint: "bg-sky-50",
-    borderTint: "border-sky-200/70",
-    ownerPrompt: "Did any inquiries come in after closing last night?",
-    nexusReply: "4 inquiries answered with approved hours & booking links; 1 group request queued for you.",
-    artifactTitle: "Inbound Inquiry Triage",
+    index: "02",
+    channel: "WhatsApp · 8:12 AM",
+    promptTime: "8:12 AM",
+    ownerPrompt: "Did any customer inquiries come in after closing last night?",
+    nexusReply: "4 routine questions were answered with approved hours and booking links; 1 group request is held for your review.",
+    artifactTitle: "After-Hours Inquiry Triage",
+    artifactSubtitle: "WhatsApp, Instagram DM & Website Chat",
     artifactBadge: "24/7 Coverage",
+    approvalNote: "Custom quotes and non-standard requests always pause for owner approval.",
     artifactMetrics: [
-      { label: "Hours & parking FAQs", value: "Answered (4)", status: "Auto" },
-      { label: "Booking link shared via WhatsApp", value: "Sent", status: "Auto" },
-      { label: "Custom event request (18 guests)", value: "Needs Review", status: "1-Tap" },
+      { label: "Hours, parking & menu FAQs", detail: "Answered using approved business profile", value: "4 Resolved", status: "Auto-Sent", tone: "emerald" },
+      { label: "Appointment booking link shared", detail: "Customer booked Friday at 2:00 PM", value: "Confirmed", status: "Booked", tone: "emerald" },
+      { label: "Private group inquiry (18 guests)", detail: "Draft reply prepared for your review", value: "Needs Review", status: "1-Tap Approve", tone: "amber" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </svg>
     ),
   },
   marketing: {
     id: "marketing",
-    shortLabel: "Marketing",
-    color: "text-purple-700",
-    bgTint: "bg-purple-50",
-    borderTint: "border-purple-200/70",
-    ownerPrompt: "Prepare our weekend promotion draft for Friday.",
-    nexusReply: "Caption, promo graphic brief and email announcement drafted for your 1-tap approval.",
-    artifactTitle: "Campaign Draft Studio",
-    artifactBadge: "Awaiting Approval",
+    index: "03",
+    channel: "WhatsApp · 10:20 AM",
+    promptTime: "10:21 AM",
+    ownerPrompt: "Prepare our weekend promotion draft for Friday morning.",
+    nexusReply: "Instagram caption, promotional visual brief, and email note are drafted in your brand voice and waiting for your approval.",
+    artifactTitle: "Weekend Campaign Draft",
+    artifactSubtitle: "Instagram, Facebook & Customer Newsletter",
+    artifactBadge: "Draft Ready",
+    approvalNote: "Nothing is published or emailed to customers until you tap approve.",
     artifactMetrics: [
-      { label: "Instagram & Facebook post draft", value: "Ready", status: "1-Tap" },
-      { label: "Weekend special highlight", value: "On-Brand", status: "Drafted" },
-      { label: "Scheduled publish window", value: "Thu 5:00 PM", status: "Queued" },
+      { label: "Instagram & Facebook post copy", detail: "Tailored to your brand tone & offers", value: "Ready", status: "1-Tap Approve", tone: "amber" },
+      { label: "VIP customer email highlight", detail: "Segmented to repeat guests", value: "480 Recipients", status: "Staged", tone: "ink" },
+      { label: "Recommended publish window", detail: "Based on past engagement peaks", value: "Thu 5:00 PM", status: "Scheduled", tone: "emerald" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
       </svg>
     ),
   },
   sales: {
     id: "sales",
-    shortLabel: "Sales",
-    color: "text-amber-700",
-    bgTint: "bg-amber-50",
-    borderTint: "border-amber-200/70",
+    index: "04",
+    channel: "SMS · 1:15 PM",
+    promptTime: "1:15 PM",
     ownerPrompt: "Which open quotes still need a follow-up this week?",
-    nexusReply: "3 open estimates passed the 48-hour mark. Courteous check-in drafts are ready.",
-    artifactTitle: "Quote & Lead Pipeline",
+    nexusReply: "3 open estimates passed the 48-hour mark. Courteous check-in messages are drafted and ready to send.",
+    artifactTitle: "Open Quote & Lead Pipeline",
+    artifactSubtitle: "Synced with CRM, Email & Estimate Records",
     artifactBadge: "3 Open Quotes",
+    approvalNote: "Each follow-up message is shown to you before it goes out.",
     artifactMetrics: [
-      { label: "Commercial Estimate #104", value: "CAD $4,200", status: "Draft Ready" },
-      { label: "New website consultation lead", value: "Captured", status: "Qualified" },
-      { label: "Callback reminder for Sarah M.", value: "Today 2 PM", status: "Scheduled" },
+      { label: "Commercial Estimate #104", detail: "Sent 3 days ago · Follow-up drafted", value: "CAD $4,200", status: "1-Tap Send", tone: "amber" },
+      { label: "New website consultation lead", detail: "Intake details summarized for call", value: "Qualified", status: "Ready", tone: "emerald" },
+      { label: "Callback reminder · Sarah M.", detail: "Added to your afternoon schedule", value: "Today 2:00 PM", status: "Booked", tone: "ink" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
         <polyline points="16 7 22 7 22 13" />
       </svg>
@@ -108,21 +115,22 @@ const SPECIALIST_VISUALS: Record<string, SpecialistVisual> = {
   },
   operations: {
     id: "operations",
-    shortLabel: "Operations",
-    color: "text-teal-700",
-    bgTint: "bg-teal-50",
-    borderTint: "border-teal-200/70",
+    index: "05",
+    channel: "WhatsApp · 8:30 AM",
+    promptTime: "8:30 AM",
     ownerPrompt: "Are the opening checklists and shift handoffs complete?",
-    nexusReply: "Opening checklist completed at 8:15 AM; 1 restock note flagged for the afternoon shift.",
-    artifactTitle: "Operations & Checklists",
+    nexusReply: "Morning opening checklist was completed at 8:15 AM; 1 packaging restock note was flagged for the afternoon shift.",
+    artifactTitle: "Daily Operations & Hand-Offs",
+    artifactSubtitle: "Staff Checklists, SOPs & Inventory Notes",
     artifactBadge: "Live Sync",
+    approvalNote: "Vendor reorder requests require owner sign-off before dispatch.",
     artifactMetrics: [
-      { label: "Morning opening checklist", value: "6 / 6 items", status: "Complete" },
-      { label: "Shift handoff notes", value: "Shared", status: "Synced" },
-      { label: "Packaging inventory check", value: "Flagged", status: "Review" },
+      { label: "Morning opening checklist", detail: "Verified by shift lead at 8:15 AM", value: "6 / 6 Items", status: "Complete", tone: "emerald" },
+      { label: "Afternoon shift handoff note", detail: "Prep & booking notes shared with team", value: "Distributed", status: "Synced", tone: "ink" },
+      { label: "Packaging inventory check", detail: "Below par level · Reorder drafted", value: "Low Stock", status: "Needs Review", tone: "amber" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <path d="M9 11l3 3L22 4" />
         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
       </svg>
@@ -130,21 +138,22 @@ const SPECIALIST_VISUALS: Record<string, SpecialistVisual> = {
   },
   "reporting-insights": {
     id: "reporting-insights",
-    shortLabel: "Reporting",
-    color: "text-indigo-700",
-    bgTint: "bg-indigo-50",
-    borderTint: "border-indigo-200/70",
-    ownerPrompt: "Summarize this week's activity across our connected tools.",
-    nexusReply: "Here is your weekly snapshot pulled from your connected POS, booking and inbox records.",
-    artifactTitle: "Connected Data Snapshot",
-    artifactBadge: "Weekly Rollup",
+    index: "06",
+    channel: "WhatsApp · Friday 4:30 PM",
+    promptTime: "4:30 PM",
+    ownerPrompt: "Summarize this week’s activity across our connected tools.",
+    nexusReply: "Here is your weekly executive rollup pulled from your POS, booking calendar, and customer inbox.",
+    artifactTitle: "Weekly Connected Rollup",
+    artifactSubtitle: "POS Sales, Bookings & Response Metrics",
+    artifactBadge: "Weekly Digest",
+    approvalNote: "Read-only reporting from your verified source records.",
     artifactMetrics: [
-      { label: "Inquiries handled on time", value: "98.4%", status: "+14%" },
-      { label: "Booked appointments synced", value: "142 total", status: "Verified" },
-      { label: "Owner hours saved on admin", value: "~9.5 hrs", status: "Tracked" },
+      { label: "Customer inquiries answered on time", detail: "Across WhatsApp, SMS & Email", value: "98.4%", status: "+14% vs last wk", tone: "emerald" },
+      { label: "Completed appointments & orders", detail: "Reconciled across POS & calendar", value: "142 Total", status: "Verified", tone: "ink" },
+      { label: "Owner hours saved on routine admin", detail: "Follow-ups, triage & recaps", value: "~9.5 hrs", status: "Tracked", tone: "emerald" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <line x1="18" y1="20" x2="18" y2="10" />
         <line x1="12" y1="20" x2="12" y2="4" />
         <line x1="6" y1="20" x2="6" y2="14" />
@@ -153,25 +162,32 @@ const SPECIALIST_VISUALS: Record<string, SpecialistVisual> = {
   },
   reputation: {
     id: "reputation",
-    shortLabel: "Reputation",
-    color: "text-rose-700",
-    bgTint: "bg-rose-50",
-    borderTint: "border-rose-200/70",
+    index: "07",
+    channel: "WhatsApp · 9:10 AM",
+    promptTime: "9:10 AM",
     ownerPrompt: "Did we get any new Google reviews over the weekend?",
-    nexusReply: "3 new 5-star reviews received. Warm, personalized thank-you replies are ready to approve.",
-    artifactTitle: "Review & Feedback Guard",
-    artifactBadge: "★★★★★ New",
+    nexusReply: "3 new 5-star Google reviews came in. Warm, personalized thank-you replies are drafted for your 1-tap approval.",
+    artifactTitle: "Review & Reputation Studio",
+    artifactSubtitle: "Google Business Profile & Customer Feedback",
+    artifactBadge: "3 New Reviews",
+    approvalNote: "Public review replies never post without your explicit approval.",
     artifactMetrics: [
-      { label: "Google Review · 'Best service in town!'", value: "★★★★★", status: "Drafted" },
-      { label: "Google Review · 'So easy to book'", value: "★★★★★", status: "Drafted" },
-      { label: "Owner approval required before post", value: "Enabled", status: "Protected" },
+      { label: "Google Review · “Best service in town!”", detail: "Personalized thank-you reply drafted", value: "5.0 ★", status: "1-Tap Approve", tone: "amber" },
+      { label: "Google Review · “So easy to book”", detail: "Personalized thank-you reply drafted", value: "5.0 ★", status: "1-Tap Approve", tone: "amber" },
+      { label: "Post-visit feedback check-in", detail: "Scheduled for yesterday’s appointments", value: "12 Guests", status: "Queued", tone: "emerald" },
     ],
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
       </svg>
     ),
   },
+}
+
+const TONE_BADGE: Record<"emerald" | "amber" | "ink", string> = {
+  emerald: "bg-emerald-50 text-emerald-800 border-emerald-200/80",
+  amber: "bg-amber-50 text-amber-800 border-amber-200/80",
+  ink: "bg-[#F5F4F0] text-black/75 border-black/10",
 }
 
 export function NexusTeamInfographic() {
@@ -180,13 +196,16 @@ export function NexusTeamInfographic() {
 
   useEffect(() => {
     if (isPaused) return
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+    if (mq.matches) return
+
     const timer = setInterval(() => {
       setActiveId((prev) => {
         const idx = AI_TEAM_ROLES.findIndex((r) => r.id === prev)
         const nextIdx = (idx + 1) % AI_TEAM_ROLES.length
         return AI_TEAM_ROLES[nextIdx].id
       })
-    }, 4500)
+    }, 5200)
     return () => clearInterval(timer)
   }, [isPaused])
 
@@ -195,240 +214,275 @@ export function NexusTeamInfographic() {
 
   return (
     <div
-      className="space-y-6"
+      className="rounded-3xl border border-black/8 bg-[#FAF9F5] overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.04)]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={() => setIsPaused(false)}
     >
-      {/* Main Infographic Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-        {/* LEFT (7 cols): Interactive Visual Architecture Hub */}
-        <div className="lg:col-span-7 rounded-2xl bg-[#FAF9F5] border border-black/7 p-6 sm:p-8 flex flex-col justify-between shadow-2xs relative overflow-hidden">
-          {/* Subtle grid backdrop */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-35"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 1px 1px, rgba(17,17,17,0.12) 1px, transparent 0)",
-              backgroundSize: "20px 20px",
-            }}
-          />
+      {/* ── TOP ARCHITECTURAL ROUTING BAR (SINGLE-LINE ON DESKTOP) ────────── */}
+      <div className="px-5 py-3.5 sm:px-7 bg-white border-b border-black/7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 lg:gap-4">
+        <div className="flex flex-wrap lg:flex-nowrap items-center gap-2 min-w-0">
+          {/* Step 1: Owner */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF9F5] border border-black/8 whitespace-nowrap shrink-0">
+            <span className="w-5 h-5 rounded-full bg-[#111] text-white text-[11px] font-medium flex items-center justify-center shrink-0">
+              1
+            </span>
+            <span className="text-xs font-medium text-[#111]">You message Nexus</span>
+            <span className="text-[11px] text-black/60 hidden sm:inline">· WhatsApp, SMS, Email</span>
+          </div>
 
-          <div className="relative z-10 space-y-6">
-            {/* Top Header Pill */}
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-black/8 shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="font-mono text-[10px] uppercase tracking-widest text-black/70 font-medium">
-                  Interactive Architecture · Click Any Specialist
-                </span>
-              </div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-black/45">
-                1 Assistant → 7 Specialists
-              </span>
-            </div>
+          <ArrowRight className="w-3.5 h-3.5 text-black/40 shrink-0" aria-hidden="true" />
 
-            {/* Visual Flow: Owner -> Main Nexus Assistant -> Specialist Team */}
-            <div className="rounded-2xl bg-white border border-black/7 p-4 sm:p-5 shadow-2xs">
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
-                {/* Node 1: Business Owner */}
-                <div className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-[#FAF9F5] border border-black/6 shrink-0 w-full sm:w-auto">
-                  <div className="w-8 h-8 rounded-full bg-[#111] text-white flex items-center justify-center text-xs font-medium shrink-0">
-                    YOU
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-black/45">Single Point of Contact</div>
-                    <div className="text-xs font-medium text-[#111]">Talk via WhatsApp, SMS or Chat</div>
-                  </div>
-                </div>
+          {/* Step 2: Nexus Core */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#111] text-white whitespace-nowrap shrink-0">
+            <Image src="/nexus-logo.png" alt="" width={16} height={16} className="object-contain shrink-0" />
+            <span className="font-pixel text-[11px] tracking-widest">NEXUS CORE</span>
+            <span className="text-[11px] text-white/75 hidden md:inline">· Coordinates specialists</span>
+          </div>
 
-                {/* Animated connector arrow */}
-                <div className="hidden sm:flex items-center justify-center text-black/30 shrink-0">
-                  <svg width="28" height="16" viewBox="0 0 28 16" fill="none">
-                    <path d="M0 8H24M24 8L18 3M24 8L18 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
+          <ArrowRight className="w-3.5 h-3.5 text-black/40 shrink-0" aria-hidden="true" />
 
-                {/* Node 2: Central Nexus Core */}
-                <div className="flex-1 flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-[#111] text-white shadow-xs w-full">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0" />
-                    <div>
-                      <div className="font-pixel text-[11px] tracking-widest text-white">NEXUS CORE</div>
-                      <div className="text-[11px] text-white/70">Routes &amp; coordinates behind the scenes</div>
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-white/10 text-emerald-300 shrink-0">
-                    Active
-                  </span>
-                </div>
-              </div>
-
-              {/* Visual connector branch lines down to specialists */}
-              <div className="my-3 flex items-center justify-center">
-                <div className="h-4 w-px bg-black/15" />
-              </div>
-
-              {/* 7 Interactive Specialist Nodes */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {AI_TEAM_ROLES.map((role) => {
-                  const vis = SPECIALIST_VISUALS[role.id] || SPECIALIST_VISUALS["executive-support"]
-                  const isSelected = role.id === activeId
-                  return (
-                    <button
-                      key={role.id}
-                      type="button"
-                      onClick={() => setActiveId(role.id)}
-                      className={`group text-left p-3 rounded-xl border transition-all duration-200 cursor-pointer flex flex-col justify-between gap-2 ${
-                        isSelected
-                          ? "bg-[#111] text-white border-[#111] shadow-sm scale-[1.01]"
-                          : "bg-[#FAF9F5] hover:bg-white text-[#111] border-black/6 hover:border-black/15"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between w-full">
-                        <span
-                          className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
-                            isSelected ? "bg-white/15 text-emerald-300" : `${vis.bgTint} ${vis.color}`
-                          }`}
-                        >
-                          {vis.icon}
-                        </span>
-                        <span
-                          className={`text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded ${
-                            isSelected ? "bg-white/15 text-white/90" : "bg-black/4 text-black/50"
-                          }`}
-                        >
-                          {role.tag}
-                        </span>
-                      </div>
-                      <div>
-                        <div className={`text-xs font-medium leading-tight ${isSelected ? "text-white" : "text-[#111]"}`}>
-                          {role.name}
-                        </div>
-                      </div>
-                    </button>
-                  )
-                })}
-
-                {/* 8th Node: Managed by Westside Union */}
-                <a
-                  href="#contact"
-                  className="p-3 rounded-xl border border-dashed border-black/15 bg-[#FAF9F5]/60 hover:bg-white hover:border-black/30 transition-all flex flex-col justify-between gap-2 group"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="w-7 h-7 rounded-lg bg-black/5 text-black/70 flex items-center justify-center text-xs font-mono">
-                      +
-                    </span>
-                    <span className="text-[9px] font-mono uppercase tracking-wider text-black/45">Custom</span>
-                  </div>
-                  <div className="text-xs font-medium text-black/80 group-hover:text-black leading-tight">
-                    Configured for you →
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            {/* Active Specialist Live Conversation Strip (Illustrative) */}
-            <div className="rounded-xl bg-white border border-black/7 p-4 shadow-2xs space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider ${activeVisual.bgTint} ${activeVisual.color} font-semibold`}>
-                    {activeRole.name} Specialist
-                  </span>
-                  <span className="text-xs text-black/60 hidden sm:inline">{activeRole.summary}</span>
-                </div>
-                <span className="text-[10px] font-mono uppercase text-black/40">Illustrative</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 rounded-lg bg-[#FAF9F5] border border-black/5">
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-black/45 block mb-1">You Ask Nexus</span>
-                  <p className="text-xs font-medium text-[#111]">&ldquo;{activeVisual.ownerPrompt}&rdquo;</p>
-                </div>
-                <div className={`p-3 rounded-lg ${activeVisual.bgTint} border ${activeVisual.borderTint}`}>
-                  <span className={`text-[9px] font-mono uppercase tracking-widest ${activeVisual.color} font-semibold block mb-1`}>
-                    Nexus Coordinates
-                  </span>
-                  <p className="text-xs text-black/80">&ldquo;{activeVisual.nexusReply}&rdquo;</p>
-                </div>
-              </div>
-            </div>
+          {/* Step 3: Active Specialist */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-900 whitespace-nowrap shrink-0">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" aria-hidden="true" />
+            <span className="text-xs font-medium">{activeRole.name}</span>
           </div>
         </div>
 
-        {/* RIGHT (5 cols): Editorial Image + Visual Output Showcase */}
-        <div className="lg:col-span-5 rounded-2xl border border-black/7 bg-white overflow-hidden flex flex-col justify-between shadow-2xs">
-          {/* Generated Editorial Showcase Photo */}
-          <div className="relative h-56 sm:h-64 overflow-hidden bg-black/5 shrink-0">
-            <img
-              src="/images/nexus-team-showcase.jpg"
-              alt="Business owner reviewing morning briefing with Nexus"
-              className="w-full h-full object-cover"
-            />
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.2) 55%, transparent 100%)",
-              }}
-            />
-            <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between gap-3 text-white">
-              <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-300 block">
-                  A Clearer Start To Your Day
-                </span>
-                <h3 className="text-base sm:text-lg font-light leading-snug mt-0.5">
-                  One calm morning briefing — instead of six separate tabs.
-                </h3>
+        <div className="flex items-center justify-between lg:justify-end gap-2.5 text-xs text-black/65 whitespace-nowrap shrink-0">
+          <span className="truncate">Select a specialist role to preview its workflow</span>
+          <span className="font-mono text-[11px] px-2.5 py-1 rounded-full bg-[#FAF9F5] border border-black/8 text-[#111] whitespace-nowrap shrink-0 tabular-nums">
+            {activeVisual.index} / 07
+          </span>
+        </div>
+      </div>
+
+      {/* ── MAIN SPLIT CONSOLE: LEFT SPECIALIST RAIL (5 COLS) + RIGHT LIVE STAGE (7 COLS) ─ */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-black/7">
+        {/* LEFT (5 COLS): Architectural Specialist Switcher */}
+        <div className="lg:col-span-5 p-5 sm:p-7 flex flex-col justify-between bg-[#FAF9F5]">
+          <div className="space-y-1.5" role="tablist" aria-label="Nexus specialist workflows">
+            {AI_TEAM_ROLES.map((role) => {
+              const vis = SPECIALIST_VISUALS[role.id] || SPECIALIST_VISUALS["executive-support"]
+              const isSelected = role.id === activeId
+
+              return (
+                <button
+                  key={role.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  aria-controls={`specialist-panel-${role.id}`}
+                  id={`specialist-tab-${role.id}`}
+                  onClick={() => setActiveId(role.id)}
+                  className={`w-full text-left rounded-2xl px-4 py-3.5 transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${
+                    isSelected
+                      ? "bg-[#111] text-white shadow-[0_6px_20px_rgba(17,17,17,0.14)]"
+                      : "bg-transparent hover:bg-white/80 text-[#111]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected
+                            ? "bg-white/12 text-emerald-300"
+                            : "bg-white border border-black/8 text-black/75"
+                        }`}
+                      >
+                        {vis.icon}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`font-mono text-[11px] ${
+                              isSelected ? "text-white/65" : "text-black/55"
+                            }`}
+                          >
+                            {vis.index}
+                          </span>
+                          <span className="text-sm font-medium truncate">{role.name}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <span
+                      className={`shrink-0 text-[11px] px-2.5 py-0.5 rounded-full border ${
+                        isSelected
+                          ? "bg-white/10 text-white/90 border-white/15"
+                          : "bg-white text-black/65 border-black/8"
+                      }`}
+                    >
+                      {role.tag}
+                    </span>
+                  </div>
+
+                  {isSelected && (
+                    <p className="mt-2.5 pl-11 text-xs text-white/80 leading-relaxed">
+                      {role.summary}
+                    </p>
+                  )}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Bottom Custom Workflow Footnote */}
+          <div className="mt-6 pt-5 border-t border-black/8 flex items-center justify-between gap-4 px-2">
+            <div className="space-y-0.5">
+              <p className="text-xs font-medium text-[#111]">
+                Tailored to your business &amp; permissions
+              </p>
+              <p className="text-xs text-black/65">
+                Westside Union configures which specialist routines are active on your plan.
+              </p>
+            </div>
+            <a
+              href="#contact"
+              className="shrink-0 inline-flex items-center gap-1.5 min-h-10 px-3.5 py-2 rounded-xl bg-white border border-black/15 text-xs font-medium text-[#111] hover:border-black/40 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+            >
+              Configure yours
+              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT (7 COLS): Live Coordination Stage */}
+        <div
+          id={`specialist-panel-${activeRole.id}`}
+          role="tabpanel"
+          aria-labelledby={`specialist-tab-${activeRole.id}`}
+          className="lg:col-span-7 p-6 sm:p-8 bg-white flex flex-col justify-between gap-6"
+        >
+          {/* 1. Conversation Thread (Owner Prompt -> Nexus Coordination) */}
+          <div className="space-y-3.5">
+            <div className="flex items-center justify-between text-xs text-black/65">
+              <span className="font-mono text-[11px] uppercase tracking-wider text-black/65">
+                {activeVisual.channel}
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-xs text-black/65">
+                <Sparkles className="w-3.5 h-3.5 text-emerald-700" aria-hidden="true" />
+                Illustrative workflow
+              </span>
+            </div>
+
+            {/* Owner Bubble */}
+            <div className="flex justify-end">
+              <div className="max-w-md rounded-2xl rounded-br-sm bg-[#111] text-white px-4 py-3 shadow-xs">
+                <div className="flex items-center justify-between gap-4 mb-1">
+                  <span className="text-[11px] font-medium text-white/75">You</span>
+                  <span className="font-mono text-[11px] text-white/65">Sent</span>
+                </div>
+                <p className="text-sm font-light leading-relaxed">
+                  &ldquo;{activeVisual.ownerPrompt}&rdquo;
+                </p>
+              </div>
+            </div>
+
+            {/* Nexus Reply Bubble */}
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-[#FAF9F5] border border-black/10 flex items-center justify-center shrink-0 mt-0.5">
+                <Image src="/nexus-logo.png" alt="" width={18} height={18} className="object-contain" />
+              </div>
+              <div className="flex-1 rounded-2xl rounded-tl-sm bg-[#FAF9F5] border border-black/8 px-4 py-3 space-y-1">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-xs font-medium text-[#111]">
+                    Nexus · <span className="text-black/65 font-normal">{activeRole.name}</span>
+                  </span>
+                  <span className="font-mono text-[11px] text-black/60">{activeVisual.promptTime}</span>
+                </div>
+                <p className="text-sm text-black/80 leading-relaxed">
+                  {activeVisual.nexusReply}
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Dynamic Specialist Output Artifact */}
-          <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4 bg-white">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-black/6 pb-2.5">
-                <div className="flex items-center gap-2">
-                  <span className={`w-6 h-6 rounded-md flex items-center justify-center ${activeVisual.bgTint} ${activeVisual.color}`}>
-                    {activeVisual.icon}
-                  </span>
-                  <span className="text-xs font-medium text-[#111]">{activeVisual.artifactTitle}</span>
-                </div>
-                <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${activeVisual.bgTint} ${activeVisual.color}`}>
-                  {activeVisual.artifactBadge}
+          {/* 2. Prepared Deliverable / Output Sheet */}
+          <div className="rounded-2xl border border-black/10 bg-[#FAF9F5]/60 overflow-hidden">
+            {/* Sheet Header */}
+            <div className="px-5 py-3.5 bg-white border-b border-black/7 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="w-9 h-9 rounded-xl bg-[#FAF9F5] border border-black/8 flex items-center justify-center text-[#111]">
+                  {activeVisual.icon}
                 </span>
+                <div>
+                  <h3 className="text-sm font-semibold text-[#111] leading-tight">
+                    {activeVisual.artifactTitle}
+                  </h3>
+                  <p className="text-xs text-black/65 mt-0.5">
+                    {activeVisual.artifactSubtitle}
+                  </p>
+                </div>
               </div>
-
-              {/* 3 Visual Output Rows */}
-              <div className="space-y-2">
-                {activeVisual.artifactMetrics.map((m, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between px-3 py-2 rounded-lg bg-[#FAF9F5] border border-black/5 text-xs"
-                  >
-                    <span className="text-black/75 truncate pr-2">{m.label}</span>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <span className="font-mono text-[11px] font-medium text-[#111]">{m.value}</span>
-                      <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200/60">
-                        {m.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <span className="font-mono text-[11px] px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 font-medium">
+                {activeVisual.artifactBadge}
+              </span>
             </div>
 
-            {/* Specialist capability pills */}
-            <div className="pt-3 border-t border-black/6 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap gap-1.5">
-                {activeRole.examples.map((ex, i) => (
-                  <span
-                    key={i}
-                    className="text-[10px] px-2.5 py-1 rounded-full bg-[#FAF9F5] border border-black/6 text-black/65"
-                  >
-                    {ex}
-                  </span>
-                ))}
+            {/* Deliverable Ledger Rows */}
+            <ul className="divide-y divide-black/6 bg-white">
+              {activeVisual.artifactMetrics.map((m) => (
+                <li
+                  key={m.label}
+                  className="px-5 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 hover:bg-[#FAF9F5]/60 transition-colors"
+                >
+                  <div className="min-w-0">
+                    <p className="text-xs sm:text-sm font-medium text-[#111] truncate">{m.label}</p>
+                    <p className="text-xs text-black/65 truncate">{m.detail}</p>
+                  </div>
+                  <div className="flex items-center gap-2.5 shrink-0">
+                    <span className="font-mono text-xs font-medium text-[#111] tabular-nums">
+                      {m.value}
+                    </span>
+                    <span
+                      className={`text-[11px] font-medium px-2.5 py-0.5 rounded-full border whitespace-nowrap ${TONE_BADGE[m.tone]}`}
+                    >
+                      {m.status}
+                    </span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            {/* Sheet Footer: Approval Guard + Capabilities */}
+            <div className="px-5 py-3 bg-[#FAF9F5] border-t border-black/7 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs text-black/70">
+                <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" aria-hidden="true" />
+                <span>{activeVisual.approvalNote}</span>
               </div>
+            </div>
+          </div>
+
+          {/* 3. Included Capabilities + Editorial Context Strip */}
+          <div className="pt-4 border-t border-black/8 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+            <div className="flex flex-col items-start gap-2">
+              {activeRole.examples.map((ex) => (
+                <span
+                  key={ex}
+                  className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full bg-[#FAF9F5] border border-black/8 text-black/75"
+                >
+                  <Check className="w-3 h-3 text-emerald-700 shrink-0" aria-hidden="true" />
+                  {ex}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-4 shrink-0">
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[#FAF9F5] ring-1 ring-black/12 shadow-sm shrink-0 bg-black/5">
+                <img
+                  src="/images/nexus-team-showcase.jpg"
+                  alt="Owner reviewing daily summary"
+                  width={224}
+                  height={224}
+                  loading="lazy"
+                  className="w-full h-full object-cover object-[52%_22%] scale-150"
+                />
+              </div>
+              <span className="text-xs sm:text-sm text-black/70 leading-snug max-w-[180px]">
+                One calm briefing instead of six separate tabs.
+              </span>
             </div>
           </div>
         </div>
@@ -436,4 +490,3 @@ export function NexusTeamInfographic() {
     </div>
   )
 }
-
